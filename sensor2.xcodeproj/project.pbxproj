@@ -1,0 +1,758 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D351F06F1C01738800F6F91D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351F06E1C01738800F6F91D /* AppDelegate.swift */; };
+		D351F0711C01738800F6F91D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351F0701C01738800F6F91D /* ViewController.swift */; };
+		D351F0741C01738800F6F91D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D351F0721C01738800F6F91D /* Main.storyboard */; };
+		D351F0761C01738800F6F91D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D351F0751C01738800F6F91D /* Assets.xcassets */; };
+		D351F0791C01738800F6F91D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D351F0771C01738800F6F91D /* LaunchScreen.storyboard */; };
+		D351F0841C01738800F6F91D /* sensor2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351F0831C01738800F6F91D /* sensor2Tests.swift */; };
+		D351F08F1C01738800F6F91D /* sensor2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351F08E1C01738800F6F91D /* sensor2UITests.swift */; };
+		D351F0941C01738800F6F91D /* sensor2 WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = D351F0931C01738800F6F91D /* sensor2 WatchKit App.app */; };
+		D351F09A1C01738800F6F91D /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D351F0981C01738800F6F91D /* Interface.storyboard */; };
+		D351F09C1C01738800F6F91D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D351F09B1C01738800F6F91D /* Assets.xcassets */; };
+		D351F0A31C01738800F6F91D /* sensor2 WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D351F0A21C01738800F6F91D /* sensor2 WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D351F0A81C01738800F6F91D /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351F0A71C01738800F6F91D /* InterfaceController.swift */; };
+		D351F0AA1C01738800F6F91D /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351F0A91C01738800F6F91D /* ExtensionDelegate.swift */; };
+		D351F0AC1C01738800F6F91D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D351F0AB1C01738800F6F91D /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D351F0801C01738800F6F91D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D351F0631C01738800F6F91D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D351F06A1C01738800F6F91D;
+			remoteInfo = sensor2;
+		};
+		D351F08B1C01738800F6F91D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D351F0631C01738800F6F91D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D351F06A1C01738800F6F91D;
+			remoteInfo = sensor2;
+		};
+		D351F0951C01738800F6F91D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D351F0631C01738800F6F91D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D351F0921C01738800F6F91D;
+			remoteInfo = "sensor2 WatchKit App";
+		};
+		D351F0A41C01738800F6F91D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D351F0631C01738800F6F91D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D351F0A11C01738800F6F91D;
+			remoteInfo = "sensor2 WatchKit Extension";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D351F0B31C01738800F6F91D /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				D351F0A31C01738800F6F91D /* sensor2 WatchKit Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D351F0B71C01738800F6F91D /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				D351F0941C01738800F6F91D /* sensor2 WatchKit App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		D351F06B1C01738800F6F91D /* sensor2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sensor2.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D351F06E1C01738800F6F91D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D351F0701C01738800F6F91D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D351F0731C01738800F6F91D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D351F0751C01738800F6F91D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D351F0781C01738800F6F91D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D351F07A1C01738800F6F91D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D351F07F1C01738800F6F91D /* sensor2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = sensor2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D351F0831C01738800F6F91D /* sensor2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sensor2Tests.swift; sourceTree = "<group>"; };
+		D351F0851C01738800F6F91D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D351F08A1C01738800F6F91D /* sensor2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = sensor2UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D351F08E1C01738800F6F91D /* sensor2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sensor2UITests.swift; sourceTree = "<group>"; };
+		D351F0901C01738800F6F91D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D351F0931C01738800F6F91D /* sensor2 WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "sensor2 WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D351F0991C01738800F6F91D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		D351F09B1C01738800F6F91D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D351F09D1C01738800F6F91D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D351F0A21C01738800F6F91D /* sensor2 WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "sensor2 WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D351F0A71C01738800F6F91D /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
+		D351F0A91C01738800F6F91D /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
+		D351F0AB1C01738800F6F91D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D351F0AD1C01738800F6F91D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D351F0681C01738800F6F91D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D351F07C1C01738800F6F91D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D351F0871C01738800F6F91D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D351F09F1C01738800F6F91D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D351F0621C01738700F6F91D = {
+			isa = PBXGroup;
+			children = (
+				D351F06D1C01738800F6F91D /* sensor2 */,
+				D351F0821C01738800F6F91D /* sensor2Tests */,
+				D351F08D1C01738800F6F91D /* sensor2UITests */,
+				D351F0971C01738800F6F91D /* sensor2 WatchKit App */,
+				D351F0A61C01738800F6F91D /* sensor2 WatchKit Extension */,
+				D351F06C1C01738800F6F91D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D351F06C1C01738800F6F91D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D351F06B1C01738800F6F91D /* sensor2.app */,
+				D351F07F1C01738800F6F91D /* sensor2Tests.xctest */,
+				D351F08A1C01738800F6F91D /* sensor2UITests.xctest */,
+				D351F0931C01738800F6F91D /* sensor2 WatchKit App.app */,
+				D351F0A21C01738800F6F91D /* sensor2 WatchKit Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D351F06D1C01738800F6F91D /* sensor2 */ = {
+			isa = PBXGroup;
+			children = (
+				D351F06E1C01738800F6F91D /* AppDelegate.swift */,
+				D351F0701C01738800F6F91D /* ViewController.swift */,
+				D351F0721C01738800F6F91D /* Main.storyboard */,
+				D351F0751C01738800F6F91D /* Assets.xcassets */,
+				D351F0771C01738800F6F91D /* LaunchScreen.storyboard */,
+				D351F07A1C01738800F6F91D /* Info.plist */,
+			);
+			path = sensor2;
+			sourceTree = "<group>";
+		};
+		D351F0821C01738800F6F91D /* sensor2Tests */ = {
+			isa = PBXGroup;
+			children = (
+				D351F0831C01738800F6F91D /* sensor2Tests.swift */,
+				D351F0851C01738800F6F91D /* Info.plist */,
+			);
+			path = sensor2Tests;
+			sourceTree = "<group>";
+		};
+		D351F08D1C01738800F6F91D /* sensor2UITests */ = {
+			isa = PBXGroup;
+			children = (
+				D351F08E1C01738800F6F91D /* sensor2UITests.swift */,
+				D351F0901C01738800F6F91D /* Info.plist */,
+			);
+			path = sensor2UITests;
+			sourceTree = "<group>";
+		};
+		D351F0971C01738800F6F91D /* sensor2 WatchKit App */ = {
+			isa = PBXGroup;
+			children = (
+				D351F0981C01738800F6F91D /* Interface.storyboard */,
+				D351F09B1C01738800F6F91D /* Assets.xcassets */,
+				D351F09D1C01738800F6F91D /* Info.plist */,
+			);
+			path = "sensor2 WatchKit App";
+			sourceTree = "<group>";
+		};
+		D351F0A61C01738800F6F91D /* sensor2 WatchKit Extension */ = {
+			isa = PBXGroup;
+			children = (
+				D351F0A71C01738800F6F91D /* InterfaceController.swift */,
+				D351F0A91C01738800F6F91D /* ExtensionDelegate.swift */,
+				D351F0AB1C01738800F6F91D /* Assets.xcassets */,
+				D351F0AD1C01738800F6F91D /* Info.plist */,
+			);
+			path = "sensor2 WatchKit Extension";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D351F06A1C01738800F6F91D /* sensor2 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D351F0B81C01738800F6F91D /* Build configuration list for PBXNativeTarget "sensor2" */;
+			buildPhases = (
+				D351F0671C01738800F6F91D /* Sources */,
+				D351F0681C01738800F6F91D /* Frameworks */,
+				D351F0691C01738800F6F91D /* Resources */,
+				D351F0B71C01738800F6F91D /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D351F0961C01738800F6F91D /* PBXTargetDependency */,
+			);
+			name = sensor2;
+			productName = sensor2;
+			productReference = D351F06B1C01738800F6F91D /* sensor2.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D351F07E1C01738800F6F91D /* sensor2Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D351F0BB1C01738800F6F91D /* Build configuration list for PBXNativeTarget "sensor2Tests" */;
+			buildPhases = (
+				D351F07B1C01738800F6F91D /* Sources */,
+				D351F07C1C01738800F6F91D /* Frameworks */,
+				D351F07D1C01738800F6F91D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D351F0811C01738800F6F91D /* PBXTargetDependency */,
+			);
+			name = sensor2Tests;
+			productName = sensor2Tests;
+			productReference = D351F07F1C01738800F6F91D /* sensor2Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		D351F0891C01738800F6F91D /* sensor2UITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D351F0BE1C01738800F6F91D /* Build configuration list for PBXNativeTarget "sensor2UITests" */;
+			buildPhases = (
+				D351F0861C01738800F6F91D /* Sources */,
+				D351F0871C01738800F6F91D /* Frameworks */,
+				D351F0881C01738800F6F91D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D351F08C1C01738800F6F91D /* PBXTargetDependency */,
+			);
+			name = sensor2UITests;
+			productName = sensor2UITests;
+			productReference = D351F08A1C01738800F6F91D /* sensor2UITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		D351F0921C01738800F6F91D /* sensor2 WatchKit App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D351F0B41C01738800F6F91D /* Build configuration list for PBXNativeTarget "sensor2 WatchKit App" */;
+			buildPhases = (
+				D351F0911C01738800F6F91D /* Resources */,
+				D351F0B31C01738800F6F91D /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D351F0A51C01738800F6F91D /* PBXTargetDependency */,
+			);
+			name = "sensor2 WatchKit App";
+			productName = "sensor2 WatchKit App";
+			productReference = D351F0931C01738800F6F91D /* sensor2 WatchKit App.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		D351F0A11C01738800F6F91D /* sensor2 WatchKit Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D351F0B01C01738800F6F91D /* Build configuration list for PBXNativeTarget "sensor2 WatchKit Extension" */;
+			buildPhases = (
+				D351F09E1C01738800F6F91D /* Sources */,
+				D351F09F1C01738800F6F91D /* Frameworks */,
+				D351F0A01C01738800F6F91D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "sensor2 WatchKit Extension";
+			productName = "sensor2 WatchKit Extension";
+			productReference = D351F0A21C01738800F6F91D /* sensor2 WatchKit Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D351F0631C01738800F6F91D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0710;
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = "Greg McNutt";
+				TargetAttributes = {
+					D351F06A1C01738800F6F91D = {
+						CreatedOnToolsVersion = 7.1.1;
+					};
+					D351F07E1C01738800F6F91D = {
+						CreatedOnToolsVersion = 7.1.1;
+						TestTargetID = D351F06A1C01738800F6F91D;
+					};
+					D351F0891C01738800F6F91D = {
+						CreatedOnToolsVersion = 7.1.1;
+						TestTargetID = D351F06A1C01738800F6F91D;
+					};
+					D351F0921C01738800F6F91D = {
+						CreatedOnToolsVersion = 7.1.1;
+					};
+					D351F0A11C01738800F6F91D = {
+						CreatedOnToolsVersion = 7.1.1;
+					};
+				};
+			};
+			buildConfigurationList = D351F0661C01738800F6F91D /* Build configuration list for PBXProject "sensor2" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D351F0621C01738700F6F91D;
+			productRefGroup = D351F06C1C01738800F6F91D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D351F06A1C01738800F6F91D /* sensor2 */,
+				D351F07E1C01738800F6F91D /* sensor2Tests */,
+				D351F0891C01738800F6F91D /* sensor2UITests */,
+				D351F0921C01738800F6F91D /* sensor2 WatchKit App */,
+				D351F0A11C01738800F6F91D /* sensor2 WatchKit Extension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D351F0691C01738800F6F91D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D351F0791C01738800F6F91D /* LaunchScreen.storyboard in Resources */,
+				D351F0761C01738800F6F91D /* Assets.xcassets in Resources */,
+				D351F0741C01738800F6F91D /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D351F07D1C01738800F6F91D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D351F0881C01738800F6F91D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D351F0911C01738800F6F91D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D351F09C1C01738800F6F91D /* Assets.xcassets in Resources */,
+				D351F09A1C01738800F6F91D /* Interface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D351F0A01C01738800F6F91D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D351F0AC1C01738800F6F91D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D351F0671C01738800F6F91D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D351F0711C01738800F6F91D /* ViewController.swift in Sources */,
+				D351F06F1C01738800F6F91D /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D351F07B1C01738800F6F91D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D351F0841C01738800F6F91D /* sensor2Tests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D351F0861C01738800F6F91D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D351F08F1C01738800F6F91D /* sensor2UITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D351F09E1C01738800F6F91D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D351F0AA1C01738800F6F91D /* ExtensionDelegate.swift in Sources */,
+				D351F0A81C01738800F6F91D /* InterfaceController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D351F0811C01738800F6F91D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D351F06A1C01738800F6F91D /* sensor2 */;
+			targetProxy = D351F0801C01738800F6F91D /* PBXContainerItemProxy */;
+		};
+		D351F08C1C01738800F6F91D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D351F06A1C01738800F6F91D /* sensor2 */;
+			targetProxy = D351F08B1C01738800F6F91D /* PBXContainerItemProxy */;
+		};
+		D351F0961C01738800F6F91D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D351F0921C01738800F6F91D /* sensor2 WatchKit App */;
+			targetProxy = D351F0951C01738800F6F91D /* PBXContainerItemProxy */;
+		};
+		D351F0A51C01738800F6F91D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D351F0A11C01738800F6F91D /* sensor2 WatchKit Extension */;
+			targetProxy = D351F0A41C01738800F6F91D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D351F0721C01738800F6F91D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D351F0731C01738800F6F91D /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		D351F0771C01738800F6F91D /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D351F0781C01738800F6F91D /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		D351F0981C01738800F6F91D /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D351F0991C01738800F6F91D /* Base */,
+			);
+			name = Interface.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D351F0AE1C01738800F6F91D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D351F0AF1C01738800F6F91D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D351F0B11C01738800F6F91D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "sensor2 WatchKit Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		D351F0B21C01738800F6F91D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "sensor2 WatchKit Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
+		D351F0B51C01738800F6F91D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				IBSC_MODULE = sensor2_WatchKit_Extension;
+				INFOPLIST_FILE = "sensor2 WatchKit App/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		D351F0B61C01738800F6F91D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				IBSC_MODULE = sensor2_WatchKit_Extension;
+				INFOPLIST_FILE = "sensor2 WatchKit App/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
+		D351F0B91C01738800F6F91D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = sensor2/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D351F0BA1C01738800F6F91D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = sensor2/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		D351F0BC1C01738800F6F91D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = sensor2Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/sensor2.app/sensor2";
+			};
+			name = Debug;
+		};
+		D351F0BD1C01738800F6F91D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = sensor2Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/sensor2.app/sensor2";
+			};
+			name = Release;
+		};
+		D351F0BF1C01738800F6F91D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = sensor2UITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2UITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = sensor2;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		D351F0C01C01738800F6F91D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = sensor2UITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2UITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = sensor2;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D351F0661C01738800F6F91D /* Build configuration list for PBXProject "sensor2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D351F0AE1C01738800F6F91D /* Debug */,
+				D351F0AF1C01738800F6F91D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D351F0B01C01738800F6F91D /* Build configuration list for PBXNativeTarget "sensor2 WatchKit Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D351F0B11C01738800F6F91D /* Debug */,
+				D351F0B21C01738800F6F91D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		D351F0B41C01738800F6F91D /* Build configuration list for PBXNativeTarget "sensor2 WatchKit App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D351F0B51C01738800F6F91D /* Debug */,
+				D351F0B61C01738800F6F91D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		D351F0B81C01738800F6F91D /* Build configuration list for PBXNativeTarget "sensor2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D351F0B91C01738800F6F91D /* Debug */,
+				D351F0BA1C01738800F6F91D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		D351F0BB1C01738800F6F91D /* Build configuration list for PBXNativeTarget "sensor2Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D351F0BC1C01738800F6F91D /* Debug */,
+				D351F0BD1C01738800F6F91D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		D351F0BE1C01738800F6F91D /* Build configuration list for PBXNativeTarget "sensor2UITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D351F0BF1C01738800F6F91D /* Debug */,
+				D351F0C01C01738800F6F91D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D351F0631C01738800F6F91D /* Project object */;
+}
