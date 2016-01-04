@@ -21,6 +21,7 @@
 		D351F0A81C01738800F6F91D /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351F0A71C01738800F6F91D /* InterfaceController.swift */; };
 		D351F0AA1C01738800F6F91D /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351F0A91C01738800F6F91D /* ExtensionDelegate.swift */; };
 		D351F0AC1C01738800F6F91D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D351F0AB1C01738800F6F91D /* Assets.xcassets */; };
+		D351F0C21C0183D300F6F91D /* SensorDynamoImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351F0C11C0183D300F6F91D /* SensorDynamoImpl.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D3036CD11C16A2F800DCC5F8 /* Watch-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Watch-Bridging-Header.h"; sourceTree = "<group>"; };
 		D351F06B1C01738800F6F91D /* sensor2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sensor2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D351F06E1C01738800F6F91D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D351F0701C01738800F6F91D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 		D351F0A91C01738800F6F91D /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
 		D351F0AB1C01738800F6F91D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D351F0AD1C01738800F6F91D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D351F0C11C0183D300F6F91D /* SensorDynamoImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensorDynamoImpl.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +207,8 @@
 		D351F0A61C01738800F6F91D /* sensor2 WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
+				D3036CD11C16A2F800DCC5F8 /* Watch-Bridging-Header.h */,
+				D351F0C11C0183D300F6F91D /* SensorDynamoImpl.swift */,
 				D351F0A71C01738800F6F91D /* InterfaceController.swift */,
 				D351F0A91C01738800F6F91D /* ExtensionDelegate.swift */,
 				D351F0AB1C01738800F6F91D /* Assets.xcassets */,
@@ -316,6 +321,7 @@
 				TargetAttributes = {
 					D351F06A1C01738800F6F91D = {
 						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = ZFJ4RM7VL4;
 					};
 					D351F07E1C01738800F6F91D = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -327,9 +333,11 @@
 					};
 					D351F0921C01738800F6F91D = {
 						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = ZFJ4RM7VL4;
 					};
 					D351F0A11C01738800F6F91D = {
 						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = ZFJ4RM7VL4;
 					};
 				};
 			};
@@ -429,6 +437,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D351F0C21C0183D300F6F91D /* SensorDynamoImpl.swift in Sources */,
 				D351F0AA1C01738800F6F91D /* ExtensionDelegate.swift in Sources */,
 				D351F0A81C01738800F6F91D /* InterfaceController.swift in Sources */,
 			);
@@ -573,12 +582,14 @@
 		D351F0B11C01738800F6F91D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "sensor2 WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "sensor2 WatchKit Extension/Watch-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
@@ -587,12 +598,14 @@
 		D351F0B21C01738800F6F91D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "sensor2 WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "sensor2 WatchKit Extension/Watch-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
@@ -602,6 +615,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				IBSC_MODULE = sensor2_WatchKit_Extension;
 				INFOPLIST_FILE = "sensor2 WatchKit App/Info.plist";
@@ -618,6 +632,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				IBSC_MODULE = sensor2_WatchKit_Extension;
 				INFOPLIST_FILE = "sensor2 WatchKit App/Info.plist";
@@ -634,6 +649,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = sensor2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2;
@@ -645,6 +661,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = sensor2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2;
@@ -719,6 +736,7 @@
 				D351F0B21C01738800F6F91D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D351F0B41C01738800F6F91D /* Build configuration list for PBXNativeTarget "sensor2 WatchKit App" */ = {
 			isa = XCConfigurationList;
@@ -727,6 +745,7 @@
 				D351F0B61C01738800F6F91D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D351F0B81C01738800F6F91D /* Build configuration list for PBXNativeTarget "sensor2" */ = {
 			isa = XCConfigurationList;
@@ -735,6 +754,7 @@
 				D351F0BA1C01738800F6F91D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D351F0BB1C01738800F6F91D /* Build configuration list for PBXNativeTarget "sensor2Tests" */ = {
 			isa = XCConfigurationList;
@@ -743,6 +763,7 @@
 				D351F0BD1C01738800F6F91D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D351F0BE1C01738800F6F91D /* Build configuration list for PBXNativeTarget "sensor2UITests" */ = {
 			isa = XCConfigurationList;
@@ -751,6 +772,7 @@
 				D351F0C01C01738800F6F91D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -1,14 +1,139 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="6221" systemVersion="13E28" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6213"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="3733"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="9019"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Courier.ttc">
+            <string>Courier</string>
+            <string>Courier</string>
+            <string>Courier</string>
+            <string>Courier</string>
+            <string>Courier</string>
+            <string>Courier</string>
+            <string>Courier</string>
+            <string>Courier</string>
+            <string>Courier</string>
+            <string>Courier</string>
+            <string>Courier</string>
+            <string>Courier</string>
+            <string>Courier</string>
+            <string>Courier</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--Interface Controller-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModuleProvider="target"/>
+                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="sensor2_WatchKit_App" customModuleProvider="target">
+                    <items>
+                        <switch width="1" alignment="left" title="Fake Data" id="Neo-BG-WDq">
+                            <connections>
+                                <action selector="fakeDataAction:" destination="AgC-eL-Hgc" id="SEZ-BG-uSc"/>
+                            </connections>
+                        </switch>
+                        <slider width="1" alignment="left" value="5" maximum="50" steps="10" id="DKx-dk-pfV">
+                            <connections>
+                                <action selector="durationAction:" destination="AgC-eL-Hgc" id="nD5-Os-Ba5"/>
+                            </connections>
+                        </slider>
+                        <group width="134" alignment="left" id="M2j-Zk-VAW">
+                            <items>
+                                <label alignment="left" text="durationMins" id="d9j-f6-FK9">
+                                    <fontDescription key="font" name="Courier" family="Courier" pointSize="9"/>
+                                </label>
+                                <label alignment="right" text="5.0" id="EQL-2g-ieb">
+                                    <fontDescription key="font" name="Courier" family="Courier" pointSize="9"/>
+                                </label>
+                            </items>
+                        </group>
+                        <button width="1" alignment="left" title="Start Recorder" enabled="NO" id="cHB-Vo-WhK">
+                            <connections>
+                                <action selector="startRecorderAction" destination="AgC-eL-Hgc" id="jqY-md-ITc"/>
+                            </connections>
+                        </button>
+                        <group width="136" alignment="left" id="8gy-Y4-G7P">
+                            <items>
+                                <label alignment="left" text="lastStart" id="7He-hO-DLO">
+                                    <fontDescription key="font" name="Courier" family="Courier" pointSize="9"/>
+                                </label>
+                                <label height="9" alignment="right" text="hhmmss" id="HhP-Ur-QGn">
+                                    <fontDescription key="font" name="Courier" family="Courier" pointSize="9"/>
+                                </label>
+                            </items>
+                        </group>
+                        <switch width="1" alignment="left" title="Dequeuer" id="b5C-5z-auK">
+                            <connections>
+                                <action selector="dequeuerAction:" destination="AgC-eL-Hgc" id="Dky-4O-fkX"/>
+                            </connections>
+                        </switch>
+                        <group width="134" height="11" alignment="left" id="Pn8-ev-VQj">
+                            <items>
+                                <label alignment="left" text="cmdLoops" id="WJW-qd-K65">
+                                    <fontDescription key="font" name="Courier" family="Courier" pointSize="9"/>
+                                </label>
+                                <label alignment="right" text="0" id="d00-fm-NE6">
+                                    <fontDescription key="font" name="Courier" family="Courier" pointSize="9"/>
+                                </label>
+                            </items>
+                        </group>
+                        <group width="134" height="11" alignment="left" id="zMg-z4-I2D">
+                            <items>
+                                <label alignment="left" text="itemsSent" id="R5Q-cL-6au">
+                                    <fontDescription key="font" name="Courier" family="Courier" pointSize="9"/>
+                                </label>
+                                <label alignment="right" text="0" id="LAc-EZ-ocK">
+                                    <fontDescription key="font" name="Courier" family="Courier" pointSize="9"/>
+                                </label>
+                            </items>
+                        </group>
+                        <group width="134" height="11" alignment="left" id="XJo-JN-RzN">
+                            <items>
+                                <label alignment="left" text="latest" id="img-aw-7qd">
+                                    <fontDescription key="font" name="Courier" family="Courier" pointSize="9"/>
+                                </label>
+                                <label alignment="right" text="mmddyy" id="8bo-18-Vbe">
+                                    <fontDescription key="font" name="Courier" family="Courier" pointSize="9"/>
+                                </label>
+                            </items>
+                        </group>
+                        <group width="134" height="11" alignment="left" id="gDg-Kg-zAn">
+                            <items>
+                                <label alignment="left" text="errors" id="ClB-CJ-XD2">
+                                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="font" name="Courier" family="Courier" pointSize="9"/>
+                                </label>
+                                <label alignment="right" text="0" id="l6G-An-FAk">
+                                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="font" name="Courier" family="Courier" pointSize="9"/>
+                                </label>
+                            </items>
+                        </group>
+                        <group width="134" height="35" alignment="left" id="7GH-hV-J2n">
+                            <items>
+                                <label alignment="left" text="last" id="DzE-dp-zsY">
+                                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="font" name="Courier" family="Courier" pointSize="9"/>
+                                </label>
+                                <label width="112" height="37" alignment="right" textAlignment="right" numberOfLines="3" id="L8A-p6-KI8">
+                                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="font" name="Courier" family="Courier" pointSize="9"/>
+                                </label>
+                            </items>
+                        </group>
+                    </items>
+                    <connections>
+                        <outlet property="cmdCountVal" destination="d00-fm-NE6" id="MAo-U1-9yK"/>
+                        <outlet property="durationVal" destination="EQL-2g-ieb" id="uom-oq-I4g"/>
+                        <outlet property="errorsVal" destination="l6G-An-FAk" id="1OZ-2E-w4G"/>
+                        <outlet property="itemCountVal" destination="LAc-EZ-ocK" id="Te9-hf-DT6"/>
+                        <outlet property="lastStartVal" destination="HhP-Ur-QGn" id="4kI-qR-PJX"/>
+                        <outlet property="lastVal" destination="L8A-p6-KI8" id="IYP-cy-ofA"/>
+                        <outlet property="latestVal" destination="8bo-18-Vbe" id="tpE-AK-F4k"/>
+                        <outlet property="startVal" destination="cHB-Vo-WhK" id="b0Z-GC-hbk"/>
+                    </connections>
+                </controller>
             </objects>
         </scene>
     </scenes>
