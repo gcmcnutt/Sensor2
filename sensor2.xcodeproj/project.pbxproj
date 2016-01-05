@@ -22,6 +22,7 @@
 		D351F0AA1C01738800F6F91D /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351F0A91C01738800F6F91D /* ExtensionDelegate.swift */; };
 		D351F0AC1C01738800F6F91D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D351F0AB1C01738800F6F91D /* Assets.xcassets */; };
 		D351F0C21C0183D300F6F91D /* SensorDynamoImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351F0C11C0183D300F6F91D /* SensorDynamoImpl.swift */; };
+		D3D467A11C3B7648006AC438 /* sensor2Web in Resources */ = {isa = PBXBuildFile; fileRef = D3D467A01C3B7648006AC438 /* sensor2Web */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +106,7 @@
 		D351F0AB1C01738800F6F91D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D351F0AD1C01738800F6F91D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D351F0C11C0183D300F6F91D /* SensorDynamoImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensorDynamoImpl.swift; sourceTree = "<group>"; };
+		D3D467A01C3B7648006AC438 /* sensor2Web */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sensor2Web; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +144,7 @@
 		D351F0621C01738700F6F91D = {
 			isa = PBXGroup;
 			children = (
+				D3D467A01C3B7648006AC438 /* sensor2Web */,
 				D351F06D1C01738800F6F91D /* sensor2 */,
 				D351F0821C01738800F6F91D /* sensor2Tests */,
 				D351F08D1C01738800F6F91D /* sensor2UITests */,
@@ -368,6 +371,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3D467A11C3B7648006AC438 /* sensor2Web in Resources */,
 				D351F0791C01738800F6F91D /* LaunchScreen.storyboard in Resources */,
 				D351F0761C01738800F6F91D /* Assets.xcassets in Resources */,
 				D351F0741C01738800F6F91D /* Main.storyboard in Resources */,
