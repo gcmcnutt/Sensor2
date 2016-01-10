@@ -12,7 +12,6 @@ import CoreMotion
 
 class InterfaceController: WKInterfaceController {
     let extensionDelegate = WKExtension.sharedExtension().delegate as! ExtensionDelegate
-    let summaryDateFormatter = NSDateFormatter()
     
     var lastStart = NSDate()
     
@@ -29,11 +28,10 @@ class InterfaceController: WKInterfaceController {
         super.awakeWithContext(context)
         
         // Configure interface objects here.
-        summaryDateFormatter.dateFormat = "HH:mm:ss.SSS"
         
         // can we record?
         startVal.setEnabled(extensionDelegate.haveAccelerometer)
-        lastStartVal.setText(summaryDateFormatter.stringFromDate(lastStart))
+        lastStartVal.setText(AppGlobals.sharedInstance.summaryDateFormatter.stringFromDate(lastStart))
         
         // do we have access to sensor?
         if (!extensionDelegate.authorizedAccelerometer) {
@@ -63,7 +61,7 @@ class InterfaceController: WKInterfaceController {
     
     @IBAction func startRecorderAction() {
         lastStart = NSDate()
-        self.lastStartVal.setText(summaryDateFormatter.stringFromDate(lastStart))
+        self.lastStartVal.setText(AppGlobals.sharedInstance.summaryDateFormatter.stringFromDate(lastStart))
         extensionDelegate.record()
     }
     
@@ -83,7 +81,7 @@ class InterfaceController: WKInterfaceController {
     func updateUI(cmdCount : Int, itemCount : Int, latestDate : NSDate, errors : Int, lastError : String) {
         cmdCountVal.setText(cmdCount.description)
         itemCountVal.setText(itemCount.description)
-        latestVal.setText(summaryDateFormatter.stringFromDate(
+        latestVal.setText(AppGlobals.sharedInstance.summaryDateFormatter.stringFromDate(
             latestDate))
         errorsVal.setText(errors.description)
         lastVal.setText(lastError)

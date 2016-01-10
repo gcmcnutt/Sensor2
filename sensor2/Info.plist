@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>APIKey</key>
+	<string>eyJhbGciOiJSU0EtU0hBMjU2IiwidmVyIjoiMSJ9.eyJ2ZXIiOiIzIiwiZW5kcG9pbnRzIjp7ImF1dGh6IjoiaHR0cHM6Ly93d3cuYW1hem9uLmNvbS9hcC9vYSIsInRva2VuRXhjaGFuZ2UiOiJodHRwczovL2FwaS5hbWF6b24uY29tL2F1dGgvbzIvdG9rZW4ifSwiY2xpZW50SWQiOiJhbXpuMS5hcHBsaWNhdGlvbi1vYTItY2xpZW50LjJkYWEyMmU5OGUwMzQxMDJhNDNjYzFlZGVmMmU1NmQ1IiwiYXBwRmFtaWx5SWQiOiJhbXpuMS5hcHBsaWNhdGlvbi5mMzNjZGIxMzQzZGY0NWUwYmY4OTdjOWE4MzhjOTc0YyIsImJ1bmRsZVNlZWRJZCI6ImNvbS5hY2NlbGVyby5zZW5zb3IyIiwiYnVuZGxlSWQiOiJjb20uYWNjZWxlcm8uc2Vuc29yMiIsImlzcyI6IkFtYXpvbiIsInR5cGUiOiJBUElLZXkiLCJhcHBWYXJpYW50SWQiOiJhbXpuMS5hcHBsaWNhdGlvbi1jbGllbnQuOTk3ZDlhMjE5YjBhNDE3NzhkMGNkOTRiYjgyOTVmMWIiLCJ0cnVzdFBvb2wiOm51bGwsImFwcElkIjoiYW16bjEuYXBwbGljYXRpb24tY2xpZW50Ljk5N2Q5YTIxOWIwYTQxNzc4ZDBjZDk0YmI4Mjk1ZjFiIiwiaWQiOiI5NjE5N2U2OC1iNjlhLTExZTUtYTVjNy1lNzA2YzZjMmIxZGEiLCJpYXQiOiIxNDUyMzIxMDc2NDQzIn0=.DNicvuMrVsiBWfZo7Z+gzii8nkjP7OXpkvOzzALE/fnwMN+mS+jMxvE2iuzqFGQaJccW30OxeKssxHEPNUZS8VlAcKP0RUMRbb39Bp9k73EX+oU/Ll7ckP5nEjZr2Vxt+RI4IwydGKDAF8gYShjKciO7X63okynrGohBOJHdTcV9UU5a98WC3PvMC4rwi8eKw4VWNdMNEBuU9KrDPzVC0JprmT2lbEalv3bN+okf4MG1DyB/ZdH2LFnKilb8C3CD9rAE3s3hVKEIhVLzahyNZPye/BEOcBR4ynER+CfPWoMJI5sVP4V5PKFP/QsVXFWRst+lFCr0wijtExzmWbokDw==</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -22,6 +24,17 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>api.amazon.com</key>
+			<dict>
+				<key>NSExceptionRequiresForwardSecrecy</key>
+				<false/>
+			</dict>
+		</dict>
+	</dict>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -30,6 +43,8 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>awsAccount</key>
+	<string>499918285206</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -42,6 +57,19 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>cognitoPool</key>
+	<string>us-east-1:53e91d7b-4528-4823-9bd0-fcfa545106bd</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.accelero.$(PRODUCT_NAME:rfc1034identifier)</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>amzn-com.accelero.$(PRODUCT_NAME:rfc1034identifier)</string>
+			</array>
+		</dict>
 	</array>
 </dict>
 </plist>

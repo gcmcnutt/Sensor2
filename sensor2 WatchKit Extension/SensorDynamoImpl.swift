@@ -28,7 +28,7 @@ class SensorDynamoImpl {
     static let P_DATE_COLNAME = "pDate"
     
     let tableName = "sensor2" // TODO
-    let customerId = "CUST_ID" // TODO
+    let extensionDelegate : ExtensionDelegate
     
     // an array of dictionary items -- each dictionary entry is a single second's samples
     var itemMap : [String : AnyObject] = [:]
@@ -40,7 +40,9 @@ class SensorDynamoImpl {
     
     var priorTimeSlot = ""
     
-    init() {
+    init(extensionDelegate: ExtensionDelegate) {
+        self.extensionDelegate = extensionDelegate
+        
         itemTimeFormatter.dateFormat = SensorDynamoImpl.ITEM_TIME_FORMAT
         itemTimeFormatter.timeZone = NSTimeZone(name:"UTC")
         
@@ -98,6 +100,14 @@ class SensorDynamoImpl {
         var dynamoPayload : [String : AnyObject]!
         var actionType : String!
         
+        NSLog("start flush")
+        
+        // update credentials
+        if (!extensionDelegate.sensorCognitoImpl.ensureCredentials()) {
+            // TODO some other error combos to consider (mem leak too)
+            return (false, nil)
+        }
+        
         if (doUpdate) {
             
             // format assumed single-item as an updateItem request
@@ -108,7 +118,7 @@ class SensorDynamoImpl {
             
             // generate key part of expression
             let key = [
-                SensorDynamoImpl.HASH_KEY_COLNAME : ["S" : customerId],
+                SensorDynamoImpl.HASH_KEY_COLNAME : ["S" : extensionDelegate.sensorCognitoImpl.getIdentityId()!],
                 SensorDynamoImpl.RANGE_KEY_COLNAME : ["S" : timeSlot]
             ]
             
@@ -152,7 +162,7 @@ class SensorDynamoImpl {
                 var item : [String : AnyObject] = [:]
                 
                 // per-slot entries
-                item[SensorDynamoImpl.HASH_KEY_COLNAME] = ["S": customerId]
+                item[SensorDynamoImpl.HASH_KEY_COLNAME] = ["S": extensionDelegate.sensorCognitoImpl.getIdentityId()!]
                 item[SensorDynamoImpl.RANGE_KEY_COLNAME] = ["S": timeSlot]
                 item[SensorDynamoImpl.P_DATE_COLNAME] = ["S" : systemTimeFormatter.stringFromDate(NSDate())]
                 
@@ -206,8 +216,6 @@ class SensorDynamoImpl {
     
     func postData(action : String!, data : NSData, doneHandler : (NSData?, NSError?) -> Void) {
         let requestMethod = "POST"
-        let accessKey = "AKIAI5VTRYI4OIHMCZEA"
-        let secretKey = "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"
         let region = "us-east-1"
         let service = "dynamodb"
         
@@ -222,8 +230,9 @@ class SensorDynamoImpl {
         request.addValue(requestTime, forHTTPHeaderField: "x-amz-date")
         request.addValue("DynamoDB_20120810." + action, forHTTPHeaderField: "x-amz-target")
         request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        request.addValue(extensionDelegate.sensorCognitoImpl.getSessionToken()!, forHTTPHeaderField: "x-amz-security-token")
         
-        let signedHeaders = "content-length;content-type;host;x-amz-date;x-amz-target" // TODO params
+        let signedHeaders = "content-length;content-type;host;x-amz-date;x-amz-security-token;x-amz-target" // TODO params
         
         // step 1 -- canonical request
         var canonicalRequest = requestMethod + "\n"
@@ -233,6 +242,7 @@ class SensorDynamoImpl {
         canonicalRequest += "content-type:" + request.valueForHTTPHeaderField("Content-Type")! + "\n"
         canonicalRequest += "host:" + url.host!.lowercaseString + "\n"
         canonicalRequest += "x-amz-date:" + request.valueForHTTPHeaderField("x-amz-date")! + "\n"
+        canonicalRequest += "x-amz-security-token:" + request.valueForHTTPHeaderField("x-amz-security-token")! + "\n"
         canonicalRequest += "x-amz-target:" + request.valueForHTTPHeaderField("x-amz-target")! + "\n"
         canonicalRequest += "\n"
         canonicalRequest += signedHeaders + "\n"
@@ -249,7 +259,7 @@ class SensorDynamoImpl {
         stringToSign += canonicalHash
         
         // step 3 calculate signature
-        let secret = "AWS4" + secretKey
+        let secret = "AWS4" + extensionDelegate.sensorCognitoImpl.getSecretKey()!
         let kDate = hmac(secret.dataUsingEncoding(NSUTF8StringEncoding)!, data: requestDate)
         let kRegion = hmac(kDate, data: region)
         let kService = hmac(kRegion, data: service)
@@ -265,7 +275,7 @@ class SensorDynamoImpl {
         
         // step 4 add signing information
         var authorization = "AWS4-HMAC-SHA256 Credential="
-        authorization += accessKey
+        authorization += extensionDelegate.sensorCognitoImpl.getAccessKey()!
         authorization += "/"
         authorization += credentialScope
         authorization += ", SignedHeaders="
@@ -278,6 +288,7 @@ class SensorDynamoImpl {
         
         let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
         
+        let start = NSDate()
         let task = session.uploadTaskWithRequest(request, fromData: data, completionHandler: {
             (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
             var outData : NSData? = nil
@@ -292,6 +303,8 @@ class SensorDynamoImpl {
             }
             doneHandler(outData, outError)
             session.invalidateAndCancel()
+            let duration = NSDate().timeIntervalSinceDate(start)
+            NSLog("*** network duration \(duration)")
         })
         task.resume()
     }

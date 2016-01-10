@@ -27,7 +27,11 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     let haveAccelerometer = CMSensorRecorder.isAccelerometerRecordingAvailable()
     let authorizedAccelerometer = CMSensorRecorder.isAuthorizedForRecording()
     
+    var appContext : NSDictionary = [:]
+    
     var sensorDynamoImpl : SensorDynamoImpl!
+    var sensorCognitoImpl : SensorCognitoImpl!
+    
     var durationValue = 5.0 // UI default
     private var dequeuerState: UInt8 = 0 // UI default
     
@@ -46,7 +50,8 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         wcsession.delegate = self
         wcsession.activateSession()
         
-        sensorDynamoImpl = SensorDynamoImpl()
+        sensorDynamoImpl = SensorDynamoImpl(extensionDelegate: self)
+        sensorCognitoImpl = SensorCognitoImpl()
     }
     
     func applicationDidBecomeActive() {
@@ -56,6 +61,16 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     func applicationWillResignActive() {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, etc.
+    }
+    
+    func session(session: WCSession,
+        didReceiveApplicationContext applicationContext: [String : AnyObject]) {
+            // we got an auth update from iPhone, track it
+            NSLog("updated context \(applicationContext)")
+            appContext = applicationContext
+            if (appContext[AppGlobals.IDENTITY_KEY] != nil) {
+                sensorCognitoImpl.setIdentityId(appContext[AppGlobals.IDENTITY_KEY] as! [ String : AnyObject ])
+            }
     }
     
     func record() {

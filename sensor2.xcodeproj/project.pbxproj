@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D3379F5A1C409FC800430D2C /* LogoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3379F591C409FC800430D2C /* LogoutDelegate.swift */; };
+		D3379F5C1C409FD200430D2C /* GetProfileDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3379F5B1C409FD200430D2C /* GetProfileDelegate.swift */; };
+		D3379F5E1C409FDF00430D2C /* AuthorizeUserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3379F5D1C409FDF00430D2C /* AuthorizeUserDelegate.swift */; };
+		D3379F601C409FEA00430D2C /* AccessTokenDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3379F5F1C409FEA00430D2C /* AccessTokenDelegate.swift */; };
+		D3379F621C409FFB00430D2C /* AppGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3379F611C409FFB00430D2C /* AppGlobals.swift */; };
+		D3379F681C40B5D400430D2C /* LoginWithAmazon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3379F671C40B5D400430D2C /* LoginWithAmazon.framework */; };
+		D3379F6A1C40E2EE00430D2C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3379F691C40E2EE00430D2C /* Security.framework */; };
+		D3379F6B1C42314200430D2C /* AppGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3379F611C409FFB00430D2C /* AppGlobals.swift */; };
+		D3379F6D1C4235AC00430D2C /* SensorCognitoImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3379F6C1C4235AC00430D2C /* SensorCognitoImpl.swift */; };
 		D351F06F1C01738800F6F91D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351F06E1C01738800F6F91D /* AppDelegate.swift */; };
 		D351F0711C01738800F6F91D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351F0701C01738800F6F91D /* ViewController.swift */; };
 		D351F0741C01738800F6F91D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D351F0721C01738800F6F91D /* Main.storyboard */; };
@@ -22,7 +31,7 @@
 		D351F0AA1C01738800F6F91D /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351F0A91C01738800F6F91D /* ExtensionDelegate.swift */; };
 		D351F0AC1C01738800F6F91D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D351F0AB1C01738800F6F91D /* Assets.xcassets */; };
 		D351F0C21C0183D300F6F91D /* SensorDynamoImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351F0C11C0183D300F6F91D /* SensorDynamoImpl.swift */; };
-		D3D467A11C3B7648006AC438 /* sensor2Web in Resources */ = {isa = PBXBuildFile; fileRef = D3D467A01C3B7648006AC438 /* sensor2Web */; };
+		D64F60767DB565C5F78ABA6A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1A7C95C9CBDCDCCB3999BB0 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,7 +91,19 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		31091825ACC9FE8C5D8F4818 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		D1A7C95C9CBDCDCCB3999BB0 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3036CD11C16A2F800DCC5F8 /* Watch-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Watch-Bridging-Header.h"; sourceTree = "<group>"; };
+		D3379F581C409F7F00430D2C /* Sensor2-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Sensor2-Bridging-Header.h"; sourceTree = "<group>"; };
+		D3379F591C409FC800430D2C /* LogoutDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutDelegate.swift; sourceTree = "<group>"; };
+		D3379F5B1C409FD200430D2C /* GetProfileDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetProfileDelegate.swift; sourceTree = "<group>"; };
+		D3379F5D1C409FDF00430D2C /* AuthorizeUserDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizeUserDelegate.swift; sourceTree = "<group>"; };
+		D3379F5F1C409FEA00430D2C /* AccessTokenDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessTokenDelegate.swift; sourceTree = "<group>"; };
+		D3379F611C409FFB00430D2C /* AppGlobals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppGlobals.swift; sourceTree = "<group>"; };
+		D3379F651C40B5B500430D2C /* LoginWithAmazon */ = {isa = PBXFileReference; lastKnownFileType = folder; name = LoginWithAmazon; path = "../Apps-SDK/iOS/LoginWithAmazon"; sourceTree = "<group>"; };
+		D3379F671C40B5D400430D2C /* LoginWithAmazon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LoginWithAmazon.framework; path = "../Apps-SDK/iOS/LoginWithAmazon/LoginWithAmazon.framework"; sourceTree = "<group>"; };
+		D3379F691C40E2EE00430D2C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		D3379F6C1C4235AC00430D2C /* SensorCognitoImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensorCognitoImpl.swift; sourceTree = "<group>"; };
 		D351F06B1C01738800F6F91D /* sensor2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sensor2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D351F06E1C01738800F6F91D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D351F0701C01738800F6F91D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -107,6 +128,7 @@
 		D351F0AD1C01738800F6F91D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D351F0C11C0183D300F6F91D /* SensorDynamoImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensorDynamoImpl.swift; sourceTree = "<group>"; };
 		D3D467A01C3B7648006AC438 /* sensor2Web */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sensor2Web; sourceTree = "<group>"; };
+		EA3948CFD2B7AE79359EF375 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +136,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3379F6A1C40E2EE00430D2C /* Security.framework in Frameworks */,
+				D3379F681C40B5D400430D2C /* LoginWithAmazon.framework in Frameworks */,
+				D64F60767DB565C5F78ABA6A /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,6 +166,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		28DFA1F4DFF309EE311D63CC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D3379F691C40E2EE00430D2C /* Security.framework */,
+				D3379F671C40B5D400430D2C /* LoginWithAmazon.framework */,
+				D3379F651C40B5B500430D2C /* LoginWithAmazon */,
+				D1A7C95C9CBDCDCCB3999BB0 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		529DB86426DACEFE75A9E021 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				EA3948CFD2B7AE79359EF375 /* Pods.debug.xcconfig */,
+				31091825ACC9FE8C5D8F4818 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		D351F0621C01738700F6F91D = {
 			isa = PBXGroup;
 			children = (
@@ -151,6 +196,8 @@
 				D351F0971C01738800F6F91D /* sensor2 WatchKit App */,
 				D351F0A61C01738800F6F91D /* sensor2 WatchKit Extension */,
 				D351F06C1C01738800F6F91D /* Products */,
+				529DB86426DACEFE75A9E021 /* Pods */,
+				28DFA1F4DFF309EE311D63CC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -169,6 +216,12 @@
 		D351F06D1C01738800F6F91D /* sensor2 */ = {
 			isa = PBXGroup;
 			children = (
+				D3379F611C409FFB00430D2C /* AppGlobals.swift */,
+				D3379F5F1C409FEA00430D2C /* AccessTokenDelegate.swift */,
+				D3379F5D1C409FDF00430D2C /* AuthorizeUserDelegate.swift */,
+				D3379F5B1C409FD200430D2C /* GetProfileDelegate.swift */,
+				D3379F591C409FC800430D2C /* LogoutDelegate.swift */,
+				D3379F581C409F7F00430D2C /* Sensor2-Bridging-Header.h */,
 				D351F06E1C01738800F6F91D /* AppDelegate.swift */,
 				D351F0701C01738800F6F91D /* ViewController.swift */,
 				D351F0721C01738800F6F91D /* Main.storyboard */,
@@ -212,6 +265,7 @@
 			children = (
 				D3036CD11C16A2F800DCC5F8 /* Watch-Bridging-Header.h */,
 				D351F0C11C0183D300F6F91D /* SensorDynamoImpl.swift */,
+				D3379F6C1C4235AC00430D2C /* SensorCognitoImpl.swift */,
 				D351F0A71C01738800F6F91D /* InterfaceController.swift */,
 				D351F0A91C01738800F6F91D /* ExtensionDelegate.swift */,
 				D351F0AB1C01738800F6F91D /* Assets.xcassets */,
@@ -227,10 +281,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D351F0B81C01738800F6F91D /* Build configuration list for PBXNativeTarget "sensor2" */;
 			buildPhases = (
+				C0A5FA6724C31BDFD82A4153 /* Check Pods Manifest.lock */,
 				D351F0671C01738800F6F91D /* Sources */,
 				D351F0681C01738800F6F91D /* Frameworks */,
 				D351F0691C01738800F6F91D /* Resources */,
 				D351F0B71C01738800F6F91D /* Embed Watch Content */,
+				A025C3616C3F18C736423CD0 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -371,7 +427,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D3D467A11C3B7648006AC438 /* sensor2Web in Resources */,
 				D351F0791C01738800F6F91D /* LaunchScreen.storyboard in Resources */,
 				D351F0761C01738800F6F91D /* Assets.xcassets in Resources */,
 				D351F0741C01738800F6F91D /* Main.storyboard in Resources */,
@@ -411,13 +466,51 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		A025C3616C3F18C736423CD0 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C0A5FA6724C31BDFD82A4153 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		D351F0671C01738800F6F91D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3379F5E1C409FDF00430D2C /* AuthorizeUserDelegate.swift in Sources */,
 				D351F0711C01738800F6F91D /* ViewController.swift in Sources */,
+				D3379F601C409FEA00430D2C /* AccessTokenDelegate.swift in Sources */,
+				D3379F621C409FFB00430D2C /* AppGlobals.swift in Sources */,
 				D351F06F1C01738800F6F91D /* AppDelegate.swift in Sources */,
+				D3379F5A1C409FC800430D2C /* LogoutDelegate.swift in Sources */,
+				D3379F5C1C409FD200430D2C /* GetProfileDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,8 +534,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3379F6B1C42314200430D2C /* AppGlobals.swift in Sources */,
 				D351F0C21C0183D300F6F91D /* SensorDynamoImpl.swift in Sources */,
 				D351F0AA1C01738800F6F91D /* ExtensionDelegate.swift in Sources */,
+				D3379F6D1C4235AC00430D2C /* SensorCognitoImpl.swift in Sources */,
 				D351F0A81C01738800F6F91D /* InterfaceController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -651,25 +746,36 @@
 		};
 		D351F0B91C01738800F6F91D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EA3948CFD2B7AE79359EF375 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
+				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.framework *.gch *.xcode* *.xcassets (*) .DS_Store CVS .svn .git .hg *.pbproj *.pbxproj";
+				EXCLUDED_SOURCE_FILE_NAMES = "sensorWeb/*";
+				FRAMEWORK_SEARCH_PATHS = "/Users/gcmcnutt/Dev/Apps-SDK/iOS/LoginWithAmazon";
 				INFOPLIST_FILE = sensor2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "sensor2/Sensor2-Bridging-Header.h";
 			};
 			name = Debug;
 		};
 		D351F0BA1C01738800F6F91D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 31091825ACC9FE8C5D8F4818 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
+				EXCLUDED_SOURCE_FILE_NAMES = "sensorWeb/*";
+				FRAMEWORK_SEARCH_PATHS = "/Users/gcmcnutt/Dev/Apps-SDK/iOS/LoginWithAmazon";
 				INFOPLIST_FILE = sensor2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "sensor2/Sensor2-Bridging-Header.h";
 			};
 			name = Release;
 		};
