@@ -31,13 +31,13 @@
             window.customerId = null;
             
             window.onAmazonLoginReady = function() {
-                amazon.Login.setClientId('amzn1.application-oa2-client.33fac734570f45738b6cef10bb67aaff');
+                amazon.Login.setClientId('amzn1.application-oa2-client.d4fde2431dc64d8bbbc038cd4ce0a715');
                 
                 AWS.config.update({
                                   region: 'us-east-1',
                                   credentials: new AWS.CognitoIdentityCredentials({
-                                                                                  AccountId: '499918285206', // your AWS account ID
-                                                                                  IdentityPoolId: 'us-east-1:a2484271-fa22-4544-882d-fb71de194251'
+                                                                                  AccountId: '499918285206',
+                                                                                  IdentityPoolId: 'us-east-1:53e91d7b-4528-4823-9bd0-fcfa545106bd'
                                                                                   })
                                   });
                                   
@@ -64,7 +64,7 @@
                                                              if (!resp.error) { // logged in
                                                              var creds = AWS.config.credentials;
                                                              creds.params.RoleArn =
-                                                             'arn:aws:iam::499918285206:role/Cognito_sensorAuth_Role';
+                                                             'arn:aws:iam::499918285206:role/Cognito_sensor2Auth_Role';
                                                              creds.params.Logins = {
                                                              'www.amazon.com': resp.access_token
                                                              };
@@ -72,11 +72,25 @@
                                                              // manually expire credentials so next request will fire a refresh()
                                                              creds.expired = true;
                                                              }
+                                                             
+                                                             var cognitoIdentity = new AWS.CognitoIdentity();
+                                                             var gparam = {
+                                                             IdentityPoolId: 'us-east-1:53e91d7b-4528-4823-9bd0-fcfa545106bd',
+                                                             AccountId: '499918285206',
+                                                             Logins: {
+                                                             'www.amazon.com': resp.access_token
+                                                             }
+                                                             };
+                                                             console.log(gparam);
+                                                             cognitoIdentity.getId(gparam, function(err, data) {
+                                                                                   if (err) {
+                                                                                   console.log(err, err.stack);
+                                                                                   } else {
+                                                                                   console.log(data);
+                                                                                   sessionStorage.setItem('customerId', data.IdentityId)
+                                                                                   }
+                                                                                   });
                                                              });
-                                                             amazon.Login.retrieveProfile(function(resp) {
-                                                                                          console.log(resp);
-                                                                                          sessionStorage.setItem('customerId', resp.profile.CustomerId);
-                                                                                          });
                                   }
                                   
             };
@@ -91,42 +105,36 @@
          
             </script>
         
-        <!--        <a href="#" id="LoginWithAmazon">-->
-        <!--            <img border="0" alt="Login with Amazon"-->
-        <!--            src="https://images-na.ssl-images-amazon.com/images/G/01/lwa/btnLWA_gold_156x32.png"-->
-        <!--            width="156" height="32" />-->
-        <!--        </a>-->
-        <!--        -->
-        <!--        <script>-->
-        <!--            -->
-        <!--            document.getElementById('LoginWithAmazon').onclick = function() {-->
-        <!--                options = { scope : 'profile' };-->
-        <!--                amazon.Login.authorize(options, 'http://127.0.0.1:9000/?signin=1');-->
-         <!--                return false;-->
-        <!--            };-->
-        <!--        -->
-        <!--            </script>-->
-        <!--        -->
-        <!--        <button id="Amazon Logout">Logout</button>-->
-        <!--        -->
-        <!--        <script>-->
-        <!--            document.getElementById('Amazon Logout').onclick = function() {-->
-        <!--                amazon.Login.logout();-->
-        <!--                -->
-        <!--                // TODO need to clear STS from current session?-->
-        <!--                //AWS.config.credentials.clearCachedId();-->
-        <!--            };-->
-        <!--        </script>-->
-        <!--        <button id="testUser">Or, manually set test user</button>-->
+        <a href="#" id="LoginWithAmazon">
+            <img border="0" alt="Login with Amazon"
+            src="https://images-na.ssl-images-amazon.com/images/G/01/lwa/btnLWA_gold_156x32.png"
+            width="156" height="32" />
+        </a>
+        
         <script>
-            <!--            document.getElementById('testUser').onclick = function() {-->
-                sessionStorage.setItem('customerId', 'amzn1.account.AHABI5JBY772UCPJ4UGYMGWKJJBA');
-                <!--            }-->
+            
+            document.getElementById('LoginWithAmazon').onclick = function() {
+                options = { scope : 'profile' };
+                amazon.Login.authorize(options, 'http://127.0.0.1:9000/index2.html?signin=1');
+            };
+        
+            </script>
+        
+        <button id="Amazon Logout">Logout</button>
+        
+        <script>
+            document.getElementById('Amazon Logout').onclick = function() {
+                amazon.Login.logout();
+                
+                // TODO need to clear STS from current session?
+                //AWS.config.credentials.clearCachedId();
+            };
         </script>
+        <br/>
         
         <label>Start time:</label><input type="text" id="dateStart"/>
         <script>
-            document.getElementById('dateStart').value = "2016-01-04T20:45:35"; //new Date().toJSON();
+            document.getElementById('dateStart').value = "2016-01-10T23:55:35"; //new Date().toJSON();
             </script>
         
         <button id="Fetch">Fetch records</button>
@@ -184,7 +192,7 @@
                           Limit : 5,
                           KeyConditionExpression: 'hashKey = :hkey and rangeKey >= :rkey',
                           ExpressionAttributeValues: {
-                              ':hkey': "CUST_ID", //sessionStorage.getItem('customerId'),
+                              ':hkey': sessionStorage.getItem('customerId'),
                               ':rkey': document.getElementById('dateStart').value
                           }
                       };

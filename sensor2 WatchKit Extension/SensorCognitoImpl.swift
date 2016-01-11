@@ -49,7 +49,7 @@ class SensorCognitoImpl {
     func setIdentityId(identity : [ String : AnyObject ]) {
         self.identity = identity
         credentials = [:]
-        ensureCredentials()
+        ensureCredentials() // TODO we have a concurrent risk on credentials here...
     }
     
     // return true IFF we think we got valid credentials
