@@ -12,7 +12,6 @@
 		D3379F5E1C409FDF00430D2C /* AuthorizeUserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3379F5D1C409FDF00430D2C /* AuthorizeUserDelegate.swift */; };
 		D3379F601C409FEA00430D2C /* AccessTokenDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3379F5F1C409FEA00430D2C /* AccessTokenDelegate.swift */; };
 		D3379F621C409FFB00430D2C /* AppGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3379F611C409FFB00430D2C /* AppGlobals.swift */; };
-		D3379F681C40B5D400430D2C /* LoginWithAmazon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3379F671C40B5D400430D2C /* LoginWithAmazon.framework */; };
 		D3379F6A1C40E2EE00430D2C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3379F691C40E2EE00430D2C /* Security.framework */; };
 		D3379F6B1C42314200430D2C /* AppGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3379F611C409FFB00430D2C /* AppGlobals.swift */; };
 		D3379F6D1C4235AC00430D2C /* SensorCognitoImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3379F6C1C4235AC00430D2C /* SensorCognitoImpl.swift */; };
@@ -31,6 +30,8 @@
 		D351F0AA1C01738800F6F91D /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351F0A91C01738800F6F91D /* ExtensionDelegate.swift */; };
 		D351F0AC1C01738800F6F91D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D351F0AB1C01738800F6F91D /* Assets.xcassets */; };
 		D351F0C21C0183D300F6F91D /* SensorDynamoImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351F0C11C0183D300F6F91D /* SensorDynamoImpl.swift */; };
+		D38056711C5DC3DA00353CD7 /* LoginWithAmazon in Resources */ = {isa = PBXBuildFile; fileRef = D38056701C5DC3D900353CD7 /* LoginWithAmazon */; };
+		D38056731C5DC4F800353CD7 /* LoginWithAmazon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D38056721C5DC4F800353CD7 /* LoginWithAmazon.framework */; };
 		D64F60767DB565C5F78ABA6A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1A7C95C9CBDCDCCB3999BB0 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -100,8 +101,6 @@
 		D3379F5D1C409FDF00430D2C /* AuthorizeUserDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizeUserDelegate.swift; sourceTree = "<group>"; };
 		D3379F5F1C409FEA00430D2C /* AccessTokenDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessTokenDelegate.swift; sourceTree = "<group>"; };
 		D3379F611C409FFB00430D2C /* AppGlobals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppGlobals.swift; sourceTree = "<group>"; };
-		D3379F651C40B5B500430D2C /* LoginWithAmazon */ = {isa = PBXFileReference; lastKnownFileType = folder; name = LoginWithAmazon; path = "../Apps-SDK/iOS/LoginWithAmazon"; sourceTree = "<group>"; };
-		D3379F671C40B5D400430D2C /* LoginWithAmazon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LoginWithAmazon.framework; path = "../Apps-SDK/iOS/LoginWithAmazon/LoginWithAmazon.framework"; sourceTree = "<group>"; };
 		D3379F691C40E2EE00430D2C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		D3379F6C1C4235AC00430D2C /* SensorCognitoImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensorCognitoImpl.swift; sourceTree = "<group>"; };
 		D351F06B1C01738800F6F91D /* sensor2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sensor2.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -127,6 +126,8 @@
 		D351F0AB1C01738800F6F91D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D351F0AD1C01738800F6F91D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D351F0C11C0183D300F6F91D /* SensorDynamoImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensorDynamoImpl.swift; sourceTree = "<group>"; };
+		D38056701C5DC3D900353CD7 /* LoginWithAmazon */ = {isa = PBXFileReference; lastKnownFileType = folder; path = LoginWithAmazon; sourceTree = "<group>"; };
+		D38056721C5DC4F800353CD7 /* LoginWithAmazon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LoginWithAmazon.framework; path = LoginWithAmazon/LoginWithAmazon.framework; sourceTree = "<group>"; };
 		D3D467A01C3B7648006AC438 /* sensor2Web */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sensor2Web; sourceTree = "<group>"; };
 		EA3948CFD2B7AE79359EF375 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -136,8 +137,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D38056731C5DC4F800353CD7 /* LoginWithAmazon.framework in Frameworks */,
 				D3379F6A1C40E2EE00430D2C /* Security.framework in Frameworks */,
-				D3379F681C40B5D400430D2C /* LoginWithAmazon.framework in Frameworks */,
 				D64F60767DB565C5F78ABA6A /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -169,9 +170,9 @@
 		28DFA1F4DFF309EE311D63CC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D38056721C5DC4F800353CD7 /* LoginWithAmazon.framework */,
+				D38056701C5DC3D900353CD7 /* LoginWithAmazon */,
 				D3379F691C40E2EE00430D2C /* Security.framework */,
-				D3379F671C40B5D400430D2C /* LoginWithAmazon.framework */,
-				D3379F651C40B5B500430D2C /* LoginWithAmazon */,
 				D1A7C95C9CBDCDCCB3999BB0 /* libPods.a */,
 			);
 			name = Frameworks;
@@ -429,6 +430,7 @@
 			files = (
 				D351F0791C01738800F6F91D /* LaunchScreen.storyboard in Resources */,
 				D351F0761C01738800F6F91D /* Assets.xcassets in Resources */,
+				D38056711C5DC3DA00353CD7 /* LoginWithAmazon in Resources */,
 				D351F0741C01738800F6F91D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -684,6 +686,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "sensor2 WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
@@ -700,6 +703,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "sensor2 WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
@@ -752,8 +756,11 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.framework *.gch *.xcode* *.xcassets (*) .DS_Store CVS .svn .git .hg *.pbproj *.pbxproj";
-				EXCLUDED_SOURCE_FILE_NAMES = "sensorWeb/*";
-				FRAMEWORK_SEARCH_PATHS = "/Users/gcmcnutt/Dev/Apps-SDK/iOS/LoginWithAmazon";
+				EXCLUDED_SOURCE_FILE_NAMES = "sensor2Web/*";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/LoginWithAmazon",
+					"$(PROJECT_DIR)/LoginWithAmazon",
+				);
 				INFOPLIST_FILE = sensor2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2;
@@ -769,8 +776,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
-				EXCLUDED_SOURCE_FILE_NAMES = "sensorWeb/*";
-				FRAMEWORK_SEARCH_PATHS = "/Users/gcmcnutt/Dev/Apps-SDK/iOS/LoginWithAmazon";
+				EXCLUDED_SOURCE_FILE_NAMES = "sensor2Web/*";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/LoginWithAmazon",
+					"$(PROJECT_DIR)/LoginWithAmazon",
+				);
 				INFOPLIST_FILE = sensor2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2;

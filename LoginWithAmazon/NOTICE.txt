@@ -1,0 +1,3 @@
+Login with Amazon SDK for iOS
+
+Copyright 2013 Amazon.com, Inc. or its affiliates.  All Rights Reserved.

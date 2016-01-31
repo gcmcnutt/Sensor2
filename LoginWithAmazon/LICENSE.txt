@@ -1,0 +1,11 @@
+﻿This software is licensed as "Content" under the Login with Amazon Service Agreement (the "Agreement") which is available at
+http://login.amazon.com/services-agreement. See the Agreement for the specific language governing permissions and
+limitations under the Agreement.
+
+These materials may include third party software that is copyrighted by other parties and is subject to separate license terms.
+Information on that software and the applicable copyright notices and license terms are included in the NOTICE.txt file
+accompanying these materials.
+
+These materials are distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+
