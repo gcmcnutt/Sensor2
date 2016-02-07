@@ -8,6 +8,7 @@
 import Foundation
 import CoreMotion
 import Darwin
+import WatchKit
 
 // collect up accelerometer data in a flushable format
 class SensorDynamoImpl {
@@ -103,8 +104,14 @@ class SensorDynamoImpl {
         NSLog("start flush")
         
         // update credentials
-        if (!extensionDelegate.sensorCognitoImpl.ensureCredentials()) {
-            // TODO some other error combos to consider (mem leak too)
+        let credentials = extensionDelegate.getCredentials()
+        if (credentials.count == 0) {
+            NSLog("no credentials.  Disable dequeue")
+            NSOperationQueue.mainQueue().addOperationWithBlock() {
+                (WKExtension.sharedExtension().rootInterfaceController
+                    as! InterfaceController).stopDequeue()
+            }
+                        
             return (false, nil)
         }
         
@@ -118,7 +125,7 @@ class SensorDynamoImpl {
             
             // generate key part of expression
             let key = [
-                SensorDynamoImpl.HASH_KEY_COLNAME : ["S" : extensionDelegate.sensorCognitoImpl.getIdentityId()!],
+                SensorDynamoImpl.HASH_KEY_COLNAME : ["S" : credentials[AppGlobals.CRED_COGNITO_KEY]!],
                 SensorDynamoImpl.RANGE_KEY_COLNAME : ["S" : timeSlot]
             ]
             
@@ -162,7 +169,7 @@ class SensorDynamoImpl {
                 var item : [String : AnyObject] = [:]
                 
                 // per-slot entries
-                item[SensorDynamoImpl.HASH_KEY_COLNAME] = ["S": extensionDelegate.sensorCognitoImpl.getIdentityId()!]
+                item[SensorDynamoImpl.HASH_KEY_COLNAME] = ["S": credentials[AppGlobals.CRED_COGNITO_KEY]!]
                 item[SensorDynamoImpl.RANGE_KEY_COLNAME] = ["S": timeSlot]
                 item[SensorDynamoImpl.P_DATE_COLNAME] = ["S" : systemTimeFormatter.stringFromDate(NSDate())]
                 
@@ -193,7 +200,7 @@ class SensorDynamoImpl {
         var returnedData : NSData?
         var returnedError : NSError?
         
-        postData(actionType, data: request, doneHandler : {(data : NSData?, error : NSError?) in
+        postData(credentials, action: actionType, data: request, doneHandler : {(data : NSData?, error : NSError?) in
             
             returnedData = data
             returnedError = error
@@ -214,7 +221,7 @@ class SensorDynamoImpl {
         }
     }
     
-    func postData(action : String!, data : NSData, doneHandler : (NSData?, NSError?) -> Void) {
+    func postData(creds : NSDictionary, action : String!, data : NSData, doneHandler : (NSData?, NSError?) -> Void) {
         let requestMethod = "POST"
         let region = "us-east-1"
         let service = "dynamodb"
@@ -230,7 +237,7 @@ class SensorDynamoImpl {
         request.addValue(requestTime, forHTTPHeaderField: "x-amz-date")
         request.addValue("DynamoDB_20120810." + action, forHTTPHeaderField: "x-amz-target")
         request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
-        request.addValue(extensionDelegate.sensorCognitoImpl.getSessionToken()!, forHTTPHeaderField: "x-amz-security-token")
+        request.addValue(creds[AppGlobals.CRED_SESSION_KEY] as! String, forHTTPHeaderField: "x-amz-security-token")
         
         let signedHeaders = "content-length;content-type;host;x-amz-date;x-amz-security-token;x-amz-target" // TODO params
         
@@ -259,7 +266,7 @@ class SensorDynamoImpl {
         stringToSign += canonicalHash
         
         // step 3 calculate signature
-        let secret = "AWS4" + extensionDelegate.sensorCognitoImpl.getSecretKey()!
+        let secret = "AWS4" + (creds[AppGlobals.CRED_SECRET_KEY] as! String)
         let kDate = hmac(secret.dataUsingEncoding(NSUTF8StringEncoding)!, data: requestDate)
         let kRegion = hmac(kDate, data: region)
         let kService = hmac(kRegion, data: service)
@@ -275,7 +282,7 @@ class SensorDynamoImpl {
         
         // step 4 add signing information
         var authorization = "AWS4-HMAC-SHA256 Credential="
-        authorization += extensionDelegate.sensorCognitoImpl.getAccessKey()!
+        authorization += creds[AppGlobals.CRED_ACCESS_KEY] as! String
         authorization += "/"
         authorization += credentialScope
         authorization += ", SignedHeaders="

@@ -14,7 +14,6 @@
 		D3379F621C409FFB00430D2C /* AppGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3379F611C409FFB00430D2C /* AppGlobals.swift */; };
 		D3379F6A1C40E2EE00430D2C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3379F691C40E2EE00430D2C /* Security.framework */; };
 		D3379F6B1C42314200430D2C /* AppGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3379F611C409FFB00430D2C /* AppGlobals.swift */; };
-		D3379F6D1C4235AC00430D2C /* SensorCognitoImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3379F6C1C4235AC00430D2C /* SensorCognitoImpl.swift */; };
 		D351F06F1C01738800F6F91D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351F06E1C01738800F6F91D /* AppDelegate.swift */; };
 		D351F0711C01738800F6F91D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351F0701C01738800F6F91D /* ViewController.swift */; };
 		D351F0741C01738800F6F91D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D351F0721C01738800F6F91D /* Main.storyboard */; };
@@ -102,7 +101,6 @@
 		D3379F5F1C409FEA00430D2C /* AccessTokenDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessTokenDelegate.swift; sourceTree = "<group>"; };
 		D3379F611C409FFB00430D2C /* AppGlobals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppGlobals.swift; sourceTree = "<group>"; };
 		D3379F691C40E2EE00430D2C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		D3379F6C1C4235AC00430D2C /* SensorCognitoImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensorCognitoImpl.swift; sourceTree = "<group>"; };
 		D351F06B1C01738800F6F91D /* sensor2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sensor2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D351F06E1C01738800F6F91D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D351F0701C01738800F6F91D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -266,7 +264,6 @@
 			children = (
 				D3036CD11C16A2F800DCC5F8 /* Watch-Bridging-Header.h */,
 				D351F0C11C0183D300F6F91D /* SensorDynamoImpl.swift */,
-				D3379F6C1C4235AC00430D2C /* SensorCognitoImpl.swift */,
 				D351F0A71C01738800F6F91D /* InterfaceController.swift */,
 				D351F0A91C01738800F6F91D /* ExtensionDelegate.swift */,
 				D351F0AB1C01738800F6F91D /* Assets.xcassets */,
@@ -539,7 +536,6 @@
 				D3379F6B1C42314200430D2C /* AppGlobals.swift in Sources */,
 				D351F0C21C0183D300F6F91D /* SensorDynamoImpl.swift in Sources */,
 				D351F0AA1C01738800F6F91D /* ExtensionDelegate.swift in Sources */,
-				D3379F6D1C4235AC00430D2C /* SensorCognitoImpl.swift in Sources */,
 				D351F0A81C01738800F6F91D /* InterfaceController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -19,9 +19,7 @@ class LogoutDelegate: NSObject, AIAuthenticationDelegate {
     @objc func requestDidSucceed(apiResult: APIResult!) {
         // Your additional logic after the user authorization state is cleared.
         
-        let credentialsProvider = AWSServiceManager.defaultServiceManager().defaultServiceConfiguration.credentialsProvider as! AWSCognitoCredentialsProvider
-        credentialsProvider.clearCredentials()
-        parentController.updateLoginState()
+        parentController.completeLogout()
         
         let alertController = UIAlertController(title: "",
             message: "User Logged out.",

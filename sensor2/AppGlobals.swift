@@ -10,19 +10,28 @@ import Foundation
 
 class AppGlobals {
     
+    // access credentials details
+    static let CRED_COGNITO_KEY = "cognitoId"
+    static let CRED_ACCESS_KEY = "accessKey"
+    static let CRED_SECRET_KEY = "secretKey"
+    static let CRED_SESSION_KEY = "sessionKey"
+    static let CRED_EXPIRATION_KEY = "expirationKey"
+    
     // key for the cognito pool in Info
     static let IDENTITY_POOL_ID_KEY = "cognitoPool"
     static let ACCOUNT_ID_KEY = "awsAccount"
     
-    // dictionary keys for state update
-    static let IDENTITY_KEY = "identity"
-        
     let dateFormatter = NSDateFormatter()
     let summaryDateFormatter = NSDateFormatter()
     
     // used for global date formatting...
     static let ISO8601_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
     static let SUMMARY_TIME_FORMAT = "HH:mm:ss.SSS"
+    
+    // send message constants
+    static let SESSION_ACTION = "action"
+    static let CLEAR_CREDENTIALS = "clearCredentials"
+    static let GET_CREDENTIALS = "getCredentials"
     
     static let sharedInstance = AppGlobals()
     

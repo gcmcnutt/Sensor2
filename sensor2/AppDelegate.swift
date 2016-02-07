@@ -80,22 +80,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    func updateWatchCredentials() {
-        // TODO handle a reachability change -- basically update credentials whenever that happens...
-        credentialsProvider.getIdentityId().continueWithBlock {
-            (task: AWSTask!) -> AWSTask! in
-            let identity : [ String : AnyObject ] = ["IdentityId" : task.result!, "Logins" : self.credentialsProvider.logins]
-            do {
-                try self.wcsession.updateApplicationContext([
-                    AppGlobals.ACCOUNT_ID_KEY : self.infoPlist[AppGlobals.ACCOUNT_ID_KEY]!,
-                    AppGlobals.IDENTITY_KEY : identity
-                    ])
-            } catch {
-                // TODO -- display to user
-                NSLog("error updating watch")
+    func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
+        NSLog("session message " + message.description)
+        if (message[AppGlobals.SESSION_ACTION] as! String == AppGlobals.GET_CREDENTIALS) {
+            var taskResult : AWSTask!
+            let sem = dispatch_semaphore_create(0)
+            
+            credentialsProvider.refresh().continueWithBlock {
+                (task: AWSTask!) -> AWSTask! in
+                taskResult = task
+                dispatch_semaphore_signal(sem)
+                return task
             }
-            return task
+            
+            dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER)
+            
+            if (taskResult.error == nil) {
+                let reply = [AppGlobals.CRED_COGNITO_KEY : self.credentialsProvider.identityId,
+                    AppGlobals.CRED_ACCESS_KEY : self.credentialsProvider.accessKey,
+                    AppGlobals.CRED_SECRET_KEY : self.credentialsProvider.secretKey,
+                    AppGlobals.CRED_SESSION_KEY : self.credentialsProvider.sessionKey,
+                    AppGlobals.CRED_EXPIRATION_KEY : self.credentialsProvider.expiration]
+                replyHandler(reply)
+            } else {
+                NSLog("error fetching credentials: \(taskResult.error!.description)")
+                replyHandler([:])
+            }
         }
+    }
+    
+    func clearCredentials() {
+        NSLog("clear credentials...")
+        credentialsProvider.clearKeychain()
+        wcsession.sendMessage([AppGlobals.SESSION_ACTION : AppGlobals.CLEAR_CREDENTIALS], replyHandler: nil, errorHandler: nil)
     }
 }
 

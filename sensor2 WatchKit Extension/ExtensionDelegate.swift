@@ -21,6 +21,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     let SLOW_POLL_DELAY_SEC = 2.0
     let FAST_POLL_DELAY_SEC = 0.01
     let MAX_EARLIEST_TIME_SEC = -24.0 * 60.0 * 60.0 // a day ago
+    let REFRESH_LEAD_SEC = 120.0
     
     let wcsession = WCSession.defaultSession()
     let sr = CMSensorRecorder()
@@ -30,8 +31,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     var appContext : NSDictionary = [:]
     
     var sensorDynamoImpl : SensorDynamoImpl!
-    var sensorCognitoImpl : SensorCognitoImpl!
-    
+    private var userCredentials : NSDictionary = [:]
     var durationValue = 5.0 // UI default
     private var dequeuerState: UInt8 = 0 // UI default
     
@@ -51,7 +51,6 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         wcsession.activateSession()
         
         sensorDynamoImpl = SensorDynamoImpl(extensionDelegate: self)
-        sensorCognitoImpl = SensorCognitoImpl()
     }
     
     func applicationDidBecomeActive() {
@@ -63,15 +62,53 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         // Use this method to pause ongoing tasks, disable timers, etc.
     }
     
-    func session(session: WCSession,
-        didReceiveApplicationContext applicationContext: [String : AnyObject]) {
-            // we got an auth update from iPhone, track it
-            NSLog("updated context \(applicationContext)")
-            appContext = applicationContext
-            if (appContext[AppGlobals.IDENTITY_KEY] != nil) {
-                sensorCognitoImpl.setIdentityId(appContext[AppGlobals.IDENTITY_KEY] as! [ String : AnyObject ])
-            }
+    func session(session: WCSession, didReceiveMessage message: [String : AnyObject]) {
+        NSLog("clear credentials")
+        userCredentials = [:]
     }
+    
+    func getCredentials() -> NSDictionary {
+        var sendMessage = false
+        var waitForReply = true
+        let expireTime = userCredentials[AppGlobals.CRED_EXPIRATION_KEY] as? NSDate
+        if (expireTime == nil) {
+            // no data at all so fetch and wait
+            sendMessage = true
+        } else {
+            // data and expired so fetch and wait
+            let now = NSDate()
+            if (now.compare(expireTime!) == NSComparisonResult.OrderedDescending) {
+                userCredentials = [:]
+                sendMessage = true
+            } else if (now.dateByAddingTimeInterval(REFRESH_LEAD_SEC).compare(expireTime!) == NSComparisonResult.OrderedDescending) {
+                // nearing expiration so fetch [no wait]
+                sendMessage = true
+                waitForReply = false
+            }
+        }
+        
+        if (sendMessage) {
+            NSLog("refreshing userCredentials... send=\(sendMessage), wait=\(waitForReply)")
+            let sem = dispatch_semaphore_create(0)
+            
+            wcsession.sendMessage([AppGlobals.SESSION_ACTION : AppGlobals.GET_CREDENTIALS],
+                replyHandler: {(result : [String : AnyObject]) in
+                    NSLog("userCredentials refreshed")
+                    self.userCredentials = result
+                    dispatch_semaphore_signal(sem)
+                }, errorHandler: {(error : NSError) in
+                    NSLog("userCredentials. error=" + error.description)
+                    dispatch_semaphore_signal(sem)
+            })
+            
+            if (waitForReply) {
+                dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER)
+            }
+        }
+        
+        return userCredentials
+    }
+    
     
     func record() {
         NSLog("recordAccelerometer(\(durationValue))")
@@ -143,7 +180,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
                         }
                     }
                 } else {
-                    while (newLatestDate.compare(NSDate()) == NSComparisonResult.OrderedAscending) {
+                    while (isRun() && newLatestDate.compare(NSDate()) == NSComparisonResult.OrderedAscending) {
                         
                         foundData = true
                         

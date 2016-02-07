@@ -18,6 +18,7 @@ class InterfaceController: WKInterfaceController {
     @IBOutlet var durationVal: WKInterfaceLabel!
     @IBOutlet var startVal: WKInterfaceButton!
     @IBOutlet var lastStartVal: WKInterfaceLabel!
+    @IBOutlet var dequeuerButton: WKInterfaceSwitch!
     @IBOutlet var cmdCountVal: WKInterfaceLabel!
     @IBOutlet var itemCountVal: WKInterfaceLabel!
     @IBOutlet var latestVal: WKInterfaceLabel!
@@ -57,6 +58,12 @@ class InterfaceController: WKInterfaceController {
     @IBAction func durationAction(value: Float) {
         extensionDelegate.durationValue = Double(value)
         self.durationVal.setText(value.description)
+    }
+    
+    func stopDequeue() {
+        NSLog("stop dequeuer...")
+        dequeuerButton.setOn(false)
+        extensionDelegate.setRun(false)
     }
     
     @IBAction func startRecorderAction() {
