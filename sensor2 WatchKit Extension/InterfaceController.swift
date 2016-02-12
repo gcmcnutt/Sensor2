@@ -61,9 +61,12 @@ class InterfaceController: WKInterfaceController {
     }
     
     func stopDequeue() {
-        NSLog("stop dequeuer...")
         dequeuerButton.setOn(false)
         extensionDelegate.setRun(false)
+
+        NSLog("stop dequeuer...")
+        let action1 = WKAlertAction(title: "Ok", style: .Cancel) {}
+        self.presentAlertControllerWithTitle("Error", message: "Can't get credentials from iPhone", preferredStyle: .ActionSheet, actions: [action1])
     }
     
     @IBAction func startRecorderAction() {

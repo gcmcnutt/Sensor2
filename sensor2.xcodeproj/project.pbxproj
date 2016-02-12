@@ -29,7 +29,6 @@
 		D351F0AA1C01738800F6F91D /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351F0A91C01738800F6F91D /* ExtensionDelegate.swift */; };
 		D351F0AC1C01738800F6F91D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D351F0AB1C01738800F6F91D /* Assets.xcassets */; };
 		D351F0C21C0183D300F6F91D /* SensorDynamoImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351F0C11C0183D300F6F91D /* SensorDynamoImpl.swift */; };
-		D38056711C5DC3DA00353CD7 /* LoginWithAmazon in Resources */ = {isa = PBXBuildFile; fileRef = D38056701C5DC3D900353CD7 /* LoginWithAmazon */; };
 		D38056731C5DC4F800353CD7 /* LoginWithAmazon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D38056721C5DC4F800353CD7 /* LoginWithAmazon.framework */; };
 		D64F60767DB565C5F78ABA6A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1A7C95C9CBDCDCCB3999BB0 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -427,7 +426,6 @@
 			files = (
 				D351F0791C01738800F6F91D /* LaunchScreen.storyboard in Resources */,
 				D351F0761C01738800F6F91D /* Assets.xcassets in Resources */,
-				D38056711C5DC3DA00353CD7 /* LoginWithAmazon in Resources */,
 				D351F0741C01738800F6F91D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -683,7 +681,7 @@
 				INFOPLIST_FILE = "sensor2 WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2beta.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -700,7 +698,7 @@
 				INFOPLIST_FILE = "sensor2 WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2beta.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -718,7 +716,7 @@
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				IBSC_MODULE = sensor2_WatchKit_Extension;
 				INFOPLIST_FILE = "sensor2 WatchKit App/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2beta.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -735,7 +733,7 @@
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				IBSC_MODULE = sensor2_WatchKit_Extension;
 				INFOPLIST_FILE = "sensor2 WatchKit App/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2beta.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -753,15 +751,14 @@
 				ENABLE_BITCODE = NO;
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.framework *.gch *.xcode* *.xcassets (*) .DS_Store CVS .svn .git .hg *.pbproj *.pbxproj";
 				EXCLUDED_SOURCE_FILE_NAMES = "sensor2Web/*";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SRCROOT)/LoginWithAmazon",
-					"$(PROJECT_DIR)/LoginWithAmazon",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/LoginWithAmazon";
 				INFOPLIST_FILE = sensor2/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "sensor2/Sensor2-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -773,15 +770,14 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				EXCLUDED_SOURCE_FILE_NAMES = "sensor2Web/*";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SRCROOT)/LoginWithAmazon",
-					"$(PROJECT_DIR)/LoginWithAmazon",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/LoginWithAmazon";
 				INFOPLIST_FILE = sensor2/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.accelero.sensor2beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "sensor2/Sensor2-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

@@ -106,7 +106,6 @@ class SensorDynamoImpl {
         // update credentials
         let credentials = extensionDelegate.getCredentials()
         if (credentials.count == 0) {
-            NSLog("no credentials.  Disable dequeue")
             NSOperationQueue.mainQueue().addOperationWithBlock() {
                 (WKExtension.sharedExtension().rootInterfaceController
                     as! InterfaceController).stopDequeue()
