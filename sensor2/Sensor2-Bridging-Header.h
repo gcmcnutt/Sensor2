@@ -11,6 +11,7 @@
 #import <AWSCore/AWSCore.h>
 #import <AWSCognito/AWSCognito.h>
 #import <LoginWithAmazon/LoginWithAmazon.h>
+#import <Google/SignIn.h>
 #endif
 
 

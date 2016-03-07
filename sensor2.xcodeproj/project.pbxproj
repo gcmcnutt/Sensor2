@@ -29,6 +29,7 @@
 		D351F0AA1C01738800F6F91D /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351F0A91C01738800F6F91D /* ExtensionDelegate.swift */; };
 		D351F0AC1C01738800F6F91D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D351F0AB1C01738800F6F91D /* Assets.xcassets */; };
 		D351F0C21C0183D300F6F91D /* SensorDynamoImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351F0C11C0183D300F6F91D /* SensorDynamoImpl.swift */; };
+		D3538F671C7A367D00D9C963 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D3538F641C76EEC900D9C963 /* GoogleService-Info.plist */; };
 		D38056731C5DC4F800353CD7 /* LoginWithAmazon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D38056721C5DC4F800353CD7 /* LoginWithAmazon.framework */; };
 		D64F60767DB565C5F78ABA6A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1A7C95C9CBDCDCCB3999BB0 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -123,6 +124,7 @@
 		D351F0AB1C01738800F6F91D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D351F0AD1C01738800F6F91D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D351F0C11C0183D300F6F91D /* SensorDynamoImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensorDynamoImpl.swift; sourceTree = "<group>"; };
+		D3538F641C76EEC900D9C963 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D38056701C5DC3D900353CD7 /* LoginWithAmazon */ = {isa = PBXFileReference; lastKnownFileType = folder; path = LoginWithAmazon; sourceTree = "<group>"; };
 		D38056721C5DC4F800353CD7 /* LoginWithAmazon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LoginWithAmazon.framework; path = LoginWithAmazon/LoginWithAmazon.framework; sourceTree = "<group>"; };
 		D3D467A01C3B7648006AC438 /* sensor2Web */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sensor2Web; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 		D351F06D1C01738800F6F91D /* sensor2 */ = {
 			isa = PBXGroup;
 			children = (
+				D3538F641C76EEC900D9C963 /* GoogleService-Info.plist */,
 				D3379F611C409FFB00430D2C /* AppGlobals.swift */,
 				D3379F5F1C409FEA00430D2C /* AccessTokenDelegate.swift */,
 				D3379F5D1C409FDF00430D2C /* AuthorizeUserDelegate.swift */,
@@ -284,6 +287,7 @@
 				D351F0691C01738800F6F91D /* Resources */,
 				D351F0B71C01738800F6F91D /* Embed Watch Content */,
 				A025C3616C3F18C736423CD0 /* Copy Pods Resources */,
+				D3F93D6F1C7EB95700AA70FB /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -425,6 +429,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D351F0791C01738800F6F91D /* LaunchScreen.storyboard in Resources */,
+				D3538F671C7A367D00D9C963 /* GoogleService-Info.plist in Resources */,
 				D351F0761C01738800F6F91D /* Assets.xcassets in Resources */,
 				D351F0741C01738800F6F91D /* Main.storyboard in Resources */,
 			);
@@ -493,6 +498,20 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
+		};
+		D3F93D6F1C7EB95700AA70FB /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 125a54cb3c412ad3626e077190515639339a45c4 e3b88ece9fc0c83ea715a0f063f5a0a8b323e6b2a24cda04f1338f62e711c583";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -751,7 +770,10 @@
 				ENABLE_BITCODE = NO;
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.framework *.gch *.xcode* *.xcassets (*) .DS_Store CVS .svn .git .hg *.pbproj *.pbxproj";
 				EXCLUDED_SOURCE_FILE_NAMES = "sensor2Web/*";
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/LoginWithAmazon";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/LoginWithAmazon",
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = sensor2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -770,7 +792,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				EXCLUDED_SOURCE_FILE_NAMES = "sensor2Web/*";
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/LoginWithAmazon";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/LoginWithAmazon",
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = sensor2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

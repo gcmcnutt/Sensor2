@@ -65,6 +65,10 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     func session(session: WCSession, didReceiveMessage message: [String : AnyObject]) {
         NSLog("clear credentials")
         userCredentials = [:]
+        NSOperationQueue.mainQueue().addOperationWithBlock() {
+            (WKExtension.sharedExtension().rootInterfaceController
+                as! InterfaceController).updateCognitoId("")
+        }
     }
     
     func getCredentials() -> NSDictionary {
@@ -93,7 +97,12 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
             
             wcsession.sendMessage([AppGlobals.SESSION_ACTION : AppGlobals.GET_CREDENTIALS],
                 replyHandler: {(result : [String : AnyObject]) in
-                    NSLog("userCredentials refreshed")
+                    let cognitoId = result[AppGlobals.CRED_COGNITO_KEY] as? String
+                    NSLog("userCredentials refreshed cognitoId=\(cognitoId)")
+                    NSOperationQueue.mainQueue().addOperationWithBlock() {
+                        (WKExtension.sharedExtension().rootInterfaceController
+                            as! InterfaceController).updateCognitoId(cognitoId)
+                    }
                     self.userCredentials = result
                     dispatch_semaphore_signal(sem)
                 }, errorHandler: {(error : NSError) in

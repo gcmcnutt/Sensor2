@@ -8,9 +8,11 @@
 
 import UIKit
 import WatchConnectivity
+import Fabric
+import TwitterKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSessionDelegate {
     
     var window: UIWindow?
     var viewController : ViewController!
@@ -40,10 +42,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         
         AWSServiceManager.defaultServiceManager().defaultServiceConfiguration = defaultServiceConfiguration
         
+        // google setup
+        var configureError: NSError?
+        GGLContext.sharedInstance().configureWithError(&configureError)
+        assert(configureError == nil, "Error configuring Google services: \(configureError)")
+        GIDSignIn.sharedInstance().delegate = self
+        
+        // twitter setup
+        Fabric.with([AWSCognito.self, Twitter.self])
+        
         // wake up session to watch
         wcsession.delegate = self
         wcsession.activateSession()
-        
+ 
         // see if we are already logged in
         let delegate = AuthorizeUserDelegate(parentController: viewController)
         delegate.launchGetAccessToken()
@@ -51,11 +62,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         return true
     }
     
-    func application(application: UIApplication, openURL: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
-        // Pass on the url to the SDK to parse authorization code from the url.
-        let isValidRedirectSignInURL = AIMobileLib.handleOpenURL(openURL, sourceApplication: sourceApplication)
-        
-        return isValidRedirectSignInURL
+    func application(application: UIApplication, openURL url: NSURL, options: [String: AnyObject]) -> Bool {
+        // TODO seems a little clunky of a dispatcher...
+        if (url.absoluteString.hasPrefix("amzn")) {
+            return AIMobileLib.handleOpenURL(url, sourceApplication: options[UIApplicationOpenURLOptionsSourceApplicationKey] as! String)
+        } else {
+            return GIDSignIn.sharedInstance().handleURL(url,
+                sourceApplication: options[UIApplicationOpenURLOptionsSourceApplicationKey] as! String,
+                annotation: options[UIApplicationOpenURLOptionsAnnotationKey])
+        }
     }
     
     func applicationWillResignActive(application: UIApplication) {
@@ -78,6 +93,52 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    func signIn(signIn: GIDSignIn!, didSignInForUser user: GIDGoogleUser!, withError error: NSError!) {
+        if (error == nil) {
+            // Perform any operations on signed in user here.
+            let idToken = user.authentication.idToken!
+            var logins = credentialsProvider.logins
+            if (logins == nil) {
+                logins = [:]
+            }
+            logins["accounts.google.com"] = idToken
+            credentialsProvider.logins = logins
+            
+            viewController.updateLoginState(
+                user.profile.name,
+                email: user.profile.email,
+                userId: user.userID,
+                postal: "")
+            
+        } else {
+            print("\(error.localizedDescription)")
+        }
+    }
+    
+    func signIn(signIn: GIDSignIn!, didDisconnectWithUser user:GIDGoogleUser!,
+        withError error: NSError!) {
+            // Perform any operations when the user disconnects from app here.
+            // ...
+    }
+    
+    func twitterLogin(session : TWTRSession) {
+        let value = session.authToken + ";" + session.authTokenSecret
+                
+        // Perform any operations on signed in user here.
+        var logins = credentialsProvider.logins
+        if (logins == nil) {
+            logins = [:]
+        }
+        logins["api.twitter.com"] = value
+        credentialsProvider.logins = logins
+        
+        viewController.updateLoginState(
+            session.userName,
+            email: "",
+            userId: session.userID,
+            postal: "")
     }
     
     func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {

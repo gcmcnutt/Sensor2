@@ -22,6 +22,7 @@ class InterfaceController: WKInterfaceController {
     @IBOutlet var cmdCountVal: WKInterfaceLabel!
     @IBOutlet var itemCountVal: WKInterfaceLabel!
     @IBOutlet var latestVal: WKInterfaceLabel!
+    @IBOutlet var cognitoIdVal: WKInterfaceLabel!
     @IBOutlet var errorsVal: WKInterfaceLabel!
     @IBOutlet var lastVal: WKInterfaceLabel!
     
@@ -86,6 +87,10 @@ class InterfaceController: WKInterfaceController {
                 self.extensionDelegate.dequeueLoop()
             }
         }
+    }
+    
+    func updateCognitoId(cognitoId : String?) {
+        cognitoIdVal.setText(cognitoId)
     }
     
     func updateUI(cmdCount : Int, itemCount : Int, latestDate : NSDate, errors : Int, lastError : String) {

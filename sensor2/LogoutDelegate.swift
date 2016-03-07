@@ -18,9 +18,7 @@ class LogoutDelegate: NSObject, AIAuthenticationDelegate {
     
     @objc func requestDidSucceed(apiResult: APIResult!) {
         // Your additional logic after the user authorization state is cleared.
-        
-        parentController.completeLogout()
-        
+                
         let alertController = UIAlertController(title: "",
             message: "User Logged out.",
             preferredStyle: .Alert)

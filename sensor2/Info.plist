@@ -31,12 +31,33 @@
 			<string>com.accelero.sensor2beta</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
+				<string>com.accelero.sensor2beta</string>
+				<string>com.googleusercontent.apps.982319363550-e603d90i5bcg2m5uem3fll8bhri52i42</string>
 				<string>amzn-com.accelero.sensor2beta</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>4</string>
+	<string>5</string>
+	<key>Fabric</key>
+	<dict>
+		<key>APIKey</key>
+		<string>125a54cb3c412ad3626e077190515639339a45c4</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict>
+					<key>consumerKey</key>
+					<string>IaKcjqzY6G3CCbojowbkqL7Yh</string>
+					<key>consumerSecret</key>
+					<string>OS4MbhVLJA5F8P3n4msFNoUUE1A8xCCGGk6Z1AFgTEH4uaIOUA</string>
+				</dict>
+				<key>KitName</key>
+				<string>Twitter</string>
+			</dict>
+		</array>
+	</dict>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
