@@ -17,6 +17,7 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
     @IBOutlet weak var postalVal: UILabel!
     @IBOutlet weak var signInButton: GIDSignInButton!
     @IBOutlet weak var twitterLoginButton: TWTRLogInButton!
+    @IBOutlet weak var facebookLoginButton: FBSDKLoginButton!
     
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
@@ -42,6 +43,9 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
                 NSLog("error: \(error?.localizedDescription)")
             }
         }
+        
+        // facebook setup
+        facebookLoginButton.readPermissions = ["email"];
     }
 
     
@@ -72,6 +76,9 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         if let userID = session?.userID {
             store.logOutUserID(userID)
         }
+        
+        // facebook
+        FBSDKLoginManager().logOut()
         
         // rest of the app
         completeLogout()

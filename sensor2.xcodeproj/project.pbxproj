@@ -31,6 +31,9 @@
 		D351F0C21C0183D300F6F91D /* SensorDynamoImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351F0C11C0183D300F6F91D /* SensorDynamoImpl.swift */; };
 		D3538F671C7A367D00D9C963 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D3538F641C76EEC900D9C963 /* GoogleService-Info.plist */; };
 		D38056731C5DC4F800353CD7 /* LoginWithAmazon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D38056721C5DC4F800353CD7 /* LoginWithAmazon.framework */; };
+		D3E320811C8D1D5B006272C2 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3E320801C8D1D5B006272C2 /* FBSDKCoreKit.framework */; };
+		D3E320831C8D1D6A006272C2 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3E320821C8D1D6A006272C2 /* FBSDKLoginKit.framework */; };
+		D3E320851C8D1D78006272C2 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3E320841C8D1D78006272C2 /* FBSDKShareKit.framework */; };
 		D64F60767DB565C5F78ABA6A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1A7C95C9CBDCDCCB3999BB0 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -128,6 +131,9 @@
 		D38056701C5DC3D900353CD7 /* LoginWithAmazon */ = {isa = PBXFileReference; lastKnownFileType = folder; path = LoginWithAmazon; sourceTree = "<group>"; };
 		D38056721C5DC4F800353CD7 /* LoginWithAmazon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LoginWithAmazon.framework; path = LoginWithAmazon/LoginWithAmazon.framework; sourceTree = "<group>"; };
 		D3D467A01C3B7648006AC438 /* sensor2Web */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sensor2Web; sourceTree = "<group>"; };
+		D3E320801C8D1D5B006272C2 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = Facebook/FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		D3E320821C8D1D6A006272C2 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = Facebook/FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		D3E320841C8D1D78006272C2 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = Facebook/FBSDKShareKit.framework; sourceTree = "<group>"; };
 		EA3948CFD2B7AE79359EF375 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -136,6 +142,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3E320851C8D1D78006272C2 /* FBSDKShareKit.framework in Frameworks */,
+				D3E320831C8D1D6A006272C2 /* FBSDKLoginKit.framework in Frameworks */,
+				D3E320811C8D1D5B006272C2 /* FBSDKCoreKit.framework in Frameworks */,
 				D38056731C5DC4F800353CD7 /* LoginWithAmazon.framework in Frameworks */,
 				D3379F6A1C40E2EE00430D2C /* Security.framework in Frameworks */,
 				D64F60767DB565C5F78ABA6A /* libPods.a in Frameworks */,
@@ -169,6 +178,9 @@
 		28DFA1F4DFF309EE311D63CC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D3E320841C8D1D78006272C2 /* FBSDKShareKit.framework */,
+				D3E320821C8D1D6A006272C2 /* FBSDKLoginKit.framework */,
+				D3E320801C8D1D5B006272C2 /* FBSDKCoreKit.framework */,
 				D38056721C5DC4F800353CD7 /* LoginWithAmazon.framework */,
 				D38056701C5DC3D900353CD7 /* LoginWithAmazon */,
 				D3379F691C40E2EE00430D2C /* Security.framework */,
@@ -773,6 +785,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SRCROOT)/LoginWithAmazon",
 					"$(inherited)",
+					"$(PROJECT_DIR)/Facebook",
 				);
 				INFOPLIST_FILE = sensor2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
@@ -795,6 +808,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SRCROOT)/LoginWithAmazon",
 					"$(inherited)",
+					"$(PROJECT_DIR)/Facebook",
 				);
 				INFOPLIST_FILE = sensor2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;

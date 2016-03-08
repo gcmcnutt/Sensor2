@@ -24,7 +24,7 @@ class AccessTokenDelegate: NSObject, AIAuthenticationDelegate {
         if (logins == nil) {
             logins = [:]
         }
-        logins["www.amazon.com"] = token
+        logins[AWSCognitoLoginProviderKey.LoginWithAmazon.rawValue] = token
         credentialsProvider.logins = logins
         
         // Load new view controller with user identifying information

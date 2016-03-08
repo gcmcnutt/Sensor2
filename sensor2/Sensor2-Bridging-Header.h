@@ -12,6 +12,9 @@
 #import <AWSCognito/AWSCognito.h>
 #import <LoginWithAmazon/LoginWithAmazon.h>
 #import <Google/SignIn.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
 #endif
 
 

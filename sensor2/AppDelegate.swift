@@ -51,13 +51,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSess
         // twitter setup
         Fabric.with([AWSCognito.self, Twitter.self])
         
+        // facebook setup
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        
         // wake up session to watch
         wcsession.delegate = self
         wcsession.activateSession()
- 
-        // see if we are already logged in
-        let delegate = AuthorizeUserDelegate(parentController: viewController)
-        delegate.launchGetAccessToken()
+        
+        // TODO see if we are already logged in
+        //let delegate = AuthorizeUserDelegate(parentController: viewController)
+        //delegate.launchGetAccessToken()
         
         return true
     }
@@ -66,6 +69,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSess
         // TODO seems a little clunky of a dispatcher...
         if (url.absoluteString.hasPrefix("amzn")) {
             return AIMobileLib.handleOpenURL(url, sourceApplication: options[UIApplicationOpenURLOptionsSourceApplicationKey] as! String)
+        } else if (url.absoluteString.hasPrefix("fb")) {
+            return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url,
+                sourceApplication: options[UIApplicationOpenURLOptionsSourceApplicationKey] as! String,
+                annotation: options[UIApplicationOpenURLOptionsAnnotationKey])
         } else {
             return GIDSignIn.sharedInstance().handleURL(url,
                 sourceApplication: options[UIApplicationOpenURLOptionsSourceApplicationKey] as! String,
@@ -103,7 +110,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSess
             if (logins == nil) {
                 logins = [:]
             }
-            logins["accounts.google.com"] = idToken
+            logins[AWSCognitoLoginProviderKey.Google.rawValue] = idToken
             credentialsProvider.logins = logins
             
             viewController.updateLoginState(
@@ -113,7 +120,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSess
                 postal: "")
             
         } else {
-            print("\(error.localizedDescription)")
+            NSLog("\(error.localizedDescription)")
         }
     }
     
@@ -125,13 +132,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSess
     
     func twitterLogin(session : TWTRSession) {
         let value = session.authToken + ";" + session.authTokenSecret
-                
+        
         // Perform any operations on signed in user here.
         var logins = credentialsProvider.logins
         if (logins == nil) {
             logins = [:]
         }
-        logins["api.twitter.com"] = value
+        logins[AWSCognitoLoginProviderKey.Twitter.rawValue] = value
         credentialsProvider.logins = logins
         
         viewController.updateLoginState(
@@ -146,6 +153,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSess
         if (message[AppGlobals.SESSION_ACTION] as! String == AppGlobals.GET_CREDENTIALS) {
             var taskResult : AWSTask!
             let sem = dispatch_semaphore_create(0)
+            
+            // HACK for now put the facebook token fetch here
+            if let token = FBSDKAccessToken.currentAccessToken()?.tokenString {
+                var logins = credentialsProvider.logins
+                if (logins == nil) {
+                    logins = [:]
+                }
+                logins[AWSCognitoLoginProviderKey.Facebook.rawValue] = token
+                credentialsProvider.logins = logins
+            }
             
             credentialsProvider.refresh().continueWithBlock {
                 (task: AWSTask!) -> AWSTask! in
