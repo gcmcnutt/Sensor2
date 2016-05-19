@@ -17,22 +17,9 @@ class AccessTokenDelegate: NSObject, AIAuthenticationDelegate {
     }
     
     @objc func requestDidSucceed(apiResult: APIResult!) {
-        let token = apiResult.result as! String
-        
-        let credentialsProvider = AWSServiceManager.defaultServiceManager().defaultServiceConfiguration.credentialsProvider as! AWSCognitoCredentialsProvider
-        var logins = credentialsProvider.logins
-        if (logins == nil) {
-            logins = [:]
-        }
-        logins[AWSCognitoLoginProviderKey.LoginWithAmazon.rawValue] = token
-        credentialsProvider.logins = logins
-        
-        // Load new view controller with user identifying information
-        // as the user is now successfully logged in.
-        let delegate = GetProfileDelegate(parentController: parentController)
-        AIMobileLib.getProfile(delegate)        
+        parentController.updateAmazonId(apiResult.result as? String)
     }
- 
+    
     @objc func requestDidFail(errorResponse: APIError) {
         let alertController = UIAlertController(title: "",
             message: "AccessToken:" + errorResponse.error.message,

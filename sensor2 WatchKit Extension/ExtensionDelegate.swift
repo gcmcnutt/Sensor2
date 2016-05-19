@@ -77,22 +77,24 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         let expireTime = userCredentials[AppGlobals.CRED_EXPIRATION_KEY] as? NSDate
         if (expireTime == nil) {
             // no data at all so fetch and wait
+            NSLog("no credentials.  refresh now.")
             sendMessage = true
         } else {
             // data and expired so fetch and wait
             let now = NSDate()
             if (now.compare(expireTime!) == NSComparisonResult.OrderedDescending) {
+                NSLog("expired credentials.  refresh now.")
                 userCredentials = [:]
                 sendMessage = true
             } else if (now.dateByAddingTimeInterval(REFRESH_LEAD_SEC).compare(expireTime!) == NSComparisonResult.OrderedDescending) {
                 // nearing expiration so fetch [no wait]
+                NSLog("credentials expire near.  refresh async.")
                 sendMessage = true
-                waitForReply = false
+                // TODO needs to limit to one outstanding request: waitForReply = false
             }
         }
         
         if (sendMessage) {
-            NSLog("refreshing userCredentials... send=\(sendMessage), wait=\(waitForReply)")
             let sem = dispatch_semaphore_create(0)
             
             wcsession.sendMessage([AppGlobals.SESSION_ACTION : AppGlobals.GET_CREDENTIALS],

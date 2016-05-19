@@ -11,10 +11,10 @@ import TwitterKit
 
 class ViewController: UIViewController, GIDSignInUIDelegate {
     
-    @IBOutlet weak var nameVal: UILabel!
-    @IBOutlet weak var emailVal: UILabel!
-    @IBOutlet weak var idVal: UILabel!
-    @IBOutlet weak var postalVal: UILabel!
+    @IBOutlet weak var amazonId: UILabel!
+    @IBOutlet weak var googleId: UILabel!
+    @IBOutlet weak var twitterId: UILabel!
+    @IBOutlet weak var facebookId: UILabel!
     @IBOutlet weak var signInButton: GIDSignInButton!
     @IBOutlet weak var twitterLoginButton: TWTRLogInButton!
     @IBOutlet weak var facebookLoginButton: FBSDKLoginButton!
@@ -47,7 +47,7 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         // facebook setup
         facebookLoginButton.readPermissions = ["email"];
     }
-
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -66,9 +66,11 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         // amazon
         let delegate = LogoutDelegate(parentController: self)
         AIMobileLib.clearAuthorizationState(delegate)
+        updateAmazonId(nil)
         
         // google
         GIDSignIn.sharedInstance().signOut()
+        updateGoogleId(nil)
         
         // twitter
         let store = Twitter.sharedInstance().sessionStore
@@ -76,25 +78,41 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         if let userID = session?.userID {
             store.logOutUserID(userID)
         }
+        updateTwitterId(nil)
         
         // facebook
         FBSDKLoginManager().logOut()
+        updateFacebookId(nil)
         
         // rest of the app
-        completeLogout()
-    }
-    
-    func completeLogout() {
         appDelegate.clearCredentials()
-        updateLoginState()
     }
     
-    func updateLoginState(name : String = "", email : String = "", userId : String = "", postal : String = "") {
+    func updateAmazonId(id : String?) {
         NSOperationQueue.mainQueue().addOperationWithBlock() {
-            self.nameVal.text = name
-            self.emailVal.text = email
-            self.idVal.text = userId
-            self.postalVal.text = postal
+            self.appDelegate.amazonToken = id
+            self.amazonId.text = id
+        }
+    }
+    
+    func updateGoogleId(id : String?) {
+        NSOperationQueue.mainQueue().addOperationWithBlock() {
+            self.appDelegate.googleToken = id
+            self.googleId.text = id
+        }
+    }
+    
+    func updateTwitterId(id : String?) {
+        NSOperationQueue.mainQueue().addOperationWithBlock() {
+            self.appDelegate.twitterToken = id
+            self.twitterId.text = id
+        }
+    }
+    
+    func updateFacebookId(id : String?) {
+        NSOperationQueue.mainQueue().addOperationWithBlock() {
+            self.appDelegate.facebookToken = id
+            self.facebookId.text = id
         }
     }
 }

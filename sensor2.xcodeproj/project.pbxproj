@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		D3379F5A1C409FC800430D2C /* LogoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3379F591C409FC800430D2C /* LogoutDelegate.swift */; };
-		D3379F5C1C409FD200430D2C /* GetProfileDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3379F5B1C409FD200430D2C /* GetProfileDelegate.swift */; };
 		D3379F5E1C409FDF00430D2C /* AuthorizeUserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3379F5D1C409FDF00430D2C /* AuthorizeUserDelegate.swift */; };
 		D3379F601C409FEA00430D2C /* AccessTokenDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3379F5F1C409FEA00430D2C /* AccessTokenDelegate.swift */; };
 		D3379F621C409FFB00430D2C /* AppGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3379F611C409FFB00430D2C /* AppGlobals.swift */; };
@@ -99,7 +98,6 @@
 		D3036CD11C16A2F800DCC5F8 /* Watch-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Watch-Bridging-Header.h"; sourceTree = "<group>"; };
 		D3379F581C409F7F00430D2C /* Sensor2-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Sensor2-Bridging-Header.h"; sourceTree = "<group>"; };
 		D3379F591C409FC800430D2C /* LogoutDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutDelegate.swift; sourceTree = "<group>"; };
-		D3379F5B1C409FD200430D2C /* GetProfileDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetProfileDelegate.swift; sourceTree = "<group>"; };
 		D3379F5D1C409FDF00430D2C /* AuthorizeUserDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizeUserDelegate.swift; sourceTree = "<group>"; };
 		D3379F5F1C409FEA00430D2C /* AccessTokenDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessTokenDelegate.swift; sourceTree = "<group>"; };
 		D3379F611C409FFB00430D2C /* AppGlobals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppGlobals.swift; sourceTree = "<group>"; };
@@ -232,7 +230,6 @@
 				D3379F611C409FFB00430D2C /* AppGlobals.swift */,
 				D3379F5F1C409FEA00430D2C /* AccessTokenDelegate.swift */,
 				D3379F5D1C409FDF00430D2C /* AuthorizeUserDelegate.swift */,
-				D3379F5B1C409FD200430D2C /* GetProfileDelegate.swift */,
 				D3379F591C409FC800430D2C /* LogoutDelegate.swift */,
 				D3379F581C409F7F00430D2C /* Sensor2-Bridging-Header.h */,
 				D351F06E1C01738800F6F91D /* AppDelegate.swift */,
@@ -538,7 +535,6 @@
 				D3379F621C409FFB00430D2C /* AppGlobals.swift in Sources */,
 				D351F06F1C01738800F6F91D /* AppDelegate.swift in Sources */,
 				D3379F5A1C409FC800430D2C /* LogoutDelegate.swift in Sources */,
-				D3379F5C1C409FD200430D2C /* GetProfileDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

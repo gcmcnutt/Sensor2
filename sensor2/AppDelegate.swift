@@ -20,6 +20,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSess
     
     let wcsession = WCSession.defaultSession()
     
+    var amazonToken : String?
+    var googleToken : String?
+    var twitterToken : String?
+    var facebookToken : String?
+    
     // AWS plumbing
     var credentialsProvider : AWSCognitoCredentialsProvider!
     
@@ -105,19 +110,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSess
     func signIn(signIn: GIDSignIn!, didSignInForUser user: GIDGoogleUser!, withError error: NSError!) {
         if (error == nil) {
             // Perform any operations on signed in user here.
-            let idToken = user.authentication.idToken!
-            var logins = credentialsProvider.logins
-            if (logins == nil) {
-                logins = [:]
-            }
-            logins[AWSCognitoLoginProviderKey.Google.rawValue] = idToken
-            credentialsProvider.logins = logins
-            
-            viewController.updateLoginState(
-                user.profile.name,
-                email: user.profile.email,
-                userId: user.userID,
-                postal: "")
+            viewController.updateGoogleId(user.authentication.idToken)
             
         } else {
             NSLog("\(error.localizedDescription)")
@@ -131,21 +124,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSess
     }
     
     func twitterLogin(session : TWTRSession) {
-        let value = session.authToken + ";" + session.authTokenSecret
-        
-        // Perform any operations on signed in user here.
-        var logins = credentialsProvider.logins
-        if (logins == nil) {
-            logins = [:]
-        }
-        logins[AWSCognitoLoginProviderKey.Twitter.rawValue] = value
-        credentialsProvider.logins = logins
-        
-        viewController.updateLoginState(
-            session.userName,
-            email: "",
-            userId: session.userID,
-            postal: "")
+        viewController.updateTwitterId(session.authToken + ";" + session.authTokenSecret)
     }
     
     func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
@@ -154,15 +133,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSess
             var taskResult : AWSTask!
             let sem = dispatch_semaphore_create(0)
             
-            // HACK for now put the facebook token fetch here
-            if let token = FBSDKAccessToken.currentAccessToken()?.tokenString {
-                var logins = credentialsProvider.logins
-                if (logins == nil) {
-                    logins = [:]
-                }
-                logins[AWSCognitoLoginProviderKey.Facebook.rawValue] = token
-                credentialsProvider.logins = logins
+            // HACK -- this should be in a callback function so update is correctly timed
+            viewController.updateFacebookId(FBSDKAccessToken.currentAccessToken()?.tokenString)
+
+            var logins = credentialsProvider.logins
+            logins = [:]
+            if (amazonToken != nil) {
+                logins[AWSCognitoLoginProviderKey.LoginWithAmazon.rawValue] = amazonToken
             }
+            if (googleToken != nil) {
+                logins[AWSCognitoLoginProviderKey.Google.rawValue] = googleToken
+            }
+            if (twitterToken != nil) {
+                logins[AWSCognitoLoginProviderKey.Twitter.rawValue] = twitterToken
+            }
+            if (facebookToken != nil) {
+                logins[AWSCognitoLoginProviderKey.Facebook.rawValue] = facebookToken
+            }
+            credentialsProvider.logins = logins
             
             credentialsProvider.refresh().continueWithBlock {
                 (task: AWSTask!) -> AWSTask! in
