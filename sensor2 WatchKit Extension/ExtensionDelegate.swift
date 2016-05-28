@@ -21,7 +21,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     let SLOW_POLL_DELAY_SEC = 2.0
     let FAST_POLL_DELAY_SEC = 0.01
     let MAX_EARLIEST_TIME_SEC = -24.0 * 60.0 * 60.0 // a day ago
-    let REFRESH_LEAD_SEC = 120.0
+    let REFRESH_LEAD_SEC = 300.0
     
     let wcsession = WCSession.defaultSession()
     let sr = CMSensorRecorder()
@@ -87,7 +87,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
             } else if (now.dateByAddingTimeInterval(REFRESH_LEAD_SEC).compare(expireTime!) == NSComparisonResult.OrderedDescending) {
                 // nearing expiration so fetch [no wait]
                 sendMessage = true
-                waitForReply = false
+                //TODO analyze this... -> waitForReply = false
             }
         }
         
@@ -144,7 +144,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         while (isRun()) {
             var foundData = false
             var commit = false
-            cmdCount++
+            cmdCount += 1
             NSLog("dequeueLoop(\(cmdCount))")
             
             // within a certain time of now
@@ -178,13 +178,13 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
                                 commit = true
                                 break;
                             } else if (rErr != nil) {
-                                errors++
+                                errors += 1
                                 lastError = rErr!.description
                                 break
                             }
                             
                             // update the uncommit state
-                            newItems++
+                            newItems += 1
                             newLatestDate = lastElement.startDate
                         }
                     }
@@ -198,12 +198,12 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
                             commit = true
                             break;
                         } else if (rErr != nil) {
-                            errors++
+                            errors += 1
                             lastError = rErr!.description
                             break
                         }
                         
-                        newItems++
+                        newItems += 1
                         newLatestDate = newLatestDate.dateByAddingTimeInterval(0.02)
                     }
                 }

@@ -110,7 +110,7 @@ class SensorDynamoImpl {
                 (WKExtension.sharedExtension().rootInterfaceController
                     as! InterfaceController).stopDequeue()
             }
-                        
+            
             return (false, nil)
         }
         
@@ -140,7 +140,7 @@ class SensorDynamoImpl {
             for (startDate, sample) in items {
                 maxDate = maxDate.laterDate(startDate)
                 minDate = minDate.earlierDate(startDate)
-                itemCount++
+                itemCount += 1
                 
                 let columnTime = columnTimeFormatter.stringFromDate(startDate)
                 
@@ -176,7 +176,7 @@ class SensorDynamoImpl {
                 for (startDate, sample) in entry as! [NSDate : [Double]] {
                     maxDate = maxDate.laterDate(startDate)
                     minDate = minDate.earlierDate(startDate)
-                    itemCount++
+                    itemCount += 1
                     
                     let columnTime = columnTimeFormatter.stringFromDate(startDate)
                     item[String(format: SensorDynamoImpl.COLUMN_FORMAT, SensorDynamoImpl.X_BASE, columnTime)] = ["N" : String(format: SensorDynamoImpl.SAMPLE_FORMAT, sample[0])]
@@ -191,7 +191,7 @@ class SensorDynamoImpl {
         }
         
         let request = try! NSJSONSerialization.dataWithJSONObject(dynamoPayload,
-            options: NSJSONWritingOptions())
+                                                                  options: NSJSONWritingOptions())
         
         NSLog("flush itemCount=\(itemCount), minDate=\(systemTimeFormatter.stringFromDate(minDate)), maxDate=\(systemTimeFormatter.stringFromDate(maxDate)), length=\(request.length)")
         

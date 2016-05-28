@@ -12,7 +12,8 @@ import Fabric
 import TwitterKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSessionDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSessionDelegate, AIAuthenticationDelegate {
+    static let AMZN_TOKEN_VALID_ESTIMATE_SEC = 3000.0
     
     var window: UIWindow?
     var viewController : ViewController!
@@ -22,6 +23,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSess
     
     // AWS plumbing
     var credentialsProvider : AWSCognitoCredentialsProvider!
+    var auths : [ Int : AnyObject ] = [:]
+    class AWSAuth {
+        var token: String
+        var expires: NSDate
+        
+        init(token : String, expires : NSDate) {
+            self.token = token
+            self.expires = expires
+        }
+    }
+    var awsSem = dispatch_semaphore_create(0)
+    
+    // some google sync...
+    var googleSem = dispatch_semaphore_create(0)
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
@@ -42,14 +57,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSess
         
         AWSServiceManager.defaultServiceManager().defaultServiceConfiguration = defaultServiceConfiguration
         
+        // amazon setup
+        let delegate = AuthorizeUserDelegate(delegate: self)
+        delegate.launchGetAccessToken()
+        
         // google setup
         var configureError: NSError?
         GGLContext.sharedInstance().configureWithError(&configureError)
         assert(configureError == nil, "Error configuring Google services: \(configureError)")
         GIDSignIn.sharedInstance().delegate = self
+        GIDSignIn.sharedInstance().signInSilently()
         
         // twitter setup
         Fabric.with([AWSCognito.self, Twitter.self])
+        let store = Twitter.sharedInstance().sessionStore
+        auths[AWSCognitoLoginProviderKey.Twitter.rawValue] = store.session()
         
         // facebook setup
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
@@ -58,10 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSess
         wcsession.delegate = self
         wcsession.activateSession()
         
-        // TODO see if we are already logged in
-        //let delegate = AuthorizeUserDelegate(parentController: viewController)
-        //delegate.launchGetAccessToken()
-        
+        NSLog("application initialized")
         return true
     }
     
@@ -71,12 +90,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSess
             return AIMobileLib.handleOpenURL(url, sourceApplication: options[UIApplicationOpenURLOptionsSourceApplicationKey] as! String)
         } else if (url.absoluteString.hasPrefix("fb")) {
             return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url,
-                sourceApplication: options[UIApplicationOpenURLOptionsSourceApplicationKey] as! String,
-                annotation: options[UIApplicationOpenURLOptionsAnnotationKey])
+                                                                         sourceApplication: options[UIApplicationOpenURLOptionsSourceApplicationKey] as! String,
+                                                                         annotation: options[UIApplicationOpenURLOptionsAnnotationKey])
         } else {
             return GIDSignIn.sharedInstance().handleURL(url,
-                sourceApplication: options[UIApplicationOpenURLOptionsSourceApplicationKey] as! String,
-                annotation: options[UIApplicationOpenURLOptionsAnnotationKey])
+                                                        sourceApplication: options[UIApplicationOpenURLOptionsSourceApplicationKey] as! String,
+                                                        annotation: options[UIApplicationOpenURLOptionsAnnotationKey])
         }
     }
     
@@ -102,67 +121,142 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSess
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
+    // amazon
+    @objc func requestDidSucceed(apiResult: APIResult!) {
+        NSLog("amazon: connect token")
+        let token = apiResult.result as! String
+        auths[AWSCognitoLoginProviderKey.LoginWithAmazon.rawValue] = AWSAuth(token : token, expires : NSDate().dateByAddingTimeInterval(AppDelegate.AMZN_TOKEN_VALID_ESTIMATE_SEC)) // a little less than an hour
+        dispatch_semaphore_signal(awsSem)
+        genDisplay()
+    }
+    
+    @objc func requestDidFail(errorResponse: APIError) {
+        NSLog("amazon: connect failed=\(errorResponse.error.message)")
+        auths.removeValueForKey(AWSCognitoLoginProviderKey.LoginWithAmazon.rawValue)
+        dispatch_semaphore_signal(awsSem)
+        //        let alertController = UIAlertController(title: "",
+        //            message: "AccessToken:" + errorResponse.error.message,
+        //            preferredStyle: .Alert)
+        //        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        //        alertController.addAction(defaultAction)
+        //        viewController.presentViewController(alertController, animated: true, completion: nil)
+        genDisplay()
+    }
+    
+    // google
     func signIn(signIn: GIDSignIn!, didSignInForUser user: GIDGoogleUser!, withError error: NSError!) {
         if (error == nil) {
-            // Perform any operations on signed in user here.
-            let idToken = user.authentication.idToken!
-            var logins = credentialsProvider.logins
-            if (logins == nil) {
-                logins = [:]
-            }
-            logins[AWSCognitoLoginProviderKey.Google.rawValue] = idToken
-            credentialsProvider.logins = logins
-            
-            viewController.updateLoginState(
-                user.profile.name,
-                email: user.profile.email,
-                userId: user.userID,
-                postal: "")
-            
+            NSLog("google: connect for \(user.userID)")
+            auths[AWSCognitoLoginProviderKey.Google.rawValue] = user.authentication
+            dispatch_semaphore_signal(googleSem)
         } else {
-            NSLog("\(error.localizedDescription)")
+            NSLog("\(error.userInfo.description)")
+            auths.removeValueForKey(AWSCognitoLoginProviderKey.Google.rawValue)
+            dispatch_semaphore_signal(googleSem)
         }
+        genDisplay()
     }
     
+    // google
     func signIn(signIn: GIDSignIn!, didDisconnectWithUser user:GIDGoogleUser!,
-        withError error: NSError!) {
-            // Perform any operations when the user disconnects from app here.
-            // ...
+                withError error: NSError!) {
+        NSLog("google disconnect for \(user.userID)")
+        auths.removeValueForKey(AWSCognitoLoginProviderKey.Google.rawValue)
+        genDisplay()
     }
     
+    // twitter
     func twitterLogin(session : TWTRSession) {
-        let value = session.authToken + ";" + session.authTokenSecret
-        
-        // Perform any operations on signed in user here.
-        var logins = credentialsProvider.logins
-        if (logins == nil) {
-            logins = [:]
-        }
-        logins[AWSCognitoLoginProviderKey.Twitter.rawValue] = value
-        credentialsProvider.logins = logins
-        
-        viewController.updateLoginState(
-            session.userName,
-            email: "",
-            userId: session.userID,
-            postal: "")
+        NSLog("twitter: connect for \(session.userID)")
+        auths[AWSCognitoLoginProviderKey.Twitter.rawValue] = session
+        genDisplay()
     }
     
+    // message from watch
     func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
         NSLog("session message " + message.description)
         if (message[AppGlobals.SESSION_ACTION] as! String == AppGlobals.GET_CREDENTIALS) {
             var taskResult : AWSTask!
             let sem = dispatch_semaphore_create(0)
+            let now = NSDate()
             
-            // HACK for now put the facebook token fetch here
-            if let token = FBSDKAccessToken.currentAccessToken()?.tokenString {
-                var logins = credentialsProvider.logins
-                if (logins == nil) {
-                    logins = [:]
+            var logins : [ NSObject : AnyObject ] = [:]
+            
+            // amazon
+            do {
+                let auth = auths[AWSCognitoLoginProviderKey.LoginWithAmazon.rawValue] as? AWSAuth
+                if (auth == nil || auth!.expires.compare(now) == NSComparisonResult.OrderedAscending) {
+                    NSLog("amazon: trigger refresh...")
+                    awsSem = dispatch_semaphore_create(0)
+                    
+                    let delegate = AuthorizeUserDelegate(delegate: self)
+                    delegate.launchGetAccessToken()
+                    
+                    // wait up to 15 seconds
+                    dispatch_semaphore_wait(awsSem, dispatch_time(
+                        DISPATCH_TIME_NOW,
+                        Int64(15 * Double(NSEC_PER_SEC))
+                        ))
                 }
-                logins[AWSCognitoLoginProviderKey.Facebook.rawValue] = token
-                credentialsProvider.logins = logins
+                
+                // load amazon auth
+                if let authNew = auths[AWSCognitoLoginProviderKey.LoginWithAmazon.rawValue] as? AWSAuth {
+                    NSLog("amazon: refresh found token=\(authNew.token), expires=\(authNew.expires)")
+                    logins[AWSCognitoLoginProviderKey.LoginWithAmazon.rawValue] = authNew.token
+                } else {
+                    NSLog("amazon: refresh found no token")
+                }
             }
+            
+            // google
+            do {
+                let auth = auths[AWSCognitoLoginProviderKey.Google.rawValue] as? GIDAuthentication
+                if (auth == nil || auth!.accessTokenExpirationDate.compare(now) == NSComparisonResult.OrderedAscending) {
+                    // sync get google token
+                    NSLog("google: trigger refresh...")
+                    googleSem = dispatch_semaphore_create(0)
+                    GIDSignIn.sharedInstance().signInSilently()
+                    
+                    // wait up to 15 seconds
+                    dispatch_semaphore_wait(googleSem, dispatch_time(
+                        DISPATCH_TIME_NOW,
+                        Int64(15 * Double(NSEC_PER_SEC))
+                        ))
+                }
+                
+                // load google login
+                if let authNew = auths[AWSCognitoLoginProviderKey.Google.rawValue] as? GIDAuthentication {
+                    NSLog("google: refresh found token=\(authNew.idToken), expires=\(authNew.idTokenExpirationDate)")
+                    logins[AWSCognitoLoginProviderKey.Google.rawValue] = authNew.idToken
+                } else {
+                    NSLog("google: refresh found no token")
+                }
+            }
+            
+            // twitter -- no expire
+            do {
+                // load twitter login
+                if let authNew = auths[AWSCognitoLoginProviderKey.Twitter.rawValue] as? TWTRSession {
+                    NSLog("twitter: refresh found token=\(authNew.authToken)")
+                    let value = authNew.authToken + ";" + authNew.authTokenSecret
+                    logins[AWSCognitoLoginProviderKey.Twitter.rawValue] = value
+                } else {
+                    NSLog("twitter: no authToken found")
+                }
+            }
+            
+            // facebook -- no expire (well, is 60 days...)
+            do {
+                if let token = FBSDKAccessToken.currentAccessToken()?.tokenString {
+                    NSLog("facebook: refresh found token=\(token)")
+                    logins[AWSCognitoLoginProviderKey.Facebook.rawValue] = token
+                } else {
+                    NSLog("facebook: refresh found no token")
+                }
+            }
+            
+            // updated list of logins
+            credentialsProvider.logins = logins
             
             credentialsProvider.refresh().continueWithBlock {
                 (task: AWSTask!) -> AWSTask! in
@@ -173,15 +267,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSess
             
             dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER)
             
+            NSLog("logins[\(credentialsProvider.logins)], expiration[\(credentialsProvider.expiration)], accessKey[\(credentialsProvider.accessKey)], secretKey[\(credentialsProvider.secretKey)], sessionKey[\(credentialsProvider.sessionKey)]")
+            
             if (taskResult.error == nil) {
                 let reply = [AppGlobals.CRED_COGNITO_KEY : self.credentialsProvider.identityId,
-                    AppGlobals.CRED_ACCESS_KEY : self.credentialsProvider.accessKey,
-                    AppGlobals.CRED_SECRET_KEY : self.credentialsProvider.secretKey,
-                    AppGlobals.CRED_SESSION_KEY : self.credentialsProvider.sessionKey,
-                    AppGlobals.CRED_EXPIRATION_KEY : self.credentialsProvider.expiration]
+                             AppGlobals.CRED_ACCESS_KEY : self.credentialsProvider.accessKey,
+                             AppGlobals.CRED_SECRET_KEY : self.credentialsProvider.secretKey,
+                             AppGlobals.CRED_SESSION_KEY : self.credentialsProvider.sessionKey,
+                             AppGlobals.CRED_EXPIRATION_KEY : self.credentialsProvider.expiration]
                 replyHandler(reply)
             } else {
-                NSLog("error fetching credentials: \(taskResult.error!.description)")
+                NSLog("error fetching credentials: \(taskResult.error!.userInfo.description)")
+                viewController.updateErrorState(taskResult.error!.userInfo.description)
                 replyHandler([:])
             }
         }
@@ -190,7 +287,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSess
     func clearCredentials() {
         NSLog("clear credentials...")
         credentialsProvider.clearKeychain()
+        auths = [:]
         wcsession.sendMessage([AppGlobals.SESSION_ACTION : AppGlobals.CLEAR_CREDENTIALS], replyHandler: nil, errorHandler: nil)
+        genDisplay()
+    }
+    
+    func genDisplay() {
+        var amznTime = ""
+        var googTime = ""
+        var twtrTime = ""
+        var fbTime = ""
+        
+        if let amzn = auths[AWSCognitoLoginProviderKey.LoginWithAmazon.rawValue] as? AWSAuth {
+            amznTime = amzn.expires.description
+        }
+        if let goog = auths[AWSCognitoLoginProviderKey.Google.rawValue] as? GIDAuthentication {
+            googTime = goog.accessTokenExpirationDate.description
+        }
+        if auths[AWSCognitoLoginProviderKey.Twitter.rawValue] != nil {
+            twtrTime = "valid"
+        }
+        if FBSDKAccessToken.currentAccessToken()?.tokenString != nil {
+            fbTime = "valid"
+        }
+        
+        viewController.updateLoginState(amznTime, goog: googTime, twtr: twtrTime, fb: fbTime)
     }
 }
 

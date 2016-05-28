@@ -11,10 +11,11 @@ import TwitterKit
 
 class ViewController: UIViewController, GIDSignInUIDelegate {
     
-    @IBOutlet weak var nameVal: UILabel!
-    @IBOutlet weak var emailVal: UILabel!
-    @IBOutlet weak var idVal: UILabel!
-    @IBOutlet weak var postalVal: UILabel!
+    @IBOutlet weak var amznVal: UILabel!
+    @IBOutlet weak var googVal: UILabel!
+    @IBOutlet weak var twtrVal: UILabel!
+    @IBOutlet weak var fbVal: UILabel!
+    @IBOutlet weak var errText: UILabel!
     @IBOutlet weak var signInButton: GIDSignInButton!
     @IBOutlet weak var twitterLoginButton: TWTRLogInButton!
     @IBOutlet weak var facebookLoginButton: FBSDKLoginButton!
@@ -29,7 +30,7 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         GIDSignIn.sharedInstance().uiDelegate = self
         
         // Uncomment to automatically sign in the user.
-        //GIDSignIn.sharedInstance().signInSilently()
+        GIDSignIn.sharedInstance().signInSilently()
         
         // TODO(developer) Configure the sign-in button look/feel
         // ...
@@ -47,7 +48,6 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         // facebook setup
         facebookLoginButton.readPermissions = ["email"];
     }
-
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -57,7 +57,7 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
     @IBAction func loginAmazonAction(sender: AnyObject) {
         // Requesting both scopes for the current user.
         let requestScopes: [String] = ["profile", "postal_code"]
-        let delegate = AuthorizeUserDelegate(parentController: self)
+        let delegate = AuthorizeUserDelegate(delegate: appDelegate)
         AIMobileLib.authorizeUserForScopes(requestScopes, delegate: delegate)
     }
     
@@ -81,20 +81,22 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         FBSDKLoginManager().logOut()
         
         // rest of the app
-        completeLogout()
-    }
-    
-    func completeLogout() {
         appDelegate.clearCredentials()
-        updateLoginState()
     }
     
-    func updateLoginState(name : String = "", email : String = "", userId : String = "", postal : String = "") {
+    func updateLoginState(amzn: String, goog: String, twtr: String, fb:String) {
         NSOperationQueue.mainQueue().addOperationWithBlock() {
-            self.nameVal.text = name
-            self.emailVal.text = email
-            self.idVal.text = userId
-            self.postalVal.text = postal
+            self.amznVal.text = amzn
+            self.googVal.text = goog
+            self.twtrVal.text = twtr
+            self.fbVal.text = fb
+        }
+        updateErrorState("")
+    }
+    
+    func updateErrorState(err: String) {
+        NSOperationQueue.mainQueue().addOperationWithBlock() {
+            self.errText.text = err
         }
     }
 }
