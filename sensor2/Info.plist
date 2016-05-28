@@ -34,7 +34,7 @@
 				<string>com.accelero.sensor2beta</string>
 				<string>com.googleusercontent.apps.982319363550-e603d90i5bcg2m5uem3fll8bhri52i42</string>
 				<string>amzn-com.accelero.sensor2beta</string>
-                <string>fb483981135134973</string>
+				<string>fb483981135134973</string>
 			</array>
 		</dict>
 	</array>
@@ -59,38 +59,49 @@
 			</dict>
 		</array>
 	</dict>
+	<key>FacebookAppID</key>
+	<string>483981135134973</string>
+	<key>FacebookDisplayName</key>
+	<string>sensor2beta</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbapi</string>
+		<string>fb-messenger-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
+			<key>akamaihd.net</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+				<false/>
+			</dict>
 			<key>api.amazon.com</key>
 			<dict>
 				<key>NSExceptionRequiresForwardSecrecy</key>
 				<false/>
 			</dict>
-            <key>facebook.com</key>
-            <dict>
-                <key>NSIncludesSubdomains</key>
-                <true/>
-                <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
-                <false/>
-            </dict>
-            <key>fbcdn.net</key>
-            <dict>
-                <key>NSIncludesSubdomains</key>
-                <true/>
-                <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
-                <false/>
-            </dict>
-            <key>akamaihd.net</key>
-            <dict>
-                <key>NSIncludesSubdomains</key>
-                <true/>
-                <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
-                <false/>
-            </dict>
+			<key>facebook.com</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+				<false/>
+			</dict>
+			<key>fbcdn.net</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+				<false/>
+			</dict>
 		</dict>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
@@ -120,16 +131,5 @@
 	<string>499918285206</string>
 	<key>cognitoPool</key>
 	<string>us-east-1:53e91d7b-4528-4823-9bd0-fcfa545106bd</string>
-    <key>FacebookAppID</key>
-    <string>483981135134973</string>
-    <key>FacebookDisplayName</key>
-    <string>sensor2beta</string>
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>fbapi</string>
-        <string>fb-messenger-api</string>
-        <string>fbauth2</string>
-        <string>fbshareextension</string>
-    </array>
 </dict>
 </plist>
