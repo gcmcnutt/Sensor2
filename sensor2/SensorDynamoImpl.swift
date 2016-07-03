@@ -1,14 +1,13 @@
 //
 //  SensorDynamoImpl.swift
+//  sensor2
 //
-//  Created by Greg McNutt on 11/21/15.
-//  Copyright © 2015 Greg McNutt. All rights reserved.
+//  Created by Greg McNutt on 6/11/16.
+//  Copyright © 2016 Greg McNutt. All rights reserved.
 //
 
 import Foundation
-import CoreMotion
 import Darwin
-import WatchKit
 
 // collect up accelerometer data in a flushable format
 class SensorDynamoImpl {
@@ -16,7 +15,6 @@ class SensorDynamoImpl {
     static let X_BASE = "x"
     static let Y_BASE = "y"
     static let Z_BASE = "z"
-    static let SAMPLE_FORMAT = "%0.4f"
     static let COLUMN_FORMAT = "%@%@"
     static let UPDATE_COLUMN_FORMAT = ",%@%@=:%@%@"
     static let ITEM_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'"
@@ -29,7 +27,7 @@ class SensorDynamoImpl {
     static let P_DATE_COLNAME = "pDate"
     
     let tableName = "sensor2" // TODO
-    let extensionDelegate : ExtensionDelegate
+    let appDelegate : AppDelegate!
     
     // an array of dictionary items -- each dictionary entry is a single second's samples
     var itemMap : [String : AnyObject] = [:]
@@ -41,8 +39,13 @@ class SensorDynamoImpl {
     
     var priorTimeSlot = ""
     
-    init(extensionDelegate: ExtensionDelegate) {
-        self.extensionDelegate = extensionDelegate
+    enum FlushException : ErrorType {
+        case NoCredentials
+        case FlushError(cause : NSError?)
+    }
+    
+    init(appDelegate: AppDelegate) {
+        self.appDelegate = appDelegate
         
         itemTimeFormatter.dateFormat = SensorDynamoImpl.ITEM_TIME_FORMAT
         itemTimeFormatter.timeZone = NSTimeZone(name:"UTC")
@@ -60,18 +63,19 @@ class SensorDynamoImpl {
         awsRequestDateFormatter.timeZone = NSTimeZone(name:"UTC")
     }
     
-    // add an ordered sample, auto flush as necessary
-    func addSample(sample : CMRecordedAccelerometerData) -> (Bool, NSError?) {
-        return addSample(sample.startDate, x : sample.acceleration.x, y : sample.acceleration.y, z : sample.acceleration.z)
-    }
-    
-    func addSample(startDate: NSDate, x: Double, y: Double, z: Double) -> (Bool, NSError?) {
+    func addSample(line : NSString) throws {
+        let parts = line.componentsSeparatedByString(",")
+        let startDate = AppGlobals.sharedInstance.dateFormatter.dateFromString(parts[0])!
+        let x = parts[1]
+        let y = parts[2]
+        let z = parts[3]
+
         // figure out the seconds slot for this sample
         let timeSlot = itemTimeFormatter.stringFromDate(startDate)
         
-        // do an update flush if this is the initial partially filled timeSlot
+        // do an update flush if this is the initial *partially* filled timeSlot, otherwise handled by the batch updater
         if (timeSlot != priorTimeSlot && itemMap.count == 1 && itemMap[priorTimeSlot]?.count < 50) {
-            return flushHandler(true)
+            try flushHandler(true)
         }
         
         priorTimeSlot = timeSlot
@@ -81,20 +85,19 @@ class SensorDynamoImpl {
             
             // this is a new second, do we have space for it, or flush?
             if (itemMap.count >= SensorDynamoImpl.SECONDS_PER_BATCH) {
-                return flushHandler(false)
+                try flushHandler(false)
             }
             
             // add new element to data
             itemMap[timeSlot] = [:]
         }
         
-        var item = itemMap[timeSlot] as! [NSDate : [Double]]
+        var item = itemMap[timeSlot] as! [NSDate : [String]]
         item[startDate] = [x, y, z]
         itemMap[timeSlot] = item
-        return (false, nil)
     }
     
-    func flushHandler(doUpdate : Bool) -> (commit: Bool, error: NSError?) {
+    func flushHandler(doUpdate : Bool) throws {
         var minDate = NSDate.distantFuture()
         var maxDate = NSDate.distantPast()
         var itemCount = 0
@@ -104,14 +107,9 @@ class SensorDynamoImpl {
         NSLog("start flush")
         
         // update credentials
-        let credentials = extensionDelegate.getCredentials()
+        let credentials = appDelegate.getCredentials()
         if (credentials.count == 0) {
-            NSOperationQueue.mainQueue().addOperationWithBlock() {
-                (WKExtension.sharedExtension().rootInterfaceController
-                    as! InterfaceController).stopDequeue()
-            }
-            
-            return (false, nil)
+            throw FlushException.NoCredentials
         }
         
         if (doUpdate) {
@@ -135,7 +133,7 @@ class SensorDynamoImpl {
             attributeValues[":" + SensorDynamoImpl.P_DATE_COLNAME] = [ "S" : processingTime]
             
             // add in the rest of the items
-            let items = entry as! [NSDate : [Double]]
+            let items = entry as! [NSDate : [String]]
             
             for (startDate, sample) in items {
                 maxDate = maxDate.laterDate(startDate)
@@ -150,9 +148,9 @@ class SensorDynamoImpl {
                 updateExpression += String(format: SensorDynamoImpl.UPDATE_COLUMN_FORMAT, SensorDynamoImpl.Z_BASE, columnTime, SensorDynamoImpl.Z_BASE, columnTime)
                 
                 // and the attribute values
-                attributeValues[":" + String(format: SensorDynamoImpl.COLUMN_FORMAT, SensorDynamoImpl.X_BASE, columnTime)] = [ "S" : String(format: SensorDynamoImpl.SAMPLE_FORMAT, sample[0]) ]
-                attributeValues[":" + String(format: SensorDynamoImpl.COLUMN_FORMAT, SensorDynamoImpl.Y_BASE, columnTime)] = [ "S" : String(format: SensorDynamoImpl.SAMPLE_FORMAT, sample[1]) ]
-                attributeValues[":" + String(format: SensorDynamoImpl.COLUMN_FORMAT, SensorDynamoImpl.Z_BASE, columnTime)] = [ "S" : String(format: SensorDynamoImpl.SAMPLE_FORMAT, sample[1]) ]
+                attributeValues[":" + String(format: SensorDynamoImpl.COLUMN_FORMAT, SensorDynamoImpl.X_BASE, columnTime)] = [ "N" : sample[0] ]
+                attributeValues[":" + String(format: SensorDynamoImpl.COLUMN_FORMAT, SensorDynamoImpl.Y_BASE, columnTime)] = [ "N" : sample[1] ]
+                attributeValues[":" + String(format: SensorDynamoImpl.COLUMN_FORMAT, SensorDynamoImpl.Z_BASE, columnTime)] = [ "N" : sample[2] ]
             }
             
             // now build the dynamo map for serialization
@@ -173,15 +171,15 @@ class SensorDynamoImpl {
                 item[SensorDynamoImpl.P_DATE_COLNAME] = ["S" : systemTimeFormatter.stringFromDate(NSDate())]
                 
                 // per-sample entries
-                for (startDate, sample) in entry as! [NSDate : [Double]] {
+                for (startDate, sample) in entry as! [NSDate : [String]] {
                     maxDate = maxDate.laterDate(startDate)
                     minDate = minDate.earlierDate(startDate)
                     itemCount += 1
                     
                     let columnTime = columnTimeFormatter.stringFromDate(startDate)
-                    item[String(format: SensorDynamoImpl.COLUMN_FORMAT, SensorDynamoImpl.X_BASE, columnTime)] = ["N" : String(format: SensorDynamoImpl.SAMPLE_FORMAT, sample[0])]
-                    item[String(format: SensorDynamoImpl.COLUMN_FORMAT, SensorDynamoImpl.Y_BASE, columnTime)] = ["N" : String(format: SensorDynamoImpl.SAMPLE_FORMAT, sample[1])]
-                    item[String(format: SensorDynamoImpl.COLUMN_FORMAT, SensorDynamoImpl.Z_BASE, columnTime)] = ["N" : String(format: SensorDynamoImpl.SAMPLE_FORMAT, sample[2])]
+                    item[String(format: SensorDynamoImpl.COLUMN_FORMAT, SensorDynamoImpl.X_BASE, columnTime)] = ["N" : sample[0]]
+                    item[String(format: SensorDynamoImpl.COLUMN_FORMAT, SensorDynamoImpl.Y_BASE, columnTime)] = ["N" : sample[1]]
+                    item[String(format: SensorDynamoImpl.COLUMN_FORMAT, SensorDynamoImpl.Z_BASE, columnTime)] = ["N" : sample[2]]
                 }
                 items.append(["PutRequest" : ["Item" : item]])
             }
@@ -213,10 +211,9 @@ class SensorDynamoImpl {
         itemMap = [:]
         
         if (returnedError != nil) {
-            return (false, returnedError)
+            throw FlushException.FlushError(cause: returnedError)
         } else {
             // TODO check the data for partial submit
-            return (true, nil)
         }
     }
     

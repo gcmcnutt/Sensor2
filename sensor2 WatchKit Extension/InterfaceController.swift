@@ -22,7 +22,6 @@ class InterfaceController: WKInterfaceController {
     @IBOutlet var cmdCountVal: WKInterfaceLabel!
     @IBOutlet var itemCountVal: WKInterfaceLabel!
     @IBOutlet var latestVal: WKInterfaceLabel!
-    @IBOutlet var cognitoIdVal: WKInterfaceLabel!
     @IBOutlet var errorsVal: WKInterfaceLabel!
     @IBOutlet var lastVal: WKInterfaceLabel!
     
@@ -61,15 +60,6 @@ class InterfaceController: WKInterfaceController {
         self.durationVal.setText(value.description)
     }
     
-    func stopDequeue() {
-        dequeuerButton.setOn(false)
-        extensionDelegate.setRun(false)
-
-        NSLog("stop dequeuer...")
-        let action1 = WKAlertAction(title: "Ok", style: .Cancel) {}
-        self.presentAlertControllerWithTitle("Error", message: "Can't get credentials from iPhone", preferredStyle: .ActionSheet, actions: [action1])
-    }
-    
     @IBAction func startRecorderAction() {
         lastStart = NSDate()
         self.lastStartVal.setText(AppGlobals.sharedInstance.summaryDateFormatter.stringFromDate(lastStart))
@@ -81,16 +71,12 @@ class InterfaceController: WKInterfaceController {
         
         // reset first fetch from time of starting dequeue
         if (value) {
-            extensionDelegate.latestDate = lastStart
+            extensionDelegate.latestDate = extensionDelegate.latestDate.laterDate(lastStart)
             
             dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
                 self.extensionDelegate.dequeueLoop()
             }
         }
-    }
-    
-    func updateCognitoId(cognitoId : String?) {
-        cognitoIdVal.setText(cognitoId)
     }
     
     func updateUI(cmdCount : Int, itemCount : Int, latestDate : NSDate, errors : Int, lastError : String) {

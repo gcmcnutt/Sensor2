@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="9532" systemVersion="14F1605" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="9515"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="10032"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Courier.ttc">
-            <string>Courier</string>
-            <string>Courier</string>
             <string>Courier</string>
             <string>Courier</string>
             <string>Courier</string>
@@ -100,18 +98,6 @@
                                 </label>
                             </items>
                         </group>
-                        <group width="134" height="42" alignment="left" id="v1f-OZ-jy0">
-                            <items>
-                                <label width="18" alignment="left" text="ID" id="VEU-7m-IyZ">
-                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <fontDescription key="font" name="Courier" family="Courier" pointSize="9"/>
-                                </label>
-                                <label width="115" height="40" alignment="right" textAlignment="right" numberOfLines="3" id="cVT-mX-mu3">
-                                    <color key="textColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <fontDescription key="font" name="Courier" family="Courier" pointSize="9"/>
-                                </label>
-                            </items>
-                        </group>
                         <group width="134" height="11" alignment="left" id="gDg-Kg-zAn">
                             <items>
                                 <label alignment="left" text="errors" id="ClB-CJ-XD2">
@@ -139,7 +125,6 @@
                     </items>
                     <connections>
                         <outlet property="cmdCountVal" destination="d00-fm-NE6" id="MAo-U1-9yK"/>
-                        <outlet property="cognitoIdVal" destination="cVT-mX-mu3" id="X5L-XF-7PH"/>
                         <outlet property="dequeuerButton" destination="b5C-5z-auK" id="WGA-oZ-TQ2"/>
                         <outlet property="durationVal" destination="EQL-2g-ieb" id="uom-oq-I4g"/>
                         <outlet property="errorsVal" destination="l6G-An-FAk" id="1OZ-2E-w4G"/>

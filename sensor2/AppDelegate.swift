@@ -14,12 +14,17 @@ import TwitterKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSessionDelegate, AIAuthenticationDelegate {
     static let AMZN_TOKEN_VALID_ESTIMATE_SEC = 3000.0
+    let REFRESH_LEAD_SEC = 300.0
+    
     
     var window: UIWindow?
     var viewController : ViewController!
     var infoPlist : NSDictionary!
     
     let wcsession = WCSession.defaultSession()
+    var sensorDynamoImpl : SensorDynamoImpl!
+    
+    private var userCredentials : NSDictionary = [:]
     
     // AWS plumbing
     var credentialsProvider : AWSCognitoCredentialsProvider!
@@ -45,6 +50,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSess
         infoPlist = NSDictionary(contentsOfFile: path)
         
         viewController = self.window?.rootViewController as! ViewController
+        
+        sensorDynamoImpl = SensorDynamoImpl(appDelegate: self)
         
         // set up Cognito
         //AWSLogger.defaultLogger().logLevel = .Verbose
@@ -150,7 +157,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSess
             auths[AWSCognitoLoginProviderKey.Google.rawValue] = user.authentication
             dispatch_semaphore_signal(googleSem)
         } else {
-            NSLog("\(error.userInfo.description)")
+            NSLog("google: error=\(error.userInfo.description)")
             auths.removeValueForKey(AWSCognitoLoginProviderKey.Google.rawValue)
             dispatch_semaphore_signal(googleSem)
         }
@@ -172,12 +179,52 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSess
         genDisplay()
     }
     
-    // message from watch
-    func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
-        NSLog("session message " + message.description)
-        if (message[AppGlobals.SESSION_ACTION] as! String == AppGlobals.GET_CREDENTIALS) {
-            var taskResult : AWSTask!
+    func session(session: WCSession, didReceiveFile file: WCSessionFile) {
+        NSLog("didReceiveFile=\(file.fileURL.description)")
+        if let aStreamReader = StreamReader(path: file.fileURL.path!) {
+            defer {
+                // TODO flush entry (this is a left justified flush, not implemented in flushHandler right now...
+                aStreamReader.close()
+            }
+            while let line = aStreamReader.nextLine() {
+                // write entry
+                do {
+                    try sensorDynamoImpl.addSample(line)
+                } catch SensorDynamoImpl.FlushException.NoCredentials {
+                    NSLog("no credentials")
+                    return // give up on this file for now
+                } catch SensorDynamoImpl.FlushException.FlushError(let cause) {
+                    NSLog("flush error: \(cause?.description)")
+                    return
+                } catch {
+                    NSLog("unknown error")
+                }
+            }
+        }
+    }
+    
+    func getCredentials() -> NSDictionary {
+        var refreshCredentials = false
+        let expireTime = userCredentials[AppGlobals.CRED_EXPIRATION_KEY] as? NSDate
+        if (expireTime == nil) {
+            // no data at all so fetch and wait
+            refreshCredentials = true
+        } else {
+            // data and expired so fetch and wait
+            let now = NSDate()
+            if (now.compare(expireTime!) == NSComparisonResult.OrderedDescending) {
+                userCredentials = [:]
+                refreshCredentials = true
+            } else if (now.dateByAddingTimeInterval(REFRESH_LEAD_SEC).compare(expireTime!) == NSComparisonResult.OrderedDescending) {
+                // nearing expiration so fetch [TODO no wait]
+                refreshCredentials = true
+            }
+        }
+        
+        if (refreshCredentials) {
+            NSLog("refreshing userCredentials...")
             let sem = dispatch_semaphore_create(0)
+            var taskResult : AWSTask!
             let now = NSDate()
             
             var logins : [ NSObject : AnyObject ] = [:]
@@ -187,6 +234,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSess
                 let auth = auths[AWSCognitoLoginProviderKey.LoginWithAmazon.rawValue] as? AWSAuth
                 if (auth == nil || auth!.expires.compare(now) == NSComparisonResult.OrderedAscending) {
                     NSLog("amazon: trigger refresh...")
+                    auths.removeValueForKey(AWSCognitoLoginProviderKey.LoginWithAmazon.rawValue)
                     awsSem = dispatch_semaphore_create(0)
                     
                     let delegate = AuthorizeUserDelegate(delegate: self)
@@ -214,6 +262,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSess
                 if (auth == nil || auth!.accessTokenExpirationDate.compare(now) == NSComparisonResult.OrderedAscending) {
                     // sync get google token
                     NSLog("google: trigger refresh...")
+                    auths.removeValueForKey(AWSCognitoLoginProviderKey.Google.rawValue)
                     googleSem = dispatch_semaphore_create(0)
                     GIDSignIn.sharedInstance().signInSilently()
                     
@@ -270,25 +319,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSess
             NSLog("logins[\(credentialsProvider.logins)], expiration[\(credentialsProvider.expiration)], accessKey[\(credentialsProvider.accessKey)], secretKey[\(credentialsProvider.secretKey)], sessionKey[\(credentialsProvider.sessionKey)]")
             
             if (taskResult.error == nil) {
-                let reply = [AppGlobals.CRED_COGNITO_KEY : self.credentialsProvider.identityId,
-                             AppGlobals.CRED_ACCESS_KEY : self.credentialsProvider.accessKey,
-                             AppGlobals.CRED_SECRET_KEY : self.credentialsProvider.secretKey,
-                             AppGlobals.CRED_SESSION_KEY : self.credentialsProvider.sessionKey,
-                             AppGlobals.CRED_EXPIRATION_KEY : self.credentialsProvider.expiration]
-                replyHandler(reply)
+                userCredentials = [AppGlobals.CRED_COGNITO_KEY : self.credentialsProvider.identityId,
+                                   AppGlobals.CRED_ACCESS_KEY : self.credentialsProvider.accessKey,
+                                   AppGlobals.CRED_SECRET_KEY : self.credentialsProvider.secretKey,
+                                   AppGlobals.CRED_SESSION_KEY : self.credentialsProvider.sessionKey,
+                                   AppGlobals.CRED_EXPIRATION_KEY : self.credentialsProvider.expiration]
             } else {
                 NSLog("error fetching credentials: \(taskResult.error!.userInfo.description)")
                 viewController.updateErrorState(taskResult.error!.userInfo.description)
-                replyHandler([:])
+                userCredentials = [:]
             }
         }
+        
+        return userCredentials
     }
     
     func clearCredentials() {
         NSLog("clear credentials...")
         credentialsProvider.clearKeychain()
+        userCredentials = [:]
         auths = [:]
-        wcsession.sendMessage([AppGlobals.SESSION_ACTION : AppGlobals.CLEAR_CREDENTIALS], replyHandler: nil, errorHandler: nil)
         genDisplay()
     }
     

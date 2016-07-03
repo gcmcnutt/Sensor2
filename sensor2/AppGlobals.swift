@@ -28,11 +28,6 @@ class AppGlobals {
     static let ISO8601_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
     static let SUMMARY_TIME_FORMAT = "HH:mm:ss.SSS"
     
-    // send message constants
-    static let SESSION_ACTION = "action"
-    static let CLEAR_CREDENTIALS = "clearCredentials"
-    static let GET_CREDENTIALS = "getCredentials"
-    
     static let sharedInstance = AppGlobals()
     
     init() {

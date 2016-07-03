@@ -18,10 +18,8 @@ extension CMSensorDataList: SequenceType {
 }
 
 class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
-    let SLOW_POLL_DELAY_SEC = 2.0
-    let FAST_POLL_DELAY_SEC = 0.01
+    let SLOW_POLL_DELAY_SEC = 5.0
     let MAX_EARLIEST_TIME_SEC = -24.0 * 60.0 * 60.0 // a day ago
-    let REFRESH_LEAD_SEC = 300.0
     
     let wcsession = WCSession.defaultSession()
     let sr = CMSensorRecorder()
@@ -30,8 +28,6 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     
     var appContext : NSDictionary = [:]
     
-    var sensorDynamoImpl : SensorDynamoImpl!
-    private var userCredentials : NSDictionary = [:]
     var durationValue = 5.0 // UI default
     private var dequeuerState: UInt8 = 0 // UI default
     
@@ -41,6 +37,11 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     var lastError = ""
     var errors = 0
     
+    var fileCount = 0
+    var writtenRecords = 0
+    var outPath : NSURL!
+    var outStream : NSOutputStream!
+    
     var fakeData : Bool = false
     
     func applicationDidFinishLaunching() {
@@ -49,8 +50,6 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         // wake up session to phone
         wcsession.delegate = self
         wcsession.activateSession()
-        
-        sensorDynamoImpl = SensorDynamoImpl(extensionDelegate: self)
     }
     
     func applicationDidBecomeActive() {
@@ -62,62 +61,18 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         // Use this method to pause ongoing tasks, disable timers, etc.
     }
     
-    func session(session: WCSession, didReceiveMessage message: [String : AnyObject]) {
-        NSLog("clear credentials")
-        userCredentials = [:]
-        NSOperationQueue.mainQueue().addOperationWithBlock() {
-            (WKExtension.sharedExtension().rootInterfaceController
-                as! InterfaceController).updateCognitoId("")
+    func session(session: WCSession, didFinishFileTransfer file: WCSessionFileTransfer, error: NSError?) {
+        if (error != nil) {
+            NSLog("fileTransfer error=\(error!.description), file=\(file.file.fileURL.description)")
+            // TODO stop dequeue
+        }
+        do {
+            try NSFileManager.defaultManager().removeItemAtURL(file.file.fileURL)
+            NSLog("fileTransfer removes=\(file.file.fileURL.description)")
+        } catch let error as NSError {
+            NSLog("fileTransfer removeError=\(error.domain), file\(file.file.fileURL.description)")
         }
     }
-    
-    func getCredentials() -> NSDictionary {
-        var sendMessage = false
-        var waitForReply = true
-        let expireTime = userCredentials[AppGlobals.CRED_EXPIRATION_KEY] as? NSDate
-        if (expireTime == nil) {
-            // no data at all so fetch and wait
-            sendMessage = true
-        } else {
-            // data and expired so fetch and wait
-            let now = NSDate()
-            if (now.compare(expireTime!) == NSComparisonResult.OrderedDescending) {
-                userCredentials = [:]
-                sendMessage = true
-            } else if (now.dateByAddingTimeInterval(REFRESH_LEAD_SEC).compare(expireTime!) == NSComparisonResult.OrderedDescending) {
-                // nearing expiration so fetch [no wait]
-                sendMessage = true
-                //TODO analyze this... -> waitForReply = false
-            }
-        }
-        
-        if (sendMessage) {
-            NSLog("refreshing userCredentials... send=\(sendMessage), wait=\(waitForReply)")
-            let sem = dispatch_semaphore_create(0)
-            
-            wcsession.sendMessage([AppGlobals.SESSION_ACTION : AppGlobals.GET_CREDENTIALS],
-                replyHandler: {(result : [String : AnyObject]) in
-                    let cognitoId = result[AppGlobals.CRED_COGNITO_KEY] as? String
-                    NSLog("userCredentials refreshed cognitoId=\(cognitoId)")
-                    NSOperationQueue.mainQueue().addOperationWithBlock() {
-                        (WKExtension.sharedExtension().rootInterfaceController
-                            as! InterfaceController).updateCognitoId(cognitoId)
-                    }
-                    self.userCredentials = result
-                    dispatch_semaphore_signal(sem)
-                }, errorHandler: {(error : NSError) in
-                    NSLog("userCredentials. error=" + error.description)
-                    dispatch_semaphore_signal(sem)
-            })
-            
-            if (waitForReply) {
-                dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER)
-            }
-        }
-        
-        return userCredentials
-    }
-    
     
     func record() {
         NSLog("recordAccelerometer(\(durationValue))")
@@ -142,8 +97,6 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     
     func dequeueLoop() {
         while (isRun()) {
-            var foundData = false
-            var commit = false
             cmdCount += 1
             NSLog("dequeueLoop(\(cmdCount))")
             
@@ -152,81 +105,86 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
             var newLatestDate = latestDate.laterDate(earliest)
             var newItems = 0
             
-            while (isRun()) {
-                
-                // real or faking it?
-                if (haveAccelerometer && !fakeData) {
-                    let data = sr.accelerometerDataFromDate(newLatestDate, toDate: NSDate())
-                    if (data != nil) {
+            // real or faking it?
+            if (haveAccelerometer && !fakeData) {
+                let data = sr.accelerometerDataFromDate(newLatestDate, toDate: NSDate())
+                if (data != nil) {
+                    
+                    for element in data! {
+                        let lastElement = element as! CMRecordedAccelerometerData
                         
-                        for element in data! {
-                            let lastElement = element as! CMRecordedAccelerometerData
-                            
-                            // skip repeated element from prior batch
-                            if (!(lastElement.startDate.compare(newLatestDate) == NSComparisonResult.OrderedDescending)) {
-                                continue;
-                            }
-                            
-                            // next item, here we enqueue it
-                            if (lastElement.startDate.compare(NSDate.distantPast()) == NSComparisonResult.OrderedAscending) {
-                                NSLog("odd date: " + lastElement.description)
-                            }
-                            
-                            foundData = true
-                            let (isCommit, rErr) = sensorDynamoImpl.addSample(lastElement)
-                            if (isCommit) {
-                                commit = true
-                                break;
-                            } else if (rErr != nil) {
-                                errors += 1
-                                lastError = rErr!.description
-                                break
-                            }
-                            
-                            // update the uncommit state
-                            newItems += 1
-                            newLatestDate = lastElement.startDate
+                        // skip repeated element from prior batch
+                        if (!(lastElement.startDate.compare(newLatestDate) == NSComparisonResult.OrderedDescending)) {
+                            continue;
                         }
-                    }
-                } else {
-                    while (isRun() && newLatestDate.compare(NSDate()) == NSComparisonResult.OrderedAscending) {
                         
-                        foundData = true
-                        
-                        let (isCommit, rErr) = sensorDynamoImpl.addSample(newLatestDate, x: random(), y: random(), z: random())
-                        if (isCommit) {
-                            commit = true
-                            break;
-                        } else if (rErr != nil) {
-                            errors += 1
-                            lastError = rErr!.description
-                            break
+                        // next item, here we enqueue it
+                        if (lastElement.startDate.compare(NSDate.distantPast()) == NSComparisonResult.OrderedAscending) {
+                            NSLog("odd date: " + lastElement.description)
                         }
+                        
+                        writeRecord(lastElement.startDate, x : lastElement.acceleration.x,
+                                    y : lastElement.acceleration.y, z : lastElement.acceleration.z)
                         
                         newItems += 1
-                        newLatestDate = newLatestDate.dateByAddingTimeInterval(0.02)
+                        newLatestDate = newLatestDate.laterDate(lastElement.startDate)
                     }
                 }
-                
-                if (commit) {
-                    latestDate = newLatestDate
-                    itemCount += newItems
-                    NSLog("commit latestDate=\(latestDate), itemCount=\(itemCount)")
-                    NSOperationQueue.mainQueue().addOperationWithBlock() {
-                        (WKExtension.sharedExtension().rootInterfaceController
-                            as! InterfaceController).updateUI(self.cmdCount, itemCount: self.itemCount, latestDate: self.latestDate, errors: self.errors, lastError: self.lastError)
-                    }
-                    break
-                }
-                
-                if (foundData) {
-                    NSThread.sleepForTimeInterval(FAST_POLL_DELAY_SEC)
-                } else {
-                    NSThread.sleepForTimeInterval(SLOW_POLL_DELAY_SEC)
+            } else {
+                while (isRun() && newLatestDate.compare(NSDate()) == NSComparisonResult.OrderedAscending) {
+                    
+                    writeRecord(newLatestDate, x: random(), y: random(), z: random())
+                    
+                    newItems += 1
+                    newLatestDate = newLatestDate.dateByAddingTimeInterval(0.02)
                 }
             }
+            
+            if (writtenRecords > 0) {
+                latestDate = newLatestDate
+                itemCount += newItems
+
+                NSLog("commit latestDate=\(latestDate), writtenRecords=\(writtenRecords), fileCount=\(fileCount), itemCount=\(itemCount)")
+
+                outStream.close()
+                writtenRecords = 0
+                
+                wcsession.transferFile(outPath, metadata: nil)
+                
+                // TODO update file transfer in progress count UI
+            }
+
+            NSOperationQueue.mainQueue().addOperationWithBlock() {
+                (WKExtension.sharedExtension().rootInterfaceController
+                    as! InterfaceController).updateUI(self.cmdCount, itemCount: self.itemCount, latestDate: self.latestDate, errors: self.errors, lastError: self.lastError)
+            }
+
+            NSThread.sleepForTimeInterval(SLOW_POLL_DELAY_SEC)
+        }
+        NSLog("exit dequeue loop")
+    }
+    
+    func writeRecord(sampleDate : NSDate, x : Double, y : Double, z: Double) {
+        if (writtenRecords == 0) {
+            let directory = NSTemporaryDirectory()
+            let fileName = NSUUID().UUIDString
+            
+            outPath = NSURL.fileURLWithPathComponents([directory, fileName])
+            try! "".writeToURL(outPath, atomically: true, encoding: NSUTF8StringEncoding)
+            outStream = NSOutputStream(toFileAtPath: outPath.path!, append: false)
+            outStream.open()
+            
+            fileCount += 1
         }
         
-        NSLog("exit dequeue loop")
+        // now write the data
+        let record = String(format: "%@,%5.3f,%5.3f,%5.3f\n", AppGlobals.sharedInstance.dateFormatter.stringFromDate(sampleDate), x, y, z)
+        let encodedRecord = [UInt8](record.utf8)
+        let retCount = outStream.write(encodedRecord, maxLength: encodedRecord.count)
+        if (retCount == -1) {
+            NSLog("writeError=\(outStream.streamError!.description)")
+        }
+        
+        writtenRecords += 1
     }
 }

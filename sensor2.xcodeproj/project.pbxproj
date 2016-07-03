@@ -26,8 +26,9 @@
 		D351F0A81C01738800F6F91D /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351F0A71C01738800F6F91D /* InterfaceController.swift */; };
 		D351F0AA1C01738800F6F91D /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351F0A91C01738800F6F91D /* ExtensionDelegate.swift */; };
 		D351F0AC1C01738800F6F91D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D351F0AB1C01738800F6F91D /* Assets.xcassets */; };
-		D351F0C21C0183D300F6F91D /* SensorDynamoImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351F0C11C0183D300F6F91D /* SensorDynamoImpl.swift */; };
 		D3538F671C7A367D00D9C963 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D3538F641C76EEC900D9C963 /* GoogleService-Info.plist */; };
+		D366D52D1D0A710C00DE7FCB /* StreamReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D366D52C1D0A710C00DE7FCB /* StreamReader.swift */; };
+		D366D52F1D0C820400DE7FCB /* SensorDynamoImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D366D52E1D0C820400DE7FCB /* SensorDynamoImpl.swift */; };
 		D38056731C5DC4F800353CD7 /* LoginWithAmazon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D38056721C5DC4F800353CD7 /* LoginWithAmazon.framework */; };
 		D3E320811C8D1D5B006272C2 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3E320801C8D1D5B006272C2 /* FBSDKCoreKit.framework */; };
 		D3E320831C8D1D6A006272C2 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3E320821C8D1D6A006272C2 /* FBSDKLoginKit.framework */; };
@@ -95,7 +96,6 @@
 		5D6A1D8708B46402D368F316 /* Pods-sensor2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sensor2.release.xcconfig"; path = "Pods/Target Support Files/Pods-sensor2/Pods-sensor2.release.xcconfig"; sourceTree = "<group>"; };
 		93712934B335D15CD1ACB769 /* libPods-sensor2.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-sensor2.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D06934EA811FBAA32C632AA8 /* Pods-sensor2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sensor2.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sensor2/Pods-sensor2.debug.xcconfig"; sourceTree = "<group>"; };
-		D3036CD11C16A2F800DCC5F8 /* Watch-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Watch-Bridging-Header.h"; sourceTree = "<group>"; };
 		D3379F581C409F7F00430D2C /* Sensor2-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Sensor2-Bridging-Header.h"; sourceTree = "<group>"; };
 		D3379F591C409FC800430D2C /* LogoutDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutDelegate.swift; sourceTree = "<group>"; };
 		D3379F5D1C409FDF00430D2C /* AuthorizeUserDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizeUserDelegate.swift; sourceTree = "<group>"; };
@@ -123,8 +123,9 @@
 		D351F0A91C01738800F6F91D /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
 		D351F0AB1C01738800F6F91D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D351F0AD1C01738800F6F91D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D351F0C11C0183D300F6F91D /* SensorDynamoImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensorDynamoImpl.swift; sourceTree = "<group>"; };
 		D3538F641C76EEC900D9C963 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D366D52C1D0A710C00DE7FCB /* StreamReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamReader.swift; sourceTree = "<group>"; };
+		D366D52E1D0C820400DE7FCB /* SensorDynamoImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensorDynamoImpl.swift; sourceTree = "<group>"; };
 		D38056701C5DC3D900353CD7 /* LoginWithAmazon */ = {isa = PBXFileReference; lastKnownFileType = folder; path = LoginWithAmazon; sourceTree = "<group>"; };
 		D38056721C5DC4F800353CD7 /* LoginWithAmazon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LoginWithAmazon.framework; path = LoginWithAmazon/LoginWithAmazon.framework; sourceTree = "<group>"; };
 		D3D467A01C3B7648006AC438 /* sensor2Web */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sensor2Web; sourceTree = "<group>"; };
@@ -242,6 +243,8 @@
 				D351F0751C01738800F6F91D /* Assets.xcassets */,
 				D351F0771C01738800F6F91D /* LaunchScreen.storyboard */,
 				D351F07A1C01738800F6F91D /* Info.plist */,
+				D366D52C1D0A710C00DE7FCB /* StreamReader.swift */,
+				D366D52E1D0C820400DE7FCB /* SensorDynamoImpl.swift */,
 			);
 			path = sensor2;
 			sourceTree = "<group>";
@@ -277,8 +280,6 @@
 		D351F0A61C01738800F6F91D /* sensor2 WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
-				D3036CD11C16A2F800DCC5F8 /* Watch-Bridging-Header.h */,
-				D351F0C11C0183D300F6F91D /* SensorDynamoImpl.swift */,
 				D351F0A71C01738800F6F91D /* InterfaceController.swift */,
 				D351F0A91C01738800F6F91D /* ExtensionDelegate.swift */,
 				D351F0AB1C01738800F6F91D /* Assets.xcassets */,
@@ -550,9 +551,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D366D52D1D0A710C00DE7FCB /* StreamReader.swift in Sources */,
 				D3379F5E1C409FDF00430D2C /* AuthorizeUserDelegate.swift in Sources */,
 				D351F0711C01738800F6F91D /* ViewController.swift in Sources */,
 				D3379F621C409FFB00430D2C /* AppGlobals.swift in Sources */,
+				D366D52F1D0C820400DE7FCB /* SensorDynamoImpl.swift in Sources */,
 				D351F06F1C01738800F6F91D /* AppDelegate.swift in Sources */,
 				D3379F5A1C409FC800430D2C /* LogoutDelegate.swift in Sources */,
 			);
@@ -579,7 +582,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3379F6B1C42314200430D2C /* AppGlobals.swift in Sources */,
-				D351F0C21C0183D300F6F91D /* SensorDynamoImpl.swift in Sources */,
 				D351F0AA1C01738800F6F91D /* ExtensionDelegate.swift in Sources */,
 				D351F0A81C01738800F6F91D /* InterfaceController.swift in Sources */,
 			);
@@ -733,7 +735,9 @@
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "sensor2 WatchKit Extension/Watch-Bridging-Header.h";
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.2;
 			};
@@ -751,7 +755,9 @@
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "sensor2 WatchKit Extension/Watch-Bridging-Header.h";
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.2;
 			};
