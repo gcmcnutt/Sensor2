@@ -20,7 +20,7 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
     @IBOutlet weak var twitterLoginButton: TWTRLogInButton!
     @IBOutlet weak var facebookLoginButton: FBSDKLoginButton!
     
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +44,8 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
                 NSLog("error: \(error?.localizedDescription)")
             }
         }
+        // TODO why do I need to hard code this?
+        twitterLoginButton.frame = CGRect(x: 38, y: 126, width: 191, height: 30)
         
         // facebook setup
         facebookLoginButton.readPermissions = ["email"];
@@ -54,14 +56,14 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func loginAmazonAction(sender: AnyObject) {
+    @IBAction func loginAmazonAction(_ sender: AnyObject) {
         // Requesting both scopes for the current user.
         let requestScopes: [String] = ["profile", "postal_code"]
         let delegate = AuthorizeUserDelegate(delegate: appDelegate)
-        AIMobileLib.authorizeUserForScopes(requestScopes, delegate: delegate)
+        AIMobileLib.authorizeUser(forScopes: requestScopes, delegate: delegate)
     }
     
-    @IBAction func logoutAction(sender: AnyObject) {
+    @IBAction func logoutAction(_ sender: AnyObject) {
         
         // amazon
         let delegate = LogoutDelegate(parentController: self)
@@ -84,8 +86,8 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         appDelegate.clearCredentials()
     }
     
-    func updateLoginState(amzn: String, goog: String, twtr: String, fb:String) {
-        NSOperationQueue.mainQueue().addOperationWithBlock() {
+    func updateLoginState(_ amzn: String, goog: String, twtr: String, fb:String) {
+        OperationQueue.main.addOperation() {
             self.amznVal.text = amzn
             self.googVal.text = goog
             self.twtrVal.text = twtr
@@ -94,8 +96,8 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         updateErrorState("")
     }
     
-    func updateErrorState(err: String) {
-        NSOperationQueue.mainQueue().addOperationWithBlock() {
+    func updateErrorState(_ err: String) {
+        OperationQueue.main.addOperation() {
             self.errText.text = err
         }
     }

@@ -11,9 +11,9 @@ import Foundation
 import CoreMotion
 
 class InterfaceController: WKInterfaceController {
-    let extensionDelegate = WKExtension.sharedExtension().delegate as! ExtensionDelegate
+    let extensionDelegate = WKExtension.shared().delegate as! ExtensionDelegate
     
-    var lastStart = NSDate()
+    var lastStart = Date()
     
     @IBOutlet var durationVal: WKInterfaceLabel!
     @IBOutlet var startVal: WKInterfaceButton!
@@ -26,14 +26,14 @@ class InterfaceController: WKInterfaceController {
     @IBOutlet var errorsVal: WKInterfaceLabel!
     @IBOutlet var lastVal: WKInterfaceLabel!
     
-    override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
+    override func awake(withContext context: Any?) {
+        super.awake(withContext: context)
         
         // Configure interface objects here.
         
         // can we record?
         startVal.setEnabled(extensionDelegate.haveAccelerometer)
-        lastStartVal.setText(AppGlobals.sharedInstance.summaryDateFormatter.stringFromDate(lastStart))
+        lastStartVal.setText(AppGlobals.sharedInstance.summaryDateFormatter.string(from: lastStart))
         
         // do we have access to sensor?
         if (!extensionDelegate.authorizedAccelerometer) {
@@ -52,11 +52,11 @@ class InterfaceController: WKInterfaceController {
     }
     
     // UI stuff
-    @IBAction func fakeDataAction(value: Bool) {
+    @IBAction func fakeDataAction(_ value: Bool) {
         extensionDelegate.fakeData = value
     }
     
-    @IBAction func durationAction(value: Float) {
+    @IBAction func durationAction(_ value: Float) {
         extensionDelegate.durationValue = Double(value)
         self.durationVal.setText(value.description)
     }
@@ -66,38 +66,38 @@ class InterfaceController: WKInterfaceController {
         extensionDelegate.setRun(false)
 
         NSLog("stop dequeuer...")
-        let action1 = WKAlertAction(title: "Ok", style: .Cancel) {}
-        self.presentAlertControllerWithTitle("Error", message: "Can't get credentials from iPhone", preferredStyle: .ActionSheet, actions: [action1])
+        let action1 = WKAlertAction(title: "Ok", style: .cancel) {}
+        self.presentAlert(withTitle: "Error", message: "Can't get credentials from iPhone", preferredStyle: .actionSheet, actions: [action1])
     }
     
     @IBAction func startRecorderAction() {
-        lastStart = NSDate()
-        self.lastStartVal.setText(AppGlobals.sharedInstance.summaryDateFormatter.stringFromDate(lastStart))
+        lastStart = Date()
+        self.lastStartVal.setText(AppGlobals.sharedInstance.summaryDateFormatter.string(from: lastStart))
         extensionDelegate.record()
     }
     
-    @IBAction func dequeuerAction(value: Bool) {
+    @IBAction func dequeuerAction(_ value: Bool) {
         extensionDelegate.setRun(value)
         
         // reset first fetch from time of starting dequeue
         if (value) {
             extensionDelegate.latestDate = lastStart
             
-            dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
+            DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
                 self.extensionDelegate.dequeueLoop()
             }
         }
     }
     
-    func updateCognitoId(cognitoId : String?) {
+    func updateCognitoId(_ cognitoId : String?) {
         cognitoIdVal.setText(cognitoId)
     }
     
-    func updateUI(cmdCount : Int, itemCount : Int, latestDate : NSDate, errors : Int, lastError : String) {
+    func updateUI(_ cmdCount : Int, itemCount : Int, latestDate : Date, errors : Int, lastError : String) {
         cmdCountVal.setText(cmdCount.description)
         itemCountVal.setText(itemCount.description)
-        latestVal.setText(AppGlobals.sharedInstance.summaryDateFormatter.stringFromDate(
-            latestDate))
+        latestVal.setText(AppGlobals.sharedInstance.summaryDateFormatter.string(
+            from: latestDate))
         errorsVal.setText(errors.description)
         lastVal.setText(lastError)
     }

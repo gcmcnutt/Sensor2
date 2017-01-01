@@ -16,25 +16,25 @@ class LogoutDelegate: NSObject, AIAuthenticationDelegate {
         self.parentController = parentController
     }
     
-    @objc func requestDidSucceed(apiResult: APIResult!) {
+    @objc func requestDidSucceed(_ apiResult: APIResult!) {
         // Your additional logic after the user authorization state is cleared.
                 
         let alertController = UIAlertController(title: "",
             message: "User Logged out.",
-            preferredStyle: .Alert)
-        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            preferredStyle: .alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alertController.addAction(defaultAction)
         
-        parentController.presentViewController(alertController, animated: true, completion: nil)
+        parentController.present(alertController, animated: true, completion: nil)
     }
     
-    @objc func requestDidFail(errorResponse: APIError) {
+    @objc func requestDidFail(_ errorResponse: APIError) {
         let alertController = UIAlertController(title: "",
             message: "Logout:" + errorResponse.error.message,
-            preferredStyle: .Alert)
-        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            preferredStyle: .alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alertController.addAction(defaultAction)
         
-        parentController.presentViewController(alertController, animated: true, completion: nil)
+        parentController.present(alertController, animated: true, completion: nil)
     }
 }

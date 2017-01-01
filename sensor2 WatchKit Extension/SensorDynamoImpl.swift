@@ -33,11 +33,11 @@ class SensorDynamoImpl {
     
     // an array of dictionary items -- each dictionary entry is a single second's samples
     var itemMap : [String : AnyObject] = [:]
-    var itemTimeFormatter = NSDateFormatter()
-    var columnTimeFormatter = NSDateFormatter()
-    var systemTimeFormatter = NSDateFormatter()
-    var awsRequestTimeFormatter = NSDateFormatter()
-    var awsRequestDateFormatter = NSDateFormatter()
+    var itemTimeFormatter = DateFormatter()
+    var columnTimeFormatter = DateFormatter()
+    var systemTimeFormatter = DateFormatter()
+    var awsRequestTimeFormatter = DateFormatter()
+    var awsRequestDateFormatter = DateFormatter()
     
     var priorTimeSlot = ""
     
@@ -45,32 +45,32 @@ class SensorDynamoImpl {
         self.extensionDelegate = extensionDelegate
         
         itemTimeFormatter.dateFormat = SensorDynamoImpl.ITEM_TIME_FORMAT
-        itemTimeFormatter.timeZone = NSTimeZone(name:"UTC")
+        itemTimeFormatter.timeZone = TimeZone(identifier:"UTC")
         
         columnTimeFormatter.dateFormat = SensorDynamoImpl.COLUMN_TIME_FORMAT
-        columnTimeFormatter.timeZone = NSTimeZone(name:"UTC")
+        columnTimeFormatter.timeZone = TimeZone(identifier:"UTC")
         
         systemTimeFormatter.dateFormat = SensorDynamoImpl.SYSTEM_TIME_FORMAT
-        systemTimeFormatter.timeZone = NSTimeZone(name:"UTC")
+        systemTimeFormatter.timeZone = TimeZone(identifier:"UTC")
         
         awsRequestTimeFormatter.dateFormat = SensorDynamoImpl.AWS_REQUEST_TIME_FORMAT
-        awsRequestTimeFormatter.timeZone = NSTimeZone(name:"UTC")
+        awsRequestTimeFormatter.timeZone = TimeZone(identifier:"UTC")
         
         awsRequestDateFormatter.dateFormat = SensorDynamoImpl.AWS_REQUEST_DATE_FORMAT
-        awsRequestDateFormatter.timeZone = NSTimeZone(name:"UTC")
+        awsRequestDateFormatter.timeZone = TimeZone(identifier:"UTC")
     }
     
     // add an ordered sample, auto flush as necessary
-    func addSample(sample : CMRecordedAccelerometerData) -> (Bool, NSError?) {
+    func addSample(_ sample : CMRecordedAccelerometerData) -> (Bool, Error?) {
         return addSample(sample.startDate, x : sample.acceleration.x, y : sample.acceleration.y, z : sample.acceleration.z)
     }
     
-    func addSample(startDate: NSDate, x: Double, y: Double, z: Double) -> (Bool, NSError?) {
+    func addSample(_ startDate: Date, x: Double, y: Double, z: Double) -> (Bool, Error?) {
         // figure out the seconds slot for this sample
-        let timeSlot = itemTimeFormatter.stringFromDate(startDate)
+        let timeSlot = itemTimeFormatter.string(from: startDate)
         
         // do an update flush if this is the initial partially filled timeSlot
-        if (timeSlot != priorTimeSlot && itemMap.count == 1 && itemMap[priorTimeSlot]?.count < 50) {
+        if (timeSlot != priorTimeSlot && itemMap.count == 1 && (itemMap[priorTimeSlot]?.count)! < 50) {
             return flushHandler(true)
         }
         
@@ -85,129 +85,134 @@ class SensorDynamoImpl {
             }
             
             // add new element to data
-            itemMap[timeSlot] = [:]
+            itemMap[timeSlot] = [:] as AnyObject
         }
         
-        var item = itemMap[timeSlot] as! [NSDate : [Double]]
+        var item = itemMap[timeSlot] as! [Date : [Double]]
         item[startDate] = [x, y, z]
-        itemMap[timeSlot] = item
+        itemMap[timeSlot] = item as AnyObject?
         return (false, nil)
     }
     
-    func flushHandler(doUpdate : Bool) -> (commit: Bool, error: NSError?) {
-        var minDate = NSDate.distantFuture()
-        var maxDate = NSDate.distantPast()
-        var itemCount = 0
-        var dynamoPayload : [String : AnyObject]!
-        var actionType : String!
+    func flushHandler(_ doUpdate : Bool) -> (commit: Bool, error: Error?) {
+        var returnedData : Data?
+        var returnedError : Error?
         
         NSLog("start flush")
         
         // update credentials
         let credentials = extensionDelegate.getCredentials()
         if (credentials.count == 0) {
-            NSOperationQueue.mainQueue().addOperationWithBlock() {
-                (WKExtension.sharedExtension().rootInterfaceController
+            OperationQueue.main.addOperation() {
+                (WKExtension.shared().rootInterfaceController
                     as! InterfaceController).stopDequeue()
             }
             
             return (false, nil)
         }
         
-        if (doUpdate) {
+        autoreleasepool { () -> Void in
+            var minDate = Date.distantFuture
+            var maxDate = Date.distantPast
+            var itemCount = 0
+            var dynamoPayload : [String : Any]!
+            var actionType : String!
             
-            // format assumed single-item as an updateItem request
-            assert(itemMap.count == 1)
             
-            // the element to process
-            let (timeSlot, entry) = itemMap.first!
-            
-            // generate key part of expression
-            let key = [
-                SensorDynamoImpl.HASH_KEY_COLNAME : ["S" : credentials[AppGlobals.CRED_COGNITO_KEY]!],
-                SensorDynamoImpl.RANGE_KEY_COLNAME : ["S" : timeSlot]
-            ]
-            
-            // generate updateExpression
-            var attributeValues : [String : [String : AnyObject]] = [:]
-            let processingTime = systemTimeFormatter.stringFromDate(NSDate())
-            var updateExpression = "SET \(SensorDynamoImpl.P_DATE_COLNAME)=:\(SensorDynamoImpl.P_DATE_COLNAME)"
-            attributeValues[":" + SensorDynamoImpl.P_DATE_COLNAME] = [ "S" : processingTime]
-            
-            // add in the rest of the items
-            let items = entry as! [NSDate : [Double]]
-            
-            for (startDate, sample) in items {
-                maxDate = maxDate.laterDate(startDate)
-                minDate = minDate.earlierDate(startDate)
-                itemCount += 1
+            if (doUpdate) {
                 
-                let columnTime = columnTimeFormatter.stringFromDate(startDate)
+                // format assumed single-item as an updateItem request
+                assert(itemMap.count == 1)
                 
-                // the update expression
-                updateExpression += String(format: SensorDynamoImpl.UPDATE_COLUMN_FORMAT, SensorDynamoImpl.X_BASE, columnTime, SensorDynamoImpl.X_BASE, columnTime)
-                updateExpression += String(format: SensorDynamoImpl.UPDATE_COLUMN_FORMAT, SensorDynamoImpl.Y_BASE, columnTime, SensorDynamoImpl.Y_BASE, columnTime)
-                updateExpression += String(format: SensorDynamoImpl.UPDATE_COLUMN_FORMAT, SensorDynamoImpl.Z_BASE, columnTime, SensorDynamoImpl.Z_BASE, columnTime)
+                // the element to process
+                let (timeSlot, entry) = itemMap.first!
                 
-                // and the attribute values
-                attributeValues[":" + String(format: SensorDynamoImpl.COLUMN_FORMAT, SensorDynamoImpl.X_BASE, columnTime)] = [ "S" : String(format: SensorDynamoImpl.SAMPLE_FORMAT, sample[0]) ]
-                attributeValues[":" + String(format: SensorDynamoImpl.COLUMN_FORMAT, SensorDynamoImpl.Y_BASE, columnTime)] = [ "S" : String(format: SensorDynamoImpl.SAMPLE_FORMAT, sample[1]) ]
-                attributeValues[":" + String(format: SensorDynamoImpl.COLUMN_FORMAT, SensorDynamoImpl.Z_BASE, columnTime)] = [ "S" : String(format: SensorDynamoImpl.SAMPLE_FORMAT, sample[1]) ]
-            }
-            
-            // now build the dynamo map for serialization
-            dynamoPayload = [ "Key" : key, "UpdateExpression" : updateExpression, "TableName" : tableName, "ExpressionAttributeValues" : attributeValues ]
-            
-            actionType = "UpdateItem"
-            
-        } else {
-            
-            // format the map as a BatchWriteItem
-            var items : [AnyObject] = []
-            for (timeSlot, entry) in itemMap {
-                var item : [String : AnyObject] = [:]
+                // generate key part of expression
+                let key = [
+                    SensorDynamoImpl.HASH_KEY_COLNAME : ["S" : credentials[AppGlobals.CRED_COGNITO_KEY]!],
+                    SensorDynamoImpl.RANGE_KEY_COLNAME : ["S" : timeSlot]
+                ]
                 
-                // per-slot entries
-                item[SensorDynamoImpl.HASH_KEY_COLNAME] = ["S": credentials[AppGlobals.CRED_COGNITO_KEY]!]
-                item[SensorDynamoImpl.RANGE_KEY_COLNAME] = ["S": timeSlot]
-                item[SensorDynamoImpl.P_DATE_COLNAME] = ["S" : systemTimeFormatter.stringFromDate(NSDate())]
+                // generate updateExpression
+                var attributeValues : [String : [String : Any]] = [:]
+                let processingTime = systemTimeFormatter.string(from: Date())
+                var updateExpression = "SET \(SensorDynamoImpl.P_DATE_COLNAME)=:\(SensorDynamoImpl.P_DATE_COLNAME)"
+                attributeValues[":" + SensorDynamoImpl.P_DATE_COLNAME] = [ "S" : processingTime]
                 
-                // per-sample entries
-                for (startDate, sample) in entry as! [NSDate : [Double]] {
-                    maxDate = maxDate.laterDate(startDate)
-                    minDate = minDate.earlierDate(startDate)
+                // add in the rest of the items
+                let items = entry as! [Date : [Double]]
+                
+                for (startDate, sample) in items {
+                    maxDate = maxDate < startDate ? startDate : maxDate
+                    minDate = minDate < startDate ? minDate : startDate
                     itemCount += 1
                     
-                    let columnTime = columnTimeFormatter.stringFromDate(startDate)
-                    item[String(format: SensorDynamoImpl.COLUMN_FORMAT, SensorDynamoImpl.X_BASE, columnTime)] = ["N" : String(format: SensorDynamoImpl.SAMPLE_FORMAT, sample[0])]
-                    item[String(format: SensorDynamoImpl.COLUMN_FORMAT, SensorDynamoImpl.Y_BASE, columnTime)] = ["N" : String(format: SensorDynamoImpl.SAMPLE_FORMAT, sample[1])]
-                    item[String(format: SensorDynamoImpl.COLUMN_FORMAT, SensorDynamoImpl.Z_BASE, columnTime)] = ["N" : String(format: SensorDynamoImpl.SAMPLE_FORMAT, sample[2])]
+                    let columnTime = columnTimeFormatter.string(from: startDate)
+                    
+                    // the update expression
+                    updateExpression += String(format: SensorDynamoImpl.UPDATE_COLUMN_FORMAT, SensorDynamoImpl.X_BASE, columnTime, SensorDynamoImpl.X_BASE, columnTime)
+                    updateExpression += String(format: SensorDynamoImpl.UPDATE_COLUMN_FORMAT, SensorDynamoImpl.Y_BASE, columnTime, SensorDynamoImpl.Y_BASE, columnTime)
+                    updateExpression += String(format: SensorDynamoImpl.UPDATE_COLUMN_FORMAT, SensorDynamoImpl.Z_BASE, columnTime, SensorDynamoImpl.Z_BASE, columnTime)
+                    
+                    // and the attribute values
+                    attributeValues[":" + String(format: SensorDynamoImpl.COLUMN_FORMAT, SensorDynamoImpl.X_BASE, columnTime)] = [ "S" : String(format: SensorDynamoImpl.SAMPLE_FORMAT, sample[0]) ]
+                    attributeValues[":" + String(format: SensorDynamoImpl.COLUMN_FORMAT, SensorDynamoImpl.Y_BASE, columnTime)] = [ "S" : String(format: SensorDynamoImpl.SAMPLE_FORMAT, sample[1]) ]
+                    attributeValues[":" + String(format: SensorDynamoImpl.COLUMN_FORMAT, SensorDynamoImpl.Z_BASE, columnTime)] = [ "S" : String(format: SensorDynamoImpl.SAMPLE_FORMAT, sample[1]) ]
                 }
-                items.append(["PutRequest" : ["Item" : item]])
+                
+                // now build the dynamo map for serialization
+                dynamoPayload = [ "Key" : key, "UpdateExpression" : updateExpression, "TableName" : tableName, "ExpressionAttributeValues" : attributeValues ]
+                
+                actionType = "UpdateItem"
+                
+            } else {
+                
+                // format the map as a BatchWriteItem
+                var items : [Any] = []
+                for (timeSlot, entry) in itemMap {
+                    var item : [String : Any] = [:]
+                    
+                    // per-slot entries
+                    item[SensorDynamoImpl.HASH_KEY_COLNAME] = ["S": credentials[AppGlobals.CRED_COGNITO_KEY]!]
+                    item[SensorDynamoImpl.RANGE_KEY_COLNAME] = ["S": timeSlot]
+                    item[SensorDynamoImpl.P_DATE_COLNAME] = ["S" : systemTimeFormatter.string(from: Date())]
+                    
+                    // per-sample entries
+                    for (startDate, sample) in entry as! [Date : [Double]] {
+                        maxDate = maxDate < startDate ? startDate : maxDate
+                        minDate = minDate < startDate ? minDate : startDate
+                        itemCount += 1
+                        
+                        let columnTime = columnTimeFormatter.string(from: startDate)
+                        item[String(format: SensorDynamoImpl.COLUMN_FORMAT, SensorDynamoImpl.X_BASE, columnTime)] = ["N" : String(format: SensorDynamoImpl.SAMPLE_FORMAT, sample[0])]
+                        item[String(format: SensorDynamoImpl.COLUMN_FORMAT, SensorDynamoImpl.Y_BASE, columnTime)] = ["N" : String(format: SensorDynamoImpl.SAMPLE_FORMAT, sample[1])]
+                        item[String(format: SensorDynamoImpl.COLUMN_FORMAT, SensorDynamoImpl.Z_BASE, columnTime)] = ["N" : String(format: SensorDynamoImpl.SAMPLE_FORMAT, sample[2])]
+                    }
+                    items.append(["PutRequest" : ["Item" : item]])
+                }
+                dynamoPayload = ["RequestItems" : [tableName : items]]
+                
+                actionType = "BatchWriteItem"
             }
-            dynamoPayload = ["RequestItems" : [tableName : items]]
             
-            actionType = "BatchWriteItem"
+            let request = try! JSONSerialization.data(withJSONObject: dynamoPayload,
+                                                      options: JSONSerialization.WritingOptions())
+            
+            NSLog("flush itemCount=\(itemCount), minDate=\(systemTimeFormatter.string(from: minDate)), maxDate=\(systemTimeFormatter.string(from: maxDate)), length=\(request.count)")
+            
+            let sem = DispatchSemaphore(value: 0)
+            
+            postData(credentials, action: actionType, data: request, doneHandler : {(data : Data?, error : Error?) in
+                
+                returnedData = data
+                returnedError = error
+                
+                sem.signal()
+            })
+            
+            _ = sem.wait(timeout: DispatchTime.distantFuture)
+            
         }
-        
-        let request = try! NSJSONSerialization.dataWithJSONObject(dynamoPayload,
-                                                                  options: NSJSONWritingOptions())
-        
-        NSLog("flush itemCount=\(itemCount), minDate=\(systemTimeFormatter.stringFromDate(minDate)), maxDate=\(systemTimeFormatter.stringFromDate(maxDate)), length=\(request.length)")
-        
-        let sem = dispatch_semaphore_create(0)
-        var returnedData : NSData?
-        var returnedError : NSError?
-        
-        postData(credentials, action: actionType, data: request, doneHandler : {(data : NSData?, error : NSError?) in
-            
-            returnedData = data
-            returnedError = error
-            
-            dispatch_semaphore_signal(sem)
-        })
-        
-        dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER)
         
         // reset for next round
         itemMap = [:]
@@ -220,19 +225,19 @@ class SensorDynamoImpl {
         }
     }
     
-    func postData(creds : NSDictionary, action : String!, data : NSData, doneHandler : (NSData?, NSError?) -> Void) {
+    func postData(_ creds : NSDictionary, action : String!, data : Data, doneHandler : @escaping (Data?, Error?) -> Void) {
         let requestMethod = "POST"
         let region = "us-east-1"
         let service = "dynamodb"
         
         // attempt to fully sign the request...
-        let url = NSURL(string: "https://dynamodb.us-east-1.amazonaws.com/")!
+        let url = URL(string: "https://dynamodb.us-east-1.amazonaws.com/")!
         //let url = NSURL(string: "http://127.0.0.1:1234/topics/test/topic?qos=1")!
         
-        let request = NSMutableURLRequest(URL: url)
-        let requestTimestamp = NSDate()
-        let requestTime = awsRequestTimeFormatter.stringFromDate(requestTimestamp)
-        let requestDate = awsRequestDateFormatter.stringFromDate(requestTimestamp)
+        let request = NSMutableURLRequest(url: url)
+        let requestTimestamp = Date()
+        let requestTime = awsRequestTimeFormatter.string(from: requestTimestamp)
+        let requestDate = awsRequestDateFormatter.string(from: requestTimestamp)
         request.addValue(requestTime, forHTTPHeaderField: "x-amz-date")
         request.addValue("DynamoDB_20120810." + action, forHTTPHeaderField: "x-amz-target")
         request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
@@ -242,19 +247,19 @@ class SensorDynamoImpl {
         
         // step 1 -- canonical request
         var canonicalRequest = requestMethod + "\n"
-        canonicalRequest += url.path! + "\n"
+        canonicalRequest += url.path + "\n"
         canonicalRequest += /*url.query! +*/ "\n"
-        canonicalRequest += "content-length:" + data.length.description + "\n"
-        canonicalRequest += "content-type:" + request.valueForHTTPHeaderField("Content-Type")! + "\n"
-        canonicalRequest += "host:" + url.host!.lowercaseString + "\n"
-        canonicalRequest += "x-amz-date:" + request.valueForHTTPHeaderField("x-amz-date")! + "\n"
-        canonicalRequest += "x-amz-security-token:" + request.valueForHTTPHeaderField("x-amz-security-token")! + "\n"
-        canonicalRequest += "x-amz-target:" + request.valueForHTTPHeaderField("x-amz-target")! + "\n"
+        canonicalRequest += "content-length:" + data.count.description + "\n"
+        canonicalRequest += "content-type:" + request.value(forHTTPHeaderField: "Content-Type")! + "\n"
+        canonicalRequest += "host:" + url.host!.lowercased() + "\n"
+        canonicalRequest += "x-amz-date:" + request.value(forHTTPHeaderField: "x-amz-date")! + "\n"
+        canonicalRequest += "x-amz-security-token:" + request.value(forHTTPHeaderField: "x-amz-security-token")! + "\n"
+        canonicalRequest += "x-amz-target:" + request.value(forHTTPHeaderField: "x-amz-target")! + "\n"
         canonicalRequest += "\n"
         canonicalRequest += signedHeaders + "\n"
         canonicalRequest += sha256(data)
         
-        let canonicalHash = sha256(canonicalRequest.dataUsingEncoding(NSUTF8StringEncoding)!)
+        let canonicalHash = sha256(canonicalRequest.data(using: String.Encoding.utf8)!)
         
         // step 2 string to sign
         let signing = "aws4_request"
@@ -266,18 +271,16 @@ class SensorDynamoImpl {
         
         // step 3 calculate signature
         let secret = "AWS4" + (creds[AppGlobals.CRED_SECRET_KEY] as! String)
-        let kDate = hmac(secret.dataUsingEncoding(NSUTF8StringEncoding)!, data: requestDate)
+        let kDate = hmac(secret.data(using: String.Encoding.utf8)!, data: requestDate)
         let kRegion = hmac(kDate, data: region)
         let kService = hmac(kRegion, data: service)
         let kSigning = hmac(kService, data: signing)
         
         let kSignature = hmac(kSigning, data: stringToSign)
-        let hexSignature = NSMutableString()
-        let kSignatureBytes = UnsafePointer<UInt8>(kSignature.bytes)
-        for i in 0..<kSignature.length {
-            hexSignature.appendFormat("%02x", kSignatureBytes[i])
+        var signature = ""
+        for i in 0..<kSignature.count {
+            signature += String(format: "%02x", kSignature[i])
         }
-        let signature = String(hexSignature)
         
         // step 4 add signing information
         var authorization = "AWS4-HMAC-SHA256 Credential="
@@ -290,59 +293,60 @@ class SensorDynamoImpl {
         authorization += signature
         
         request.addValue(authorization, forHTTPHeaderField: "Authorization")
-        request.HTTPMethod = requestMethod
+        request.httpMethod = requestMethod
         
-        let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
+        let config = URLSessionConfiguration.ephemeral
+        config.requestCachePolicy = NSURLRequest.CachePolicy.reloadIgnoringLocalCacheData
+        let session = URLSession(configuration: config)
         
-        let start = NSDate()
-        let task = session.uploadTaskWithRequest(request, fromData: data, completionHandler: {
-            (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
-            var outData : NSData? = nil
-            var outError : NSError? = nil
+        let start = Date()
+        let task = session.uploadTask(with: request as URLRequest, from: data, completionHandler: {
+            (data: Data?, response: URLResponse?, error: Error?) -> Void in
+            var outData : Data? = nil
             if (data != nil) {
-                NSLog("data(\(String(data: data!, encoding: NSUTF8StringEncoding)))")
-                outData = data!.copy() as? NSData
+                NSLog("data(\(String(data: data!, encoding: String.Encoding.utf8)))")
+                outData = (data! as NSData).copy() as? Data
             }
             if (error != nil) {
                 NSLog("error(\(error))")
-                outError = error!.copy() as? NSError
             }
-            doneHandler(outData, outError)
+            doneHandler(outData, error)
             session.invalidateAndCancel()
-            let duration = NSDate().timeIntervalSinceDate(start)
+            let duration = Date().timeIntervalSince(start)
             NSLog("*** network duration \(duration)")
         })
         task.resume()
     }
     
-    func sha256(data: NSData) -> String {
-        let res = NSMutableData(length: Int(CC_SHA256_DIGEST_LENGTH))!
-        CC_SHA256(data.bytes, CC_LONG(data.length), UnsafeMutablePointer(res.mutableBytes))
-        let resBytes = UnsafePointer<UInt8>(res.bytes)
-        let hash = NSMutableString()
-        for i in 0..<res.length {
-            hash.appendFormat("%02x", resBytes[i])
+    func sha256(_ data: Data) -> String {
+        var res = [UInt8](repeating: 0,  count: Int(CC_SHA256_DIGEST_LENGTH))
+        data.withUnsafeBytes {
+            _ = CC_SHA256($0, CC_LONG(data.count), &res)
         }
-        return String(hash)
+        var hash = ""
+        for i in 0..<res.count {
+            hash += String(format: "%02x", res[i])
+        }
+        return hash
     }
     
     enum HMACAlgorithm {
-        case MD5, SHA1, SHA224, SHA256, SHA384, SHA512
+        case md5, sha1, sha224, sha256, sha384, sha512
         
         func toCCHmacAlgorithm() -> CCHmacAlgorithm {
             var result: Int = 0
             switch self {
-            case .MD5:
+            case .md5:
                 result = kCCHmacAlgMD5
-            case .SHA1:
+            case .sha1:
                 result = kCCHmacAlgSHA1
-            case .SHA224:
+            case .sha224:
                 result = kCCHmacAlgSHA224
-            case .SHA256:
+            case .sha256:
                 result = kCCHmacAlgSHA256
-            case .SHA384:
+            case .sha384:
                 result = kCCHmacAlgSHA384
-            case .SHA512:
+            case .sha512:
                 result = kCCHmacAlgSHA512
             }
             return CCHmacAlgorithm(result)
@@ -351,32 +355,32 @@ class SensorDynamoImpl {
         func digestLength() -> Int {
             var result: CInt = 0
             switch self {
-            case .MD5:
+            case .md5:
                 result = CC_MD5_DIGEST_LENGTH
-            case .SHA1:
+            case .sha1:
                 result = CC_SHA1_DIGEST_LENGTH
-            case .SHA224:
+            case .sha224:
                 result = CC_SHA224_DIGEST_LENGTH
-            case .SHA256:
+            case .sha256:
                 result = CC_SHA256_DIGEST_LENGTH
-            case .SHA384:
+            case .sha384:
                 result = CC_SHA384_DIGEST_LENGTH
-            case .SHA512:
+            case .sha512:
                 result = CC_SHA512_DIGEST_LENGTH
             }
             return Int(result)
         }
     }
     
-    func hmac(key: NSData, data: String) -> NSData {
-        let dbytes = data.dataUsingEncoding(NSUTF8StringEncoding)!
+    func hmac(_ key: Data, data: String) -> Data {
+        let dbytes = data.data(using: String.Encoding.utf8)!
         var context = CCHmacContext()
-        let algorithm = HMACAlgorithm.SHA256
-        CCHmacInit(&context, algorithm.toCCHmacAlgorithm(), key.bytes, key.length)
-        CCHmacUpdate(&context, dbytes.bytes, dbytes.length)
+        let algorithm = HMACAlgorithm.sha256
+        CCHmacInit(&context, algorithm.toCCHmacAlgorithm(), (key as NSData).bytes, key.count)
+        CCHmacUpdate(&context, (dbytes as NSData).bytes, dbytes.count)
         
         let digest = NSMutableData(length: Int(CC_SHA256_DIGEST_LENGTH))!
-        CCHmacFinal(&context, UnsafeMutablePointer(digest.mutableBytes))
-        return NSData(bytes : digest.bytes, length : digest.length)
+        CCHmacFinal(&context, UnsafeMutableRawPointer(digest.mutableBytes))
+        return Data(bytes: UnsafeRawPointer(digest.bytes), count : digest.length)
     }
 }

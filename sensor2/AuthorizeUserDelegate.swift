@@ -16,23 +16,23 @@ class AuthorizeUserDelegate: NSObject, AIAuthenticationDelegate {
         self.delegate = delegate
     }
     
-    @objc func requestDidSucceed(apiResult: APIResult!) {
+    @objc func requestDidSucceed(_ apiResult: APIResult!) {
         launchGetAccessToken()
     }
     
-    @objc func requestDidFail(errorResponse: APIError) {
+    @objc func requestDidFail(_ errorResponse: APIError) {
         let alertController = UIAlertController(title: "",
                                                 message: "AuthorizeUser:" + errorResponse.error.message,
-                                                preferredStyle: .Alert)
-        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                                                preferredStyle: .alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alertController.addAction(defaultAction)
         
-        delegate.viewController.presentViewController(alertController, animated: true, completion: nil)
+        delegate.viewController.present(alertController, animated: true, completion: nil)
     }
     
     func launchGetAccessToken() {
         // initialize the token system
         let requestScopes: [String] = ["profile"]
-        AIMobileLib.getAccessTokenForScopes(requestScopes, withOverrideParams: ["kForceRefresh" : "YES"], delegate: delegate)
+        AIMobileLib.getAccessToken(forScopes: requestScopes, withOverrideParams: ["kForceRefresh" : "YES"], delegate: delegate)
     }
 }

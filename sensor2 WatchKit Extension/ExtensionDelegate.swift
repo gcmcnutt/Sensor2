@@ -11,9 +11,9 @@ import Foundation
 import CoreMotion
 import WatchConnectivity
 
-extension CMSensorDataList: SequenceType {
-    public func generate() -> NSFastGenerator {
-        return NSFastGenerator(self)
+extension CMSensorDataList: Sequence {
+    public func makeIterator() -> NSFastEnumerationIterator {
+        return NSFastEnumerationIterator(self)
     }
 }
 
@@ -23,7 +23,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     let MAX_EARLIEST_TIME_SEC = -24.0 * 60.0 * 60.0 // a day ago
     let REFRESH_LEAD_SEC = 300.0
     
-    let wcsession = WCSession.defaultSession()
+    let wcsession = WCSession.default()
     let sr = CMSensorRecorder()
     let haveAccelerometer = CMSensorRecorder.isAccelerometerRecordingAvailable()
     let authorizedAccelerometer = CMSensorRecorder.isAuthorizedForRecording()
@@ -37,7 +37,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     
     var cmdCount = 0
     var itemCount = 0
-    var latestDate = NSDate.distantPast()
+    var latestDate = Date.distantPast
     var lastError = ""
     var errors = 0
     
@@ -48,7 +48,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         
         // wake up session to phone
         wcsession.delegate = self
-        wcsession.activateSession()
+        wcsession.activate()
         
         sensorDynamoImpl = SensorDynamoImpl(extensionDelegate: self)
     }
@@ -62,29 +62,33 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         // Use this method to pause ongoing tasks, disable timers, etc.
     }
     
-    func session(session: WCSession, didReceiveMessage message: [String : AnyObject]) {
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        NSLog(String(format: "state=%d", activationState.rawValue))
+    }
+    
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
         NSLog("clear credentials")
         userCredentials = [:]
-        NSOperationQueue.mainQueue().addOperationWithBlock() {
-            (WKExtension.sharedExtension().rootInterfaceController
+        OperationQueue.main.addOperation() {
+            (WKExtension.shared().rootInterfaceController
                 as! InterfaceController).updateCognitoId("")
         }
     }
     
     func getCredentials() -> NSDictionary {
         var sendMessage = false
-        var waitForReply = true
-        let expireTime = userCredentials[AppGlobals.CRED_EXPIRATION_KEY] as? NSDate
+        let waitForReply = true
+        let expireTime = userCredentials[AppGlobals.CRED_EXPIRATION_KEY] as? Date
         if (expireTime == nil) {
             // no data at all so fetch and wait
             sendMessage = true
         } else {
             // data and expired so fetch and wait
-            let now = NSDate()
-            if (now.compare(expireTime!) == NSComparisonResult.OrderedDescending) {
+            let now = Date()
+            if (now.compare(expireTime!) == ComparisonResult.orderedDescending) {
                 userCredentials = [:]
                 sendMessage = true
-            } else if (now.dateByAddingTimeInterval(REFRESH_LEAD_SEC).compare(expireTime!) == NSComparisonResult.OrderedDescending) {
+            } else if (now.addingTimeInterval(REFRESH_LEAD_SEC).compare(expireTime!) == ComparisonResult.orderedDescending) {
                 // nearing expiration so fetch [no wait]
                 sendMessage = true
                 //TODO analyze this... -> waitForReply = false
@@ -93,25 +97,25 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         
         if (sendMessage) {
             NSLog("refreshing userCredentials... send=\(sendMessage), wait=\(waitForReply)")
-            let sem = dispatch_semaphore_create(0)
+            let sem = DispatchSemaphore(value: 0)
             
             wcsession.sendMessage([AppGlobals.SESSION_ACTION : AppGlobals.GET_CREDENTIALS],
-                replyHandler: {(result : [String : AnyObject]) in
+                replyHandler: {(result : [String : Any]) in
                     let cognitoId = result[AppGlobals.CRED_COGNITO_KEY] as? String
                     NSLog("userCredentials refreshed cognitoId=\(cognitoId)")
-                    NSOperationQueue.mainQueue().addOperationWithBlock() {
-                        (WKExtension.sharedExtension().rootInterfaceController
+                    OperationQueue.main.addOperation() {
+                        (WKExtension.shared().rootInterfaceController
                             as! InterfaceController).updateCognitoId(cognitoId)
                     }
-                    self.userCredentials = result
-                    dispatch_semaphore_signal(sem)
-                }, errorHandler: {(error : NSError) in
-                    NSLog("userCredentials. error=" + error.description)
-                    dispatch_semaphore_signal(sem)
+                    self.userCredentials = result as NSDictionary
+                    sem.signal()
+                }, errorHandler: {(error : Error) in
+                    NSLog("userCredentials. error=" + error.localizedDescription)
+                    sem.signal()
             })
             
             if (waitForReply) {
-                dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER)
+                _ = sem.wait(timeout: DispatchTime.distantFuture)
             }
         }
         
@@ -121,14 +125,14 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     
     func record() {
         NSLog("recordAccelerometer(\(durationValue))")
-        sr.recordAccelerometerForDuration(durationValue * 60.0)
+        sr.recordAccelerometer(forDuration: durationValue * 60.0)
     }
     
     func random() -> Double {
         return Double(arc4random()) / 0xFFFFFFFF
     }
     
-    func setRun(state: Bool) {
+    func setRun(_ state: Bool) {
         if (state) {
             OSAtomicTestAndSet(7, &dequeuerState)
         } else {
@@ -148,27 +152,27 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
             NSLog("dequeueLoop(\(cmdCount))")
             
             // within a certain time of now
-            let earliest = NSDate().dateByAddingTimeInterval(MAX_EARLIEST_TIME_SEC)
-            var newLatestDate = latestDate.laterDate(earliest)
+            let earliest = Date().addingTimeInterval(MAX_EARLIEST_TIME_SEC)
+            var newLatestDate = latestDate > earliest ? latestDate : earliest
             var newItems = 0
             
             while (isRun()) {
                 
                 // real or faking it?
                 if (haveAccelerometer && !fakeData) {
-                    let data = sr.accelerometerDataFromDate(newLatestDate, toDate: NSDate())
+                    let data = sr.accelerometerData(from: newLatestDate, to: Date())
                     if (data != nil) {
                         
                         for element in data! {
                             let lastElement = element as! CMRecordedAccelerometerData
                             
                             // skip repeated element from prior batch
-                            if (!(lastElement.startDate.compare(newLatestDate) == NSComparisonResult.OrderedDescending)) {
+                            if (!(lastElement.startDate.compare(newLatestDate) == ComparisonResult.orderedDescending)) {
                                 continue;
                             }
                             
                             // next item, here we enqueue it
-                            if (lastElement.startDate.compare(NSDate.distantPast()) == NSComparisonResult.OrderedAscending) {
+                            if (lastElement.startDate.compare(Date.distantPast) == ComparisonResult.orderedAscending) {
                                 NSLog("odd date: " + lastElement.description)
                             }
                             
@@ -179,7 +183,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
                                 break;
                             } else if (rErr != nil) {
                                 errors += 1
-                                lastError = rErr!.description
+                                lastError = rErr!.localizedDescription
                                 break
                             }
                             
@@ -189,7 +193,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
                         }
                     }
                 } else {
-                    while (isRun() && newLatestDate.compare(NSDate()) == NSComparisonResult.OrderedAscending) {
+                    while (isRun() && newLatestDate.compare(Date()) == ComparisonResult.orderedAscending) {
                         
                         foundData = true
                         
@@ -199,12 +203,12 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
                             break;
                         } else if (rErr != nil) {
                             errors += 1
-                            lastError = rErr!.description
+                            lastError = rErr!.localizedDescription
                             break
                         }
                         
                         newItems += 1
-                        newLatestDate = newLatestDate.dateByAddingTimeInterval(0.02)
+                        newLatestDate = newLatestDate.addingTimeInterval(0.02)
                     }
                 }
                 
@@ -212,17 +216,17 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
                     latestDate = newLatestDate
                     itemCount += newItems
                     NSLog("commit latestDate=\(latestDate), itemCount=\(itemCount)")
-                    NSOperationQueue.mainQueue().addOperationWithBlock() {
-                        (WKExtension.sharedExtension().rootInterfaceController
+                    OperationQueue.main.addOperation() {
+                        (WKExtension.shared().rootInterfaceController
                             as! InterfaceController).updateUI(self.cmdCount, itemCount: self.itemCount, latestDate: self.latestDate, errors: self.errors, lastError: self.lastError)
                     }
                     break
                 }
                 
                 if (foundData) {
-                    NSThread.sleepForTimeInterval(FAST_POLL_DELAY_SEC)
+                    Thread.sleep(forTimeInterval: FAST_POLL_DELAY_SEC)
                 } else {
-                    NSThread.sleepForTimeInterval(SLOW_POLL_DELAY_SEC)
+                    Thread.sleep(forTimeInterval: SLOW_POLL_DELAY_SEC)
                 }
             }
         }

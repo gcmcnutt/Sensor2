@@ -1,9 +1,9 @@
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '9.0'
+platform :ios, '10.2'
 
 target "sensor2" do
-	pod 'AWSCore', '< 2.4'
-	pod 'AWSCognito', '< 2.4'
+	pod 'AWSCore'
+	pod 'AWSCognito'
 	pod 'Google/SignIn'
 	pod 'GoogleAppUtilities'
 	pod 'Fabric'

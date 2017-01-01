@@ -21,8 +21,8 @@ class AppGlobals {
     static let IDENTITY_POOL_ID_KEY = "cognitoPool"
     static let ACCOUNT_ID_KEY = "awsAccount"
     
-    let dateFormatter = NSDateFormatter()
-    let summaryDateFormatter = NSDateFormatter()
+    let dateFormatter = DateFormatter()
+    let summaryDateFormatter = DateFormatter()
     
     // used for global date formatting...
     static let ISO8601_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
@@ -37,7 +37,7 @@ class AppGlobals {
     
     init() {
         dateFormatter.dateFormat = AppGlobals.ISO8601_TIME_FORMAT
-        dateFormatter.timeZone = NSTimeZone(name:"UTC");
+        dateFormatter.timeZone = TimeZone(identifier:"UTC");
         
         summaryDateFormatter.dateFormat = AppGlobals.SUMMARY_TIME_FORMAT
     }
