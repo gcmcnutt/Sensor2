@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSMotionUsageDescription</key>
+	<string>The Watch&apos;s accelerometer is used to collection motion information for this application.</string>
 	<key>APIKey</key>
 	<string>eyJhbGciOiJSU0EtU0hBMjU2IiwidmVyIjoiMSJ9.eyJ2ZXIiOiIzIiwiZW5kcG9pbnRzIjp7ImF1dGh6IjoiaHR0cHM6Ly93d3cuYW1hem9uLmNvbS9hcC9vYSIsInRva2VuRXhjaGFuZ2UiOiJodHRwczovL2FwaS5hbWF6b24uY29tL2F1dGgvbzIvdG9rZW4ifSwiY2xpZW50SWQiOiJhbXpuMS5hcHBsaWNhdGlvbi1vYTItY2xpZW50LmRlMjcwYzc0MjI1MDQ1ZTFhODE4MmNiNTIwMTJjYjM1IiwiYXBwRmFtaWx5SWQiOiJhbXpuMS5hcHBsaWNhdGlvbi5mMzNjZGIxMzQzZGY0NWUwYmY4OTdjOWE4MzhjOTc0YyIsImJ1bmRsZVNlZWRJZCI6ImNvbS5hY2NlbGVyby5zZW5zb3IyYmV0YSIsImJ1bmRsZUlkIjoiY29tLmFjY2VsZXJvLnNlbnNvcjJiZXRhIiwiaXNzIjoiQW1hem9uIiwidHlwZSI6IkFQSUtleSIsImFwcFZhcmlhbnRJZCI6ImFtem4xLmFwcGxpY2F0aW9uLWNsaWVudC40MzlmMTU3ODdlMjI0NDY5OTAxZDViMGFjZmJlZTE5NCIsInRydXN0UG9vbCI6bnVsbCwiYXBwSWQiOiJhbXpuMS5hcHBsaWNhdGlvbi1jbGllbnQuNDM5ZjE1Nzg3ZTIyNDQ2OTkwMWQ1YjBhY2ZiZWUxOTQiLCJpZCI6IjQ2MDE4Y2M5LWQwOTEtMTFlNS1hMTkzLTJmMjRjMDE3NTg1ZiIsImlhdCI6IjE0NTUxNzU4MDY4MzUifQ==.rMFBFM7WPK4qXdKDB0iH5d7jfyPdAJ9TAHM/eT/JcI77C5VQiEtslJ5By29a32I5SGYBH3wBUZXruEeNlNznDj4FGe5QHk0g9B5AzP45OAMmZP9tOzME5m7MSJdjBAM22KopnSR8F3IFmwc3ZZ4Dh2wD+2idSDCk7OnzWf9ziusyyA0lCaQVaX8Ft00AdasbM/iHWd/LTfdGPZsJr08bkfuk8YXwIooinwkaf/9DDIR6qL7SBuHeLRjFVA3tA8C5rh/yu36jigg8dUPVy6Y40EjU8R+ObS1wzeurrGHTySzVayws8xqVs5t2V4zjGeuIRQN4044YMLn/4XuBYu7IyQ==</string>
 	<key>CFBundleDevelopmentRegion</key>
@@ -107,7 +109,7 @@
 		</dict>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright (c) 2016 Accelero Engineering. All rights reserved.</string>
+	<string>Copyright (c) 2017 Accelero Engineering. All rights reserved.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
