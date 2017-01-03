@@ -1,5 +1,5 @@
 # Sensor 2
 
-WatchOS 2.1 Sensor experiments
+WatchOS 3.1 Sensor experiments
 
 Details at:  http://blog.accelero.com
