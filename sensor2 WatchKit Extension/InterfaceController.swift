@@ -35,10 +35,7 @@ class InterfaceController: WKInterfaceController {
         startVal.setEnabled(extensionDelegate.haveAccelerometer)
         lastStartVal.setText(AppGlobals.sharedInstance.summaryDateFormatter.string(from: lastStart))
         
-        // do we have access to sensor?
-        if (!extensionDelegate.authorizedAccelerometer) {
-            startVal.setTitle("not auth")
-        }
+        updateRecordButton()
     }
     
     override func willActivate() {
@@ -61,6 +58,10 @@ class InterfaceController: WKInterfaceController {
         self.durationVal.setText(value.description)
     }
     
+    func updateRecordButton() {
+        startVal.setTitle(CMSensorRecorder.isAuthorizedForRecording() ? "Start Recorder" : "no auth yet")
+    }
+    
     func stopDequeue() {
         dequeuerButton.setOn(false)
         extensionDelegate.setRun(false)
@@ -71,9 +72,15 @@ class InterfaceController: WKInterfaceController {
     }
     
     @IBAction func startRecorderAction() {
-        lastStart = Date()
-        self.lastStartVal.setText(AppGlobals.sharedInstance.summaryDateFormatter.string(from: lastStart))
-        extensionDelegate.record()
+        self.lastStartVal.setText("authorizing...")
+        DispatchQueue.global(qos: .background).async {
+            self.extensionDelegate.record()
+            
+            DispatchQueue.main.async {
+                self.updateRecordButton()
+                self.lastStartVal.setText(AppGlobals.sharedInstance.summaryDateFormatter.string(from: Date()))
+            }
+        }
     }
     
     @IBAction func dequeuerAction(_ value: Bool) {

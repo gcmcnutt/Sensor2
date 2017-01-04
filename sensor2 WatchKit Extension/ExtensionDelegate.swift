@@ -26,7 +26,6 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     let wcsession = WCSession.default()
     let sr = CMSensorRecorder()
     let haveAccelerometer = CMSensorRecorder.isAccelerometerRecordingAvailable()
-    let authorizedAccelerometer = CMSensorRecorder.isAuthorizedForRecording()
     
     var appContext : NSDictionary = [:]
     
