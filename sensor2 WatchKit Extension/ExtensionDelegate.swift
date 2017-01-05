@@ -23,6 +23,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     let MAX_EARLIEST_TIME_SEC = -24.0 * 60.0 * 60.0 // a day ago
     let REFRESH_LEAD_SEC = 300.0
     
+    var infoPlist : NSDictionary!
     let wcsession = WCSession.default()
     let sr = CMSensorRecorder()
     let haveAccelerometer = CMSensorRecorder.isAccelerometerRecordingAvailable()
@@ -44,6 +45,9 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     
     func applicationDidFinishLaunching() {
         // Perform any final initialization of your application.
+        
+        let path = Bundle.main.path(forResource: "Info", ofType: "plist")!
+        infoPlist = NSDictionary(contentsOfFile: path)
         
         // wake up session to phone
         wcsession.delegate = self

@@ -28,7 +28,6 @@ class SensorDynamoImpl {
     static let RANGE_KEY_COLNAME = "rangeKey"
     static let P_DATE_COLNAME = "pDate"
     
-    let tableName = "sensor2" // TODO
     let extensionDelegate : ExtensionDelegate
     
     // an array of dictionary items -- each dictionary entry is a single second's samples
@@ -97,8 +96,9 @@ class SensorDynamoImpl {
     func flushHandler(_ doUpdate : Bool) -> (commit: Bool, error: Error?) {
         var returnedData : Data?
         var returnedError : Error?
+        let tableName = extensionDelegate.infoPlist[AppGlobals.DYNAMO_TABLE_NAME_KEY] as! String
         
-        NSLog("start flush")
+        NSLog("start flush to " + tableName)
         
         // update credentials
         let credentials = extensionDelegate.getCredentials()
