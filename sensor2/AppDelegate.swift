@@ -201,6 +201,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSess
                 let auth = auths[AWSIdentityProviderLoginWithAmazon] as? AWSAuth
                 if (auth == nil || auth!.expires.compare(now) == ComparisonResult.orderedAscending) {
                     NSLog("amazon: trigger refresh...")
+                    auths[AWSIdentityProviderLoginWithAmazon] = nil
                     awsSem = DispatchSemaphore(value: 0)
                     
                     let delegate = AuthorizeUserDelegate(delegate: self)
@@ -225,8 +226,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSess
                 if (auth == nil || auth!.accessTokenExpirationDate.compare(now) == ComparisonResult.orderedAscending) {
                     // sync get google token
                     NSLog("google: trigger refresh...")
+                    auths[AWSIdentityProviderGoogle] = nil
                     googleSem = DispatchSemaphore(value: 0)
-                    GIDSignIn.sharedInstance().signInSilently()
+                    DispatchQueue.main.async {
+                        GIDSignIn.sharedInstance().signInSilently()
+                    }
                     
                     // wait up to 15 seconds
                     _ = googleSem.wait(timeout: DispatchTime.now() + Double(Int64(15 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC))
@@ -316,7 +320,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSess
             twtrTime = "valid"
         }
         if FBSDKAccessToken.current()?.tokenString != nil {
-            fbTime = "valid"
+            fbTime = FBSDKAccessToken.current().expirationDate.description
         }
         
         viewController.updateLoginState(amznTime, goog: googTime, twtr: twtrTime, fb: fbTime)

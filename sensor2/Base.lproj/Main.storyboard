@@ -140,7 +140,7 @@
 - Watch will dequeue when active only
 
 After data is sent:
-- https://test.accelero.com/index2.html
+- https://test.accelero.com
 - Login
 - Specify the display time (in UTC)</string>
                                 <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
