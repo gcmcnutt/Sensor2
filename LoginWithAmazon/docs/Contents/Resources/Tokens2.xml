@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/AIMobileLib.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/AIMobileLib</TokenIdentifier>
+			<Abstract type="html">  AIMobileLib is a static class that contains Login with Amazon APIs.</Abstract>
+			<DeclaredIn>AIMobileLib.h</DeclaredIn>
+            
+			
+			<NodeRef refid="2"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/AIMobileLib/authorizeUserForScopes:delegate:options:</TokenIdentifier>
+			<Abstract type="html">  Allows the user to login and, if necessary, authorize the app for the requested scopes.</Abstract>
+			<DeclaredIn>AIMobileLib.h</DeclaredIn>
+			
+			<Declaration>+ (void)authorizeUserForScopes:(NSArray *)scopes delegate:(id&lt;AIAuthenticationDelegate&gt;)authenticationDelegate options:(NSDictionary *)options</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>scopes</Name>
+					<Abstract type="html">The profile scopes that the app is requesting from the user. The first scope must be &quot;profile&quot;.
+                &quot;postal_code&quot; is an optional second scope.</Abstract>
+				</Parameter><Parameter>
+					<Name>authenticationDelegate</Name>
+					<Abstract type="html">A delegate implementing the AIAuthenticationDelegate protocol to receive success and
+                                failure messages.</Abstract>
+				</Parameter><Parameter>
+					<Name>options</Name>
+					<Abstract type="html">An optional dictionary of options.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/authorizeUserForScopes:delegate:options:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/AIMobileLib/authorizeUserForScopes:delegate:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AIMobileLib.h</DeclaredIn>
+			
+			<Declaration>+ (void)authorizeUserForScopes:(NSArray *)scopes delegate:(id&lt;AIAuthenticationDelegate&gt;)authenticationDelegate</Declaration>
+			
+			
+			<Anchor>//api/name/authorizeUserForScopes:delegate:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/AIMobileLib/getAccessTokenForScopes:withOverrideParams:delegate:</TokenIdentifier>
+			<Abstract type="html">  Once the user has logged in, this method will return a valid access token for the requested scopes.</Abstract>
+			<DeclaredIn>AIMobileLib.h</DeclaredIn>
+			
+			<Declaration>+ (void)getAccessTokenForScopes:(NSArray *)scopes withOverrideParams:(NSDictionary *)overrideParams delegate:(id&lt;AIAuthenticationDelegate&gt;)authenticationDelegate</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>scopes</Name>
+					<Abstract type="html">The profile scopes that the app is requesting from the user. The first scope must be &quot;profile&quot;.
+                &quot;postal_code&quot; is an optional second scope.</Abstract>
+				</Parameter><Parameter>
+					<Name>overrideParams</Name>
+					<Abstract type="html">Dictionary of optional keys to alter behavior of this function.</Abstract>
+				</Parameter><Parameter>
+					<Name>authenticationDelegate</Name>
+					<Abstract type="html">A delegate implementing the AIAuthenticationDelegate protocol to receive success and
+                               failure messages.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/getAccessTokenForScopes:withOverrideParams:delegate:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/AIMobileLib/clearAuthorizationState:</TokenIdentifier>
+			<Abstract type="html">  Deletes cached user tokens and other data.  Use this method to logout a user.</Abstract>
+			<DeclaredIn>AIMobileLib.h</DeclaredIn>
+			
+			<Declaration>+ (void)clearAuthorizationState:(id&lt;AIAuthenticationDelegate&gt;)authenticationDelegate</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>authenticationDelegate</Name>
+					<Abstract type="html">A delegate implementing the AIAuthenticationDelegate protocol to receive success and
+                               failure messages.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/clearAuthorizationState:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/AIMobileLib/getProfile:withOptions:</TokenIdentifier>
+			<Abstract type="html">  Use this method to get the profile of the current authorized user.</Abstract>
+			<DeclaredIn>AIMobileLib.h</DeclaredIn>
+			
+			<Declaration>+ (void)getProfile:(id&lt;AIAuthenticationDelegate&gt;)authenticationDelegate withOptions:(NSDictionary *)options</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>authenticationDelegate</Name>
+					<Abstract type="html">A delegate implementing the AIAuthenticationDelegate protocol to receive success and
+                               failure messages.</Abstract>
+				</Parameter><Parameter>
+					<Name>options</Name>
+					<Abstract type="html">An optional dictionary of options.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/getProfile:withOptions:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/AIMobileLib/getProfile:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AIMobileLib.h</DeclaredIn>
+			
+			<Declaration>+ (void)getProfile:(id&lt;AIAuthenticationDelegate&gt;)authenticationDelegate</Declaration>
+			
+			
+			<Anchor>//api/name/getProfile:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/AIMobileLib/handleOpenURL:sourceApplication:</TokenIdentifier>
+			<Abstract type="html">  Helper function for authorizeUserForScopes:delegate:.</Abstract>
+			<DeclaredIn>AIMobileLib.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/c/tdef/API</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>+ (BOOL)handleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>url</Name>
+					<Abstract type="html">The url received in the [UIApplicationDelegate application:openURL:sourceApplication:annotation] delegate
+            method.</Abstract>
+				</Parameter><Parameter>
+					<Name>sourceApplication</Name>
+					<Abstract type="html">The sourceApplication received in the
+                          [UIApplicationDelegate application:openURL:sourceApplication:annotation] delegate method.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">Returns YES if the url passed in was a valid url for the SDK and NO if the url was not valid.</Abstract></ReturnValue>
+			<Anchor>//api/name/handleOpenURL:sourceApplication:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/AIMobileLib/getClientId</TokenIdentifier>
+			<Abstract type="html">  Helper function for authorizeUserForScopes:delegate:options:.</Abstract>
+			<DeclaredIn>AIMobileLib.h</DeclaredIn>
+			
+			<Declaration>+ (NSString *)getClientId</Declaration>
+			
+			<ReturnValue><Abstract type="html">Return the clientId in need for calling Login with Amazon Authorize Service in exchange for refresh and access tokens.</Abstract></ReturnValue>
+			<Anchor>//api/name/getClientId</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/AIMobileLib/getRedirectUri</TokenIdentifier>
+			<Abstract type="html">  Helper function for authorizeUserForScopes:delegate:options:.</Abstract>
+			<DeclaredIn>AIMobileLib.h</DeclaredIn>
+			
+			<Declaration>+ (NSString *)getRedirectUri</Declaration>
+			
+			<ReturnValue><Abstract type="html">Return the redirect_uri used in the [authorizeUserForScopes:delegate:options] API.</Abstract></ReturnValue>
+			<Anchor>//api/name/getRedirectUri</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

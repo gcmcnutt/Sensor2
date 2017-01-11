@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/AMZNLWASDKInfo.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/AMZNLWASDKInfo</TokenIdentifier>
+			<Abstract type="html">Copyright 2012-2015 Amazon.com, Inc. or its affiliates. All rights reserved.</Abstract>
+			<DeclaredIn>AMZNLWASDKInfo.h</DeclaredIn>
+            
+			
+			<NodeRef refid="6"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/AMZNLWASDKInfo/sdkVersion</TokenIdentifier>
+			<Abstract type="html">Returns current Login with Amazon SDK for iOS version</Abstract>
+			<DeclaredIn>AMZNLWASDKInfo.h</DeclaredIn>
+			
+			<Declaration>+ (NSString *)sdkVersion</Declaration>
+			
+			
+			<Anchor>//api/name/sdkVersion</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

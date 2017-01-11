@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Protocols/AMZNScope.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intf/AMZNScope</TokenIdentifier>
+			<Abstract type="html">This protocol is used to define Scopes used in calling &apos;authorize&apos; methods defined AMZNAuthorizationManager class. Scope classes that implements
+this protocol represent the concept of &apos;scope&apos; in OAuth 2.0 protocol.</Abstract>
+			<DeclaredIn>AMZNScope.h</DeclaredIn>
+            
+			
+			<NodeRef refid="12"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/AMZNScope/setName:</TokenIdentifier>
+			<Abstract type="html">The name of a scope.</Abstract>
+			<DeclaredIn>AMZNScope.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSString *name</Declaration>
+			
+			
+			<Anchor>//api/name/name</Anchor>
+            <NodeRef refid="12"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/AMZNScope/name</TokenIdentifier>
+			<Abstract type="html">The name of a scope.</Abstract>
+			<DeclaredIn>AMZNScope.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSString *name</Declaration>
+			
+			
+			<Anchor>//api/name/name</Anchor>
+            <NodeRef refid="12"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfp/AMZNScope/name</TokenIdentifier>
+			<Abstract type="html">The name of a scope.</Abstract>
+			<DeclaredIn>AMZNScope.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSString *name</Declaration>
+			
+			
+			<Anchor>//api/name/name</Anchor>
+            <NodeRef refid="12"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/AMZNScope/setScopeData:</TokenIdentifier>
+			<Abstract type="html">The scope data for a given scope.</Abstract>
+			<DeclaredIn>AMZNScope.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSDictionary *scopeData</Declaration>
+			
+			
+			<Anchor>//api/name/scopeData</Anchor>
+            <NodeRef refid="12"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/AMZNScope/scopeData</TokenIdentifier>
+			<Abstract type="html">The scope data for a given scope.</Abstract>
+			<DeclaredIn>AMZNScope.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSDictionary *scopeData</Declaration>
+			
+			
+			<Anchor>//api/name/scopeData</Anchor>
+            <NodeRef refid="12"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfp/AMZNScope/scopeData</TokenIdentifier>
+			<Abstract type="html">The scope data for a given scope.</Abstract>
+			<DeclaredIn>AMZNScope.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSDictionary *scopeData</Declaration>
+			
+			
+			<Anchor>//api/name/scopeData</Anchor>
+            <NodeRef refid="12"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>AIMobileLib Class Reference</title>
+
+	<link rel="stylesheet" href="../css/style.css">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
+	<meta name="generator" content="appledoc 2.2.1 (build 1333)">
+</head>
+<body class="appledoc">
+	<header>
+		<div class="container" class="hide-in-xcode">
+			
+			<h1 id="library-title">
+				<a href="../index.html">LoginWithAmazon </a>
+			</h1>
+
+			<p id="developer-home">
+				<a href="../index.html">Amazon.com, Inc</a>
+			</p>
+			
+		</div>
+	</header>
+
+	<aside>
+		<div class="container">
+			<nav>
+				<ul id="header-buttons" role="toolbar">
+					<li><a href="../index.html">Index</a></li>
+<li><a href="../hierarchy.html">Hierarchy</a></li>
+
+					<li id="on-this-page" role="navigation">
+						<label>
+							On This Page
+
+							<div class="chevron">
+								<div class="chevy chevron-left"></div>
+								<div class="chevy chevron-right"></div>
+							</div>
+
+							<select id="jump-to">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+
+	
+	
+
+	
+	<optgroup label="Class Methods">
+		
+		<option value="//api/name/authorizeUserForScopes:delegate:">+ authorizeUserForScopes:delegate:</option>
+		
+		<option value="//api/name/authorizeUserForScopes:delegate:options:">+ authorizeUserForScopes:delegate:options:</option>
+		
+		<option value="//api/name/clearAuthorizationState:">+ clearAuthorizationState:</option>
+		
+		<option value="//api/name/getAccessTokenForScopes:withOverrideParams:delegate:">+ getAccessTokenForScopes:withOverrideParams:delegate:</option>
+		
+		<option value="//api/name/getClientId">+ getClientId</option>
+		
+		<option value="//api/name/getProfile:">+ getProfile:</option>
+		
+		<option value="//api/name/getProfile:withOptions:">+ getProfile:withOptions:</option>
+		
+		<option value="//api/name/getRedirectUri">+ getRedirectUri</option>
+		
+		<option value="//api/name/handleOpenURL:sourceApplication:">+ handleOpenURL:sourceApplication:</option>
+		
+	</optgroup>
+	
+
+	
+	
+</select>
+						</label>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</aside>
+
+	<article>
+		<div id="overview_contents" class="container">
+			<div id="content">
+				<main role="main">
+					<h1 class="title">AIMobileLib Class Reference</h1>
+
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<th>Inherits from</th>
+	<td>NSObject</td>
+</tr><tr>
+	<th>Declared in</th>
+	<td>AIMobileLib.h</td>
+</tr>
+						</tbody></table></div>
+					
+
+                    
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>  AIMobileLib is a static class that contains Login with Amazon APIs.</p>
+
+<p>  This class provides APIs for getting authorization from users, getting profile information, clearing authorization
+  state, and getting authorization tokens to access secure data.</p>
+					</div>
+					
+					
+
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						
+
+						
+						
+
+						<div class="task-list">
+							<div class="section-method">
+	<a name="//api/name/authorizeUserForScopes:delegate:options:" title="authorizeUserForScopes:delegate:options:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/authorizeUserForScopes:delegate:options:">+&nbsp;authorizeUserForScopes:delegate:options:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>  Allows the user to login and, if necessary, authorize the app for the requested scopes.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (void)authorizeUserForScopes:(NSArray *)<em>scopes</em> delegate:(id&lt;AIAuthenticationDelegate&gt;)<em>authenticationDelegate</em> options:(NSDictionary *)<em>options</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>scopes</code></th>
+						<td><p>The profile scopes that the app is requesting from the user. The first scope must be &ldquo;profile&rdquo;.
+                &ldquo;postal_code&rdquo; is an optional second scope.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>authenticationDelegate</code></th>
+						<td><p>A delegate implementing the <code>AIAuthenticationDelegate</code> protocol to receive success and
+                                failure messages.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>options</code></th>
+						<td><p>An optional dictionary of options.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection availability">
+				<h4 class="method-subtitle parameter-title">Availability</h4>
+				<p>1.0</p>
+			</div>
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>  Allows the user to login and, if necessary, authorize the app for the requested scopes.</p>
+
+<p>  Use this method to request authorization from the user for the required scopes. If the user has not logged in, they
+  will see a login page.  Afterward, if they have not previously approved these scopes for your app, they will see a
+  consent page.</p>
+
+<p>  The sign-in page is displayed in Safari, so there will be a visible switch from the app to Safari. After the user
+  signs in on the browser, they are redirected back to the app. The app must define
+  <code>[UIApplicationDelegate application:openURL:sourceApplication:annotation]</code> in the app delegate and call the
+  <code>handleOpenURL:sourceApplication:</code> API from that delegate method. This allows the SDK to get the login information
+  from the Safari web browser.</p>
+
+<p>  Scopes that can be used with this API are:</p>
+
+<ul>
+<li>&ldquo;profile&rdquo;: This scope enables an app to request profile information from the backend server. The profile
+information includes customer&rsquo;s name, email and user_id.</li>
+<li>&ldquo;postal_code&rdquo;: This scope enables an app to request the postal code registered to the user&rsquo;s account.</li>
+</ul>
+
+
+<p>  The result of this API is sent to the <code>delegate</code>. On success, <code>[AIAuthenticationDelegate requestDidSucceed:]</code> is
+  called. The app can now call <code>getProfile:</code> to retrieve the user&rsquo;s profile data, or
+  <code>getAccessTokenForScopes:withOverrideParams:delegate:</code> to retrieve the raw access token. On failure,
+  <code>[AIAuthenticationDelegate requestDidFail:]</code> is called. The error code and an error message are passed to the method
+  in the APIError object. Error codes that can be returned by this API are:</p>
+
+<ul>
+<li><code>kAIServerError</code> : The server encountered an error while completing the request, or the SDK received an unknown
+                   response from the server.  You can allow the user to login again.</li>
+<li><code>kAIErrorUserInterrupted</code> : The user canceled the login page.  You can allow the user to login again.</li>
+<li><code>kAIAccessDenied</code> : The user did not consent to the requested scopes.</li>
+<li><code>kAIDeviceError</code> : The SDK encountered an error on the device. The SDK returns this when there is a problem with the
+                   Keychain. Calling <code>clearAuthorizationState:</code> will help.</li>
+<li><code>kAIInvalidInput</code> : One of the API parameters is invalid.  See the error message for more information.</li>
+<li><code>kAINetworkError</code> : A network error occurred, possibly due to the user being offline.</li>
+<li><code>kAIUnauthorizedClient</code> : The app is not authorized to make this call.</li>
+<li><code>kAIInternalError</code> : An internal error occurred in the SDK.  You can allow the user to login again.</li>
+</ul>
+
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">AIMobileLib.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/authorizeUserForScopes:delegate:" title="authorizeUserForScopes:delegate:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/authorizeUserForScopes:delegate:">+&nbsp;authorizeUserForScopes:delegate:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+
+			<div class="method-subsection method-declaration"><code>+ (void)authorizeUserForScopes:(NSArray *)<em>scopes</em> delegate:(id&lt;AIAuthenticationDelegate&gt;)<em>authenticationDelegate</em></code></div>
+
+		    
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/getAccessTokenForScopes:withOverrideParams:delegate:" title="getAccessTokenForScopes:withOverrideParams:delegate:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/getAccessTokenForScopes:withOverrideParams:delegate:">+&nbsp;getAccessTokenForScopes:withOverrideParams:delegate:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>  Once the user has logged in, this method will return a valid access token for the requested scopes.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (void)getAccessTokenForScopes:(NSArray *)<em>scopes</em> withOverrideParams:(NSDictionary *)<em>overrideParams</em> delegate:(id&lt;AIAuthenticationDelegate&gt;)<em>authenticationDelegate</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>scopes</code></th>
+						<td><p>The profile scopes that the app is requesting from the user. The first scope must be &ldquo;profile&rdquo;.
+                &ldquo;postal_code&rdquo; is an optional second scope.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>overrideParams</code></th>
+						<td><p>Dictionary of optional keys to alter behavior of this function.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>authenticationDelegate</code></th>
+						<td><p>A delegate implementing the <code>AIAuthenticationDelegate</code> protocol to receive success and
+                               failure messages.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection availability">
+				<h4 class="method-subtitle parameter-title">Availability</h4>
+				<p>1.0</p>
+			</div>
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>  Once the user has logged in, this method will return a valid access token for the requested scopes.</p>
+
+<p>  This method returns a valid access token, if necessary by exchanging the current refresh token for a new access token.
+  If the method is successful, this access token is valid for the requested scopes.</p>
+
+<p>  Scopes that can be used with this API are:</p>
+
+<ul>
+<li>&ldquo;profile&rdquo;: This scope enables an app to request profile information from the backend server. The profile
+information includes customer&rsquo;s name, email and user_id.</li>
+<li>&ldquo;postal_code&rdquo;: This scope enables an app to request the postal code registered to the user&rsquo;s account.</li>
+</ul>
+
+
+<p>  Values that can be used in <code>overrideParams</code>:</p>
+
+<ul>
+<li><code>kForceRefresh</code> - Forces the SDK to refresh the access token, discarding the current one and retrieving a new one.</li>
+</ul>
+
+
+<p>  The result of this API is sent to the <code>delegate</code>. On success, <code>[AIAuthenticationDelegate requestDidSucceed:]</code> is
+  called. The new access token is passed in the result property of the APIResult parameter.  The app can then use the
+  access token directly with services that support it. On failure, <code>[AIAuthenticationDelegate requestDidFail:]</code> is
+  called. The error code and an error message are passed to the method in the APIError object. Error codes that can be
+  returned by this API are:</p>
+
+<ul>
+<li><code>kAIApplicationNotAuthorized</code> : The app is not authorized for scopes requested. Call
+                                <code>authorizeUserForScopes:delegate:</code> to allow the user to authorize the app.</li>
+<li><code>kAIServerError</code> : The server encountered an error while completing the request, or the SDK received an unknown
+                   response from the server.  You can allow the user to login again.</li>
+<li><code>kAIDeviceError</code> : The SDK encountered an error on the device. The SDK returns this when there is a problem with the
+                   Keychain. Calling <code>clearAuthorizationState:</code> will help.</li>
+<li><code>kAIInvalidInput</code> : One of the API parameters is invalid.  See the error message for more information.</li>
+<li><code>kAINetworkError</code> : A network error occurred, possibly due to the user being offline.</li>
+<li><code>kAIUnauthorizedClient</code> : The app is not authorized to make this call.</li>
+<li><code>kAIInternalError</code> : An internal error occurred in the SDK.  You can allow the user to login again.</li>
+</ul>
+
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">AIMobileLib.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/clearAuthorizationState:" title="clearAuthorizationState:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/clearAuthorizationState:">+&nbsp;clearAuthorizationState:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>  Deletes cached user tokens and other data.  Use this method to logout a user.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (void)clearAuthorizationState:(id&lt;AIAuthenticationDelegate&gt;)<em>authenticationDelegate</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>authenticationDelegate</code></th>
+						<td><p>A delegate implementing the <code>AIAuthenticationDelegate</code> protocol to receive success and
+                               failure messages.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection availability">
+				<h4 class="method-subtitle parameter-title">Availability</h4>
+				<p>1.0</p>
+			</div>
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>  Deletes cached user tokens and other data.  Use this method to logout a user.</p>
+
+<p>  This method removes the authorization tokens from the Keychain. It also clears the cookies from the local cookie
+  storage to clear the authorization state of the users who checked the &ldquo;Remember me&rdquo; checkbox.</p>
+
+<p>  The result of this API is sent to the <code>delegate</code>. On success, <code>[AIAuthenticationDelegate requestDidSucceed:]</code> is
+  called. On failure, <code>[AIAuthenticationDelegate requestDidFail:]</code> is called. The error code and an error message are
+  passed to the method in the APIError object. Error codes that can be returned by this API are:</p>
+
+<ul>
+<li><code>kAIDeviceError</code> : The SDK encountered an error on the device. The SDK returns this when there is a problem with the
+                   Keychain.</li>
+<li><code>kAIInvalidInput</code> : One of the API parameters is invalid.  See the error message for more information.</li>
+</ul>
+
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">AIMobileLib.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/getProfile:withOptions:" title="getProfile:withOptions:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/getProfile:withOptions:">+&nbsp;getProfile:withOptions:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>  Use this method to get the profile of the current authorized user.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (void)getProfile:(id&lt;AIAuthenticationDelegate&gt;)<em>authenticationDelegate</em> withOptions:(NSDictionary *)<em>options</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>authenticationDelegate</code></th>
+						<td><p>A delegate implementing the <code>AIAuthenticationDelegate</code> protocol to receive success and
+                               failure messages.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>options</code></th>
+						<td><p>An optional dictionary of options.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection availability">
+				<h4 class="method-subtitle parameter-title">Availability</h4>
+				<p>1.0</p>
+			</div>
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>  Use this method to get the profile of the current authorized user.</p>
+
+<p>  This method gets profile information for the current authorized user. The app should make sure it is authorized for
+  the &ldquo;profile&rdquo; scope prior to calling this method.  If the app is authorized for the &ldquo;postal_code&rdquo; scope,
+  getProfile will return that information as well.  This profile information is cached for 60 minutes.</p>
+
+<p>  The result of this API is sent to the <code>delegate</code>. On success, <code>[AIAuthenticationDelegate requestDidSucceed:]</code> is
+  called. The user profile is passed in the result property of the APIResult parameter as an NSDictionary. The following
+  keys are used:</p>
+
+<ul>
+<li>&ldquo;name&rdquo; : The name of the user.</li>
+<li>&ldquo;email&rdquo; : The registered email address of the user.</li>
+<li>&ldquo;user_id&rdquo; : The used id of the user, in the form of &ldquo;amzn1.user.VALUE&rdquo;.  The user id is unique to the user.</li>
+<li>&ldquo;postal_code&rdquo; : The registered postal code of the user.</li>
+</ul>
+
+
+<p>  On failure, <code>[AIAuthenticationDelegate requestDidFail:]</code> is called. The error code and an error message are passed to
+  the method in the APIError object. Error codes that can be returned by this API are:</p>
+
+<ul>
+<li><code>kAIApplicationNotAuthorized</code> : The app is not authorized for scopes requested. Call
+                                <code>authorizeUserForScopes:delegate:</code> to allow the user to authorize the app.</li>
+<li><code>kAIServerError</code> : The server encountered an error while completing the request, or the SDK received an unknown
+                   response from the server.  You can allow the user to login again.</li>
+<li><code>kAIDeviceError</code> : The SDK encountered an error on the device. The SDK returns this when there is a problem with the
+                   Keychain. Calling <code>clearAuthorizationState:</code> will help.</li>
+<li><code>kAIInvalidInput</code> : One of the API parameters is invalid.  See the error message for more information.</li>
+<li><code>kAINetworkError</code> : A network error occurred, possibly due to the user being offline.</li>
+<li><code>kAIInternalError</code> : An internal error occurred in the SDK.  You can allow the user to login again.</li>
+</ul>
+
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">AIMobileLib.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/getProfile:" title="getProfile:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/getProfile:">+&nbsp;getProfile:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+
+			<div class="method-subsection method-declaration"><code>+ (void)getProfile:(id&lt;AIAuthenticationDelegate&gt;)<em>authenticationDelegate</em></code></div>
+
+		    
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/handleOpenURL:sourceApplication:" title="handleOpenURL:sourceApplication:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/handleOpenURL:sourceApplication:">+&nbsp;handleOpenURL:sourceApplication:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>  Helper function for <code>authorizeUserForScopes:delegate:</code>.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (BOOL)handleOpenURL:(NSURL *)<em>url</em> sourceApplication:(NSString *)<em>sourceApplication</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>url</code></th>
+						<td><p>The url received in the <code>[UIApplicationDelegate application:openURL:sourceApplication:annotation]</code> delegate
+            method.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>sourceApplication</code></th>
+						<td><p>The sourceApplication received in the
+                          <code>[UIApplicationDelegate application:openURL:sourceApplication:annotation]</code> delegate method.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>Returns YES if the url passed in was a valid url for the SDK and NO if the url was not valid.</p>
+			</div>
+			
+
+			
+			<div class="method-subsection availability">
+				<h4 class="method-subtitle parameter-title">Availability</h4>
+				<p>1.0</p>
+			</div>
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>  Helper function for <code>authorizeUserForScopes:delegate:</code>.</p>
+
+<p>  Call this function from your implementation of the
+  <code>[UIApplicationDelegate application:openURL:sourceApplication:annotation]</code> delegate. This method handles the
+  <code>[UIApplicationDelegate application:openURL:sourceApplication:annotation]</code> call from the Safari web browser. The app
+  should be calling this function when it receives a call to
+  <code>[UIApplicationDelegate application:openURL:sourceApplication:annotation]</code>, passing in the <code>url</code> and the
+  <code>sourceApplication</code>. If app fails to do so, the SDK will not be able to complete the login flow.</p>
+
+<p>  The SDK validates the <code>url</code> parameter to see if it is valid for the SDK. It is possible the app may want to handle the
+  <code>url</code> as well, in which case the app should first call the SDK to see if this <code>url</code> is a callback from Safari and if
+  the SDK wants to process it. After processing, the SDK will return its preference and the app can then process the
+  <code>url</code> if it chooses. Any error arising from this API is reported through the failure delegate used for the
+  <code>authorizeUserForScopes:delegate:</code> call.</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection see-also-section">
+				<h4 class="method-subtitle">See Also</h4>
+				<ul>
+					
+					<li><code><p>See <code>authorizeUserForScopes:delegate:</code> for more discussion on how to work with this <a href="../Constants/API.html">API</a> to complement the login
+      work flow.</p></code></li>
+					
+				</ul>
+			</div>
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">AIMobileLib.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/getClientId" title="getClientId"></a>
+	<h3 class="method-title"><code><a href="#//api/name/getClientId">+&nbsp;getClientId</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>  Helper function for <code>authorizeUserForScopes:delegate:options:</code>.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (NSString *)getClientId</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>Return the clientId in need for calling Login with Amazon Authorize Service in exchange for refresh and access tokens.</p>
+			</div>
+			
+
+			
+			<div class="method-subsection availability">
+				<h4 class="method-subtitle parameter-title">Availability</h4>
+				<p>2.0</p>
+			</div>
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>  Helper function for <code>authorizeUserForScopes:delegate:options:</code>.</p>
+
+<p>  Use this function to get the clientID encoded in the API key your app uses to configure Login with Amazon SDK
+  for iOS. This clientId is your client identifier that Login with Amazon SDK uses to authorize customers for your application.
+  If you are requesting to get an authorization code in return from the <code>[authorizeUserForScopes:delegate:options:]</code>
+  API, you will need this value to call Login with Amazon Authorize Service in exchange for refresh and access tokens.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">AIMobileLib.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/getRedirectUri" title="getRedirectUri"></a>
+	<h3 class="method-title"><code><a href="#//api/name/getRedirectUri">+&nbsp;getRedirectUri</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>  Helper function for <code>authorizeUserForScopes:delegate:options:</code>.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (NSString *)getRedirectUri</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>Return the redirect_uri used in the <code>[authorizeUserForScopes:delegate:options]</code> API.</p>
+			</div>
+			
+
+			
+			<div class="method-subsection availability">
+				<h4 class="method-subtitle parameter-title">Availability</h4>
+				<p>2.0</p>
+			</div>
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>  Helper function for <code>authorizeUserForScopes:delegate:options:</code>.</p>
+
+<p>  Use this function to get the redirect_uri that Login with Amazon SDK uses in the <code>[authorizeUserForScopes:delegate:options]</code>
+  API. If you are requesting to get an authorization code in return, this value is required to call Login with Amazon Authorize
+  service in exchange for refresh and access tokens.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">AIMobileLib.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>
+						</div>
+						
+					</div>
+					
+					
+
+                    
+				</main>
+
+				<footer>
+					<div class="footer-copyright">
+						
+						<p class="copyright">Copyright &copy; 2016 Amazon.com, Inc. All rights reserved. Updated: 2016-11-01</p>
+						
+						
+						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1333)</a>.</p>
+						
+					</div>
+				</footer>
+			</div>
+		</div>
+	</article>
+
+	<script src="../js/script.js"></script>
+</body>
+</html>

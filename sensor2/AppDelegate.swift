@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSess
     
     // AWS plumbing
     var credentialsProvider : AWSCognitoCredentialsProvider!
+    
     var auths : [ String : Any ] = [:]
     class AWSAuth {
         var token: String
@@ -257,7 +258,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSess
                 }
             }
             
-            // facebook -- no expire (well, is 60 days...)
+            // facebook -- no expire
             do {
                 if let token = FBSDKAccessToken.current()?.tokenString {
                     NSLog("facebook: refresh found token=\(token)")
@@ -268,9 +269,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSess
             }
             
             // updated list of logins
-            credentialsProvider.logins = logins
-            
-            credentialsProvider.credentials().continue({ (task:AWSTask<AWSCredentials>) -> AnyObject? in
+            let providerManager = CognitoCustomProviderManager(tokens: logins)
+            credentialsProvider.setIdentityProviderManagerOnce(providerManager)
+            credentialsProvider.credentials().continue({
+                (task:AWSTask<AWSCredentials>) -> AnyObject? in
                 taskResult = task
                 sem.signal()
                 return task
@@ -280,7 +282,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, WCSess
             
             if (taskResult.error == nil) {
                 let credentials = taskResult.result!
-                NSLog("logins[\(credentialsProvider.logins)], expiration[\(credentials.expiration)], accessKey[\(credentials.accessKey)], secretKey[\(credentials.secretKey)], sessionKey[\(credentials.sessionKey)]")
+                NSLog("logins[\(logins)], expiration[\(credentials.expiration)], accessKey[\(credentials.accessKey)], secretKey[\(credentials.secretKey)], sessionKey[\(credentials.sessionKey)]")
                 
                 let reply = [AppGlobals.CRED_COGNITO_KEY : credentialsProvider.identityId!,
                              AppGlobals.CRED_ACCESS_KEY : credentials.accessKey,

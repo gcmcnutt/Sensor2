@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Protocols/AIAuthenticationDelegate.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intf/AIAuthenticationDelegate</TokenIdentifier>
+			<Abstract type="html">  Applications calling AIMobileLib APIs must implement the methods of this protocol to receive success and failure
+  information.</Abstract>
+			<DeclaredIn>AIAuthenticationDelegate.h</DeclaredIn>
+            
+			
+			<NodeRef refid="11"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/AIAuthenticationDelegate/requestDidSucceed:</TokenIdentifier>
+			<Abstract type="html">  The APIs call this delegate method with the result when it completes successfully.</Abstract>
+			<DeclaredIn>AIAuthenticationDelegate.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/cl/APIResult</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>- (void)requestDidSucceed:(APIResult *)apiResult</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>apiResult</Name>
+					<Abstract type="html">An APIResult object containing the information about the calling API and the result generated.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/requestDidSucceed:</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/AIAuthenticationDelegate/requestDidFail:</TokenIdentifier>
+			<Abstract type="html">The APIs call this delegate method with the result when it fails.</Abstract>
+			<DeclaredIn>AIAuthenticationDelegate.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/cl/APIError</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>- (void)requestDidFail:(APIError *)errorResponse</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>errorResponse</Name>
+					<Abstract type="html">An APIResult object containing the information about the API and the error that occurred.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/requestDidFail:</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

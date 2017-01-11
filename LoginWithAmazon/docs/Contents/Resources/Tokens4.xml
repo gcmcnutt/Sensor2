@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/AMZNAuthorizeRequest.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/AMZNAuthorizeRequest</TokenIdentifier>
+			<Abstract type="html">This class is used to define an input request object when calling authorize:handler method in AMZNAuthorizationHandler
+class.</Abstract>
+			<DeclaredIn>AMZNAuthorizeRequest.h</DeclaredIn>
+            <Availability type="html"></Availability>
+			
+			<NodeRef refid="4"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AMZNAuthorizeRequest/setScopes:</TokenIdentifier>
+			<Abstract type="html">This property represents a list of scopes object that request authorization. Each scope object in the scopes array
+should be in AMZNScope type.</Abstract>
+			<DeclaredIn>AMZNAuthorizeRequest.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) NSArray *scopes</Declaration>
+			
+			
+			<Anchor>//api/name/scopes</Anchor>
+            <NodeRef refid="4"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AMZNAuthorizeRequest/scopes</TokenIdentifier>
+			<Abstract type="html">This property represents a list of scopes object that request authorization. Each scope object in the scopes array
+should be in AMZNScope type.</Abstract>
+			<DeclaredIn>AMZNAuthorizeRequest.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) NSArray *scopes</Declaration>
+			
+			
+			<Anchor>//api/name/scopes</Anchor>
+            <NodeRef refid="4"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/AMZNAuthorizeRequest/scopes</TokenIdentifier>
+			<Abstract type="html">This property represents a list of scopes object that request authorization. Each scope object in the scopes array
+should be in AMZNScope type.</Abstract>
+			<DeclaredIn>AMZNAuthorizeRequest.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) NSArray *scopes</Declaration>
+			
+			
+			<Anchor>//api/name/scopes</Anchor>
+            <NodeRef refid="4"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AMZNAuthorizeRequest/setInteractiveStrategy:</TokenIdentifier>
+			<Abstract type="html">This property represents desired interactive strategy of an authorization request. See detailed usage in
+AMZNInteractiveStrategy type.</Abstract>
+			<DeclaredIn>AMZNAuthorizeRequest.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) AMZNInteractiveStrategy interactiveStrategy</Declaration>
+			
+			
+			<Anchor>//api/name/interactiveStrategy</Anchor>
+            <NodeRef refid="4"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AMZNAuthorizeRequest/interactiveStrategy</TokenIdentifier>
+			<Abstract type="html">This property represents desired interactive strategy of an authorization request. See detailed usage in
+AMZNInteractiveStrategy type.</Abstract>
+			<DeclaredIn>AMZNAuthorizeRequest.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) AMZNInteractiveStrategy interactiveStrategy</Declaration>
+			
+			
+			<Anchor>//api/name/interactiveStrategy</Anchor>
+            <NodeRef refid="4"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/AMZNAuthorizeRequest/interactiveStrategy</TokenIdentifier>
+			<Abstract type="html">This property represents desired interactive strategy of an authorization request. See detailed usage in
+AMZNInteractiveStrategy type.</Abstract>
+			<DeclaredIn>AMZNAuthorizeRequest.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) AMZNInteractiveStrategy interactiveStrategy</Declaration>
+			
+			
+			<Anchor>//api/name/interactiveStrategy</Anchor>
+            <NodeRef refid="4"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AMZNAuthorizeRequest/setGrantType:</TokenIdentifier>
+			<Abstract type="html">This property represents which grant type to use during authorization. See detailed usage in
+AMZNAuthorizationGrantType type</Abstract>
+			<DeclaredIn>AMZNAuthorizeRequest.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) AMZNAuthorizationGrantType grantType</Declaration>
+			
+			
+			<Anchor>//api/name/grantType</Anchor>
+            <NodeRef refid="4"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AMZNAuthorizeRequest/grantType</TokenIdentifier>
+			<Abstract type="html">This property represents which grant type to use during authorization. See detailed usage in
+AMZNAuthorizationGrantType type</Abstract>
+			<DeclaredIn>AMZNAuthorizeRequest.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) AMZNAuthorizationGrantType grantType</Declaration>
+			
+			
+			<Anchor>//api/name/grantType</Anchor>
+            <NodeRef refid="4"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/AMZNAuthorizeRequest/grantType</TokenIdentifier>
+			<Abstract type="html">This property represents which grant type to use during authorization. See detailed usage in
+AMZNAuthorizationGrantType type</Abstract>
+			<DeclaredIn>AMZNAuthorizeRequest.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) AMZNAuthorizationGrantType grantType</Declaration>
+			
+			
+			<Anchor>//api/name/grantType</Anchor>
+            <NodeRef refid="4"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AMZNAuthorizeRequest/setCodeChallenge:</TokenIdentifier>
+			<Abstract type="html">This property let you pass a code challenge when you request grant type as AMZNAuthorizationGrantTypeCode</Abstract>
+			<DeclaredIn>AMZNAuthorizeRequest.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) NSString *codeChallenge</Declaration>
+			
+			
+			<Anchor>//api/name/codeChallenge</Anchor>
+            <NodeRef refid="4"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AMZNAuthorizeRequest/codeChallenge</TokenIdentifier>
+			<Abstract type="html">This property let you pass a code challenge when you request grant type as AMZNAuthorizationGrantTypeCode</Abstract>
+			<DeclaredIn>AMZNAuthorizeRequest.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) NSString *codeChallenge</Declaration>
+			
+			
+			<Anchor>//api/name/codeChallenge</Anchor>
+            <NodeRef refid="4"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/AMZNAuthorizeRequest/codeChallenge</TokenIdentifier>
+			<Abstract type="html">This property let you pass a code challenge when you request grant type as AMZNAuthorizationGrantTypeCode</Abstract>
+			<DeclaredIn>AMZNAuthorizeRequest.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) NSString *codeChallenge</Declaration>
+			
+			
+			<Anchor>//api/name/codeChallenge</Anchor>
+            <NodeRef refid="4"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AMZNAuthorizeRequest/setCodeChallengeMethod:</TokenIdentifier>
+			<Abstract type="html">This property let you pass a code challenge when you request grant type as AMZNAuthorizationGrantTypeCode</Abstract>
+			<DeclaredIn>AMZNAuthorizeRequest.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) NSString *codeChallengeMethod</Declaration>
+			
+			
+			<Anchor>//api/name/codeChallengeMethod</Anchor>
+            <NodeRef refid="4"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AMZNAuthorizeRequest/codeChallengeMethod</TokenIdentifier>
+			<Abstract type="html">This property let you pass a code challenge when you request grant type as AMZNAuthorizationGrantTypeCode</Abstract>
+			<DeclaredIn>AMZNAuthorizeRequest.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) NSString *codeChallengeMethod</Declaration>
+			
+			
+			<Anchor>//api/name/codeChallengeMethod</Anchor>
+            <NodeRef refid="4"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/AMZNAuthorizeRequest/codeChallengeMethod</TokenIdentifier>
+			<Abstract type="html">This property let you pass a code challenge when you request grant type as AMZNAuthorizationGrantTypeCode</Abstract>
+			<DeclaredIn>AMZNAuthorizeRequest.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) NSString *codeChallengeMethod</Declaration>
+			
+			
+			<Anchor>//api/name/codeChallengeMethod</Anchor>
+            <NodeRef refid="4"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>
