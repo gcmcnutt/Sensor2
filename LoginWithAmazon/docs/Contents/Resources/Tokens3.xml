@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/AMZNAuthorizationManager.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/AMZNAuthorizationManager</TokenIdentifier>
+			<Abstract type="html">AMZNAuthorizationManager defines methods used to get authorization from a user and clean authorization state.</Abstract>
+			<DeclaredIn>AMZNAuthorizationManager.h</DeclaredIn>
+            <Availability type="html"></Availability>
+			
+			<NodeRef refid="3"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AMZNAuthorizationManager/setSandboxMode:</TokenIdentifier>
+			<Abstract type="html">This property is used to decide whether to enable sandbox mode</Abstract>
+			<DeclaredIn>AMZNAuthorizationManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, getter=isSandboxMode) BOOL sandboxMode</Declaration>
+			
+			
+			<Anchor>//api/name/sandboxMode</Anchor>
+            <NodeRef refid="3"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AMZNAuthorizationManager/isSandboxMode</TokenIdentifier>
+			<Abstract type="html">This property is used to decide whether to enable sandbox mode</Abstract>
+			<DeclaredIn>AMZNAuthorizationManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, getter=isSandboxMode) BOOL sandboxMode</Declaration>
+			
+			
+			<Anchor>//api/name/sandboxMode</Anchor>
+            <NodeRef refid="3"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/AMZNAuthorizationManager/sandboxMode</TokenIdentifier>
+			<Abstract type="html">This property is used to decide whether to enable sandbox mode</Abstract>
+			<DeclaredIn>AMZNAuthorizationManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, getter=isSandboxMode) BOOL sandboxMode</Declaration>
+			
+			
+			<Anchor>//api/name/sandboxMode</Anchor>
+            <NodeRef refid="3"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AMZNAuthorizationManager/setRegion:</TokenIdentifier>
+			<Abstract type="html">This property is used to decide which region to use.
+Set this value to one of the constants defined as part of the enum AMZNRegion.</Abstract>
+			<DeclaredIn>AMZNAuthorizationManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) AMZNRegion region</Declaration>
+			
+			
+			<Anchor>//api/name/region</Anchor>
+            <NodeRef refid="3"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AMZNAuthorizationManager/region</TokenIdentifier>
+			<Abstract type="html">This property is used to decide which region to use.
+Set this value to one of the constants defined as part of the enum AMZNRegion.</Abstract>
+			<DeclaredIn>AMZNAuthorizationManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) AMZNRegion region</Declaration>
+			
+			
+			<Anchor>//api/name/region</Anchor>
+            <NodeRef refid="3"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/AMZNAuthorizationManager/region</TokenIdentifier>
+			<Abstract type="html">This property is used to decide which region to use.
+Set this value to one of the constants defined as part of the enum AMZNRegion.</Abstract>
+			<DeclaredIn>AMZNAuthorizationManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) AMZNRegion region</Declaration>
+			
+			
+			<Anchor>//api/name/region</Anchor>
+            <NodeRef refid="3"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/AMZNAuthorizationManager/sharedManager</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AMZNAuthorizationManager.h</DeclaredIn>
+			
+			<Declaration>+ (instancetype)sharedManager</Declaration>
+			
+			
+			<Anchor>//api/name/sharedManager</Anchor>
+            <NodeRef refid="3"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AMZNAuthorizationManager/authorize:withHandler:</TokenIdentifier>
+			<Abstract type="html">This method is used to get authorization from an user. The method accepts input in AMZNAuthorizeRequest type.</Abstract>
+			<DeclaredIn>AMZNAuthorizationManager.h</DeclaredIn>
+			
+			<Declaration>- (void)authorize:(AMZNAuthorizeRequest *)request withHandler:(AMZNAuthorizationRequestHandler)handler</Declaration>
+			
+			
+			<Anchor>//api/name/authorize:withHandler:</Anchor>
+            <NodeRef refid="3"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AMZNAuthorizationManager/signOut:</TokenIdentifier>
+			<Abstract type="html">Deletes cached user tokens and other data.  Use this method to logout a user.</Abstract>
+			<DeclaredIn>AMZNAuthorizationManager.h</DeclaredIn>
+			
+			<Declaration>- (void)signOut:(AMZNSignOutRequestHandler)handler</Declaration>
+			
+			
+			<Anchor>//api/name/signOut:</Anchor>
+            <NodeRef refid="3"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/AMZNAuthorizationManager/handleOpenURL:sourceApplication:</TokenIdentifier>
+			<Abstract type="html">Helper function for authorize:withHandler:.</Abstract>
+			<DeclaredIn>AMZNAuthorizationManager.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/c/tdef/API</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>+ (BOOL)handleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>url</Name>
+					<Abstract type="html">The url received in the [UIApplicationDelegate application:openURL:sourceApplication:annotation] delegate
+method.</Abstract>
+				</Parameter><Parameter>
+					<Name>sourceApplication</Name>
+					<Abstract type="html">The sourceApplication received in the
+[UIApplicationDelegate application:openURL:sourceApplication:annotation] delegate method.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">Returns YES if the url passed in was a valid url for the SDK and NO if the url was not valid.</Abstract></ReturnValue>
+			<Anchor>//api/name/handleOpenURL:sourceApplication:</Anchor>
+            <NodeRef refid="3"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

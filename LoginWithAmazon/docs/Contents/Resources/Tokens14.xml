@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Constants/AMZNInteractiveStrategy.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/c/tdef/AMZNInteractiveStrategy</TokenIdentifier>
+			<Abstract type="html">These constants define interactive stratgies used in executing an authorization reuest.
+Interactive strategy defnies whether to switch UI for re-authentication when calling for authorize:handler API. LWA SDK for iOS supports fllowing three types of interactive strategyes:</Abstract>
+			<DeclaredIn>AMZNAuthorizeRequest.h</DeclaredIn>
+            <Availability type="html"></Availability>
+			
+			<NodeRef refid="14"/>
+		</Token>
+		
+		
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/AMZNInteractiveStrategyAuto</TokenIdentifier>
+            <Abstract type="html">     AMZNInteractiveStrategyAuto: The SDK first looks up for locally stored authorization grant. If those stored authorization grant contains all requested scopes (or any
+     remaining scopes are implicitly authorized), then the SDK will then try to return currently cached access token. If the token has expired, the SDK will try to refresh and return a new
+     access token. If there is no previously authorized user, or some of the requested scopes are not authorized, or the token refresh call failed, the SDK will redirect end user to SignIn flow.
+     AMZNAuthorizeRequest will default to use AMZNInteractiveStrategyAuto if no interactive strategy is specified by caller.
+     </Abstract>
+            <Declaration>AMZNInteractiveStrategyAuto</Declaration>
+            <Availability type="html"></Availability>
+            <DeclaredIn>AMZNAuthorizeRequest.h</DeclaredIn>
+            
+            <NodeRef refid="14"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/AMZNInteractiveStrategyNever</TokenIdentifier>
+            <Abstract type="html">     AMZNInteractiveStrategyNever: In this case, the SDK only try to use locally cached authorized grant. If those stored authorization grant contains all requested scopes (or any
+     remaining scopes are implicitly authorized), then the SDK will then try to return currently cached access token. If the token has expired, the SDK will try to refresh and return a new
+     access token. If there is no previously authorized user, or some of the requested scopes are not authorized, or the token refresh call failed, the SDK will return error.
+     </Abstract>
+            <Declaration>AMZNInteractiveStrategyNever</Declaration>
+            <Availability type="html"></Availability>
+            <DeclaredIn>AMZNAuthorizeRequest.h</DeclaredIn>
+            
+            <NodeRef refid="14"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/AMZNInteractiveStrategyAlways</TokenIdentifier>
+            <Abstract type="html">     AMZNInteractiveStrategyAlways: In this case, the SDK will not look up for locally stored authorization grant, instead, it will always force to redirect end user to SignIn whenever an
+     authorization request is being executed.
+     </Abstract>
+            <Declaration>AMZNInteractiveStrategyAlways</Declaration>
+            <Availability type="html"></Availability>
+            <DeclaredIn>AMZNAuthorizeRequest.h</DeclaredIn>
+            
+            <NodeRef refid="14"/>
+        </Token>
+        
+        
+	</File>
+</Tokens>

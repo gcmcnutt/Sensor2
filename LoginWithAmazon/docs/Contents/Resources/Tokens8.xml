@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/AMZNScopeFactory.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/AMZNScopeFactory</TokenIdentifier>
+			<Abstract type="html">This interface defines faction methods to create a scope object that can be used as properties in a LWAAuthorizeRequest object.</Abstract>
+			<DeclaredIn>AMZNScopeFactory.h</DeclaredIn>
+            <Availability type="html"></Availability>
+			
+			<NodeRef refid="8"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/AMZNScopeFactory/scopeWithName:</TokenIdentifier>
+			<Abstract type="html">This method returns a scope object with input name.</Abstract>
+			<DeclaredIn>AMZNScopeFactory.h</DeclaredIn>
+			
+			<Declaration>+ (id&lt;AMZNScope&gt;)scopeWithName:(NSString *)scopeName</Declaration>
+			
+			
+			<Anchor>//api/name/scopeWithName:</Anchor>
+            <NodeRef refid="8"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/AMZNScopeFactory/scopeWithName:data:</TokenIdentifier>
+			<Abstract type="html">This method returns a scope object with input name and scope data.</Abstract>
+			<DeclaredIn>AMZNScopeFactory.h</DeclaredIn>
+			
+			<Declaration>+ (id&lt;AMZNScope&gt;)scopeWithName:(NSString *)scopeName data:(NSDictionary *)scopeData</Declaration>
+			
+			
+			<Anchor>//api/name/scopeWithName:data:</Anchor>
+            <NodeRef refid="8"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/AMZNScopeFactory/getScopeDataAsJsonString:withErrorObject:</TokenIdentifier>
+			<Abstract type="html">This method returns scope name and scope data in a json format.</Abstract>
+			<DeclaredIn>AMZNScopeFactory.h</DeclaredIn>
+			
+			<Declaration>+ (NSString *)getScopeDataAsJsonString:(NSArray *)scopes withErrorObject:(AIError *)errorObject</Declaration>
+			
+			
+			<Anchor>//api/name/getScopeDataAsJsonString:withErrorObject:</Anchor>
+            <NodeRef refid="8"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

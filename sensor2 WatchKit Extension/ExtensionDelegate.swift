@@ -23,10 +23,10 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     let MAX_EARLIEST_TIME_SEC = -24.0 * 60.0 * 60.0 // a day ago
     let REFRESH_LEAD_SEC = 300.0
     
+    var infoPlist : NSDictionary!
     let wcsession = WCSession.default()
     let sr = CMSensorRecorder()
     let haveAccelerometer = CMSensorRecorder.isAccelerometerRecordingAvailable()
-    let authorizedAccelerometer = CMSensorRecorder.isAuthorizedForRecording()
     
     var appContext : NSDictionary = [:]
     
@@ -40,11 +40,15 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     var latestDate = Date.distantPast
     var lastError = ""
     var errors = 0
+    var getCredentialsBusy = false
     
-    var fakeData : Bool = false
+    var fakeData = false
     
     func applicationDidFinishLaunching() {
         // Perform any final initialization of your application.
+        
+        let path = Bundle.main.path(forResource: "Info", ofType: "plist")!
+        infoPlist = NSDictionary(contentsOfFile: path)
         
         // wake up session to phone
         wcsession.delegate = self
@@ -77,7 +81,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     
     func getCredentials() -> NSDictionary {
         var sendMessage = false
-        let waitForReply = true
+        var waitForReply = true
         let expireTime = userCredentials[AppGlobals.CRED_EXPIRATION_KEY] as? Date
         if (expireTime == nil) {
             // no data at all so fetch and wait
@@ -91,12 +95,14 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
             } else if (now.addingTimeInterval(REFRESH_LEAD_SEC).compare(expireTime!) == ComparisonResult.orderedDescending) {
                 // nearing expiration so fetch [no wait]
                 sendMessage = true
-                //TODO analyze this... -> waitForReply = false
+                waitForReply = false
             }
         }
         
-        if (sendMessage) {
+        // is an outstanding request already processing (e.g. in a latency masked prefresh example)?
+        if (sendMessage && !getCredentialsBusy) {
             NSLog("refreshing userCredentials... send=\(sendMessage), wait=\(waitForReply)")
+            getCredentialsBusy = true
             let sem = DispatchSemaphore(value: 0)
             
             wcsession.sendMessage([AppGlobals.SESSION_ACTION : AppGlobals.GET_CREDENTIALS],
@@ -115,8 +121,9 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
             })
             
             if (waitForReply) {
-                _ = sem.wait(timeout: DispatchTime.distantFuture)
+                _ = sem.wait(timeout: DispatchTime.now() + Double(Int64(15 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC))
             }
+            getCredentialsBusy = false
         }
         
         return userCredentials

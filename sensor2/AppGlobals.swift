@@ -19,7 +19,7 @@ class AppGlobals {
     
     // key for the cognito pool in Info
     static let IDENTITY_POOL_ID_KEY = "cognitoPool"
-    static let ACCOUNT_ID_KEY = "awsAccount"
+    static let DYNAMO_TABLE_NAME_KEY = "DynamoTableName"
     
     let dateFormatter = DateFormatter()
     let summaryDateFormatter = DateFormatter()

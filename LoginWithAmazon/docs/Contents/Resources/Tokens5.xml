@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/AMZNAuthorizeResult.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/AMZNAuthorizeResult</TokenIdentifier>
+			<Abstract type="html">This class defines the result object of the authorize:handler method defined in AMZNAuthorizationManager. The result object is passed into
+the AMZNAuthorizationRequestHandler block callback.</Abstract>
+			<DeclaredIn>AMZNAuthorizeResult.h</DeclaredIn>
+            <Availability type="html"></Availability>
+			
+			<NodeRef refid="5"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AMZNAuthorizeResult/setToken:</TokenIdentifier>
+			<Abstract type="html">A valid access token contains permissions to requested scopes in previous authorize:handler API call.</Abstract>
+			<DeclaredIn>AMZNAuthorizeResult.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) NSString *token</Declaration>
+			
+			
+			<Anchor>//api/name/token</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AMZNAuthorizeResult/token</TokenIdentifier>
+			<Abstract type="html">A valid access token contains permissions to requested scopes in previous authorize:handler API call.</Abstract>
+			<DeclaredIn>AMZNAuthorizeResult.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) NSString *token</Declaration>
+			
+			
+			<Anchor>//api/name/token</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/AMZNAuthorizeResult/token</TokenIdentifier>
+			<Abstract type="html">A valid access token contains permissions to requested scopes in previous authorize:handler API call.</Abstract>
+			<DeclaredIn>AMZNAuthorizeResult.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) NSString *token</Declaration>
+			
+			
+			<Anchor>//api/name/token</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AMZNAuthorizeResult/setAuthorizationCode:</TokenIdentifier>
+			<Abstract type="html">A valid authorization code along with code verifier can be exchanged for an access token pair that
+contains permissions to requested scopes in authorize:withHandler API call.</Abstract>
+			<DeclaredIn>AMZNAuthorizeResult.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) NSString *authorizationCode</Declaration>
+			
+			
+			<Anchor>//api/name/authorizationCode</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AMZNAuthorizeResult/authorizationCode</TokenIdentifier>
+			<Abstract type="html">A valid authorization code along with code verifier can be exchanged for an access token pair that
+contains permissions to requested scopes in authorize:withHandler API call.</Abstract>
+			<DeclaredIn>AMZNAuthorizeResult.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) NSString *authorizationCode</Declaration>
+			
+			
+			<Anchor>//api/name/authorizationCode</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/AMZNAuthorizeResult/authorizationCode</TokenIdentifier>
+			<Abstract type="html">A valid authorization code along with code verifier can be exchanged for an access token pair that
+contains permissions to requested scopes in authorize:withHandler API call.</Abstract>
+			<DeclaredIn>AMZNAuthorizeResult.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) NSString *authorizationCode</Declaration>
+			
+			
+			<Anchor>//api/name/authorizationCode</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AMZNAuthorizeResult/setClientId:</TokenIdentifier>
+			<Abstract type="html">The client id is needed as one of the parameter while exchanging authorization code for token pair</Abstract>
+			<DeclaredIn>AMZNAuthorizeResult.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) NSString *clientId</Declaration>
+			
+			
+			<Anchor>//api/name/clientId</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AMZNAuthorizeResult/clientId</TokenIdentifier>
+			<Abstract type="html">The client id is needed as one of the parameter while exchanging authorization code for token pair</Abstract>
+			<DeclaredIn>AMZNAuthorizeResult.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) NSString *clientId</Declaration>
+			
+			
+			<Anchor>//api/name/clientId</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/AMZNAuthorizeResult/clientId</TokenIdentifier>
+			<Abstract type="html">The client id is needed as one of the parameter while exchanging authorization code for token pair</Abstract>
+			<DeclaredIn>AMZNAuthorizeResult.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) NSString *clientId</Declaration>
+			
+			
+			<Anchor>//api/name/clientId</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AMZNAuthorizeResult/setRedirectUri:</TokenIdentifier>
+			<Abstract type="html">The redirect uri is needed as one of the parameter while exchanging the authorization code for token pair</Abstract>
+			<DeclaredIn>AMZNAuthorizeResult.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) NSString *redirectUri</Declaration>
+			
+			
+			<Anchor>//api/name/redirectUri</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AMZNAuthorizeResult/redirectUri</TokenIdentifier>
+			<Abstract type="html">The redirect uri is needed as one of the parameter while exchanging the authorization code for token pair</Abstract>
+			<DeclaredIn>AMZNAuthorizeResult.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) NSString *redirectUri</Declaration>
+			
+			
+			<Anchor>//api/name/redirectUri</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/AMZNAuthorizeResult/redirectUri</TokenIdentifier>
+			<Abstract type="html">The redirect uri is needed as one of the parameter while exchanging the authorization code for token pair</Abstract>
+			<DeclaredIn>AMZNAuthorizeResult.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) NSString *redirectUri</Declaration>
+			
+			
+			<Anchor>//api/name/redirectUri</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AMZNAuthorizeResult/setUser:</TokenIdentifier>
+			<Abstract type="html">An AMZNUser object contains user&apos;s profile information. This object is only available if the app requested scopes that contain permissions
+to customer&apos;s profile data. Refer to AMZNProfileScope to find a list of scopes in such type.</Abstract>
+			<DeclaredIn>AMZNAuthorizeResult.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong, nullable) AMZNUser *user</Declaration>
+			
+			
+			<Anchor>//api/name/user</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AMZNAuthorizeResult/user</TokenIdentifier>
+			<Abstract type="html">An AMZNUser object contains user&apos;s profile information. This object is only available if the app requested scopes that contain permissions
+to customer&apos;s profile data. Refer to AMZNProfileScope to find a list of scopes in such type.</Abstract>
+			<DeclaredIn>AMZNAuthorizeResult.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong, nullable) AMZNUser *user</Declaration>
+			
+			
+			<Anchor>//api/name/user</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/AMZNAuthorizeResult/user</TokenIdentifier>
+			<Abstract type="html">An AMZNUser object contains user&apos;s profile information. This object is only available if the app requested scopes that contain permissions
+to customer&apos;s profile data. Refer to AMZNProfileScope to find a list of scopes in such type.</Abstract>
+			<DeclaredIn>AMZNAuthorizeResult.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong, nullable) AMZNUser *user</Declaration>
+			
+			
+			<Anchor>//api/name/user</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

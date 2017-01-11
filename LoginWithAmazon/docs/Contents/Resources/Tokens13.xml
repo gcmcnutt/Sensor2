@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Constants/AMZNAuthorizationGrantType.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/c/tdef/AMZNAuthorizationGrantType</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AMZNAuthorizeRequest.h</DeclaredIn>
+            
+			
+			<NodeRef refid="13"/>
+		</Token>
+		
+		
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/AMZNAuthorizationGrantTypeToken</TokenIdentifier>
+            <Abstract type="html">     AMZNAuthorizationGrantTypeToken: An OAuth 2.0 access token. When requesting an access token, Login With Amazon SDK will persist this token and
+     refresh it when necessary on your behalf.
+     AMZNAuthorizeRequest will default to use AMZNAuthorizationGrantTypeToken if no interactive strategy is specified by caller.
+     </Abstract>
+            <Declaration>AMZNAuthorizationGrantTypeToken</Declaration>
+            <Availability type="html"></Availability>
+            <DeclaredIn>AMZNAuthorizeRequest.h</DeclaredIn>
+            
+            <NodeRef refid="13"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/AMZNAuthorizationGrantTypeCode</TokenIdentifier>
+            <Abstract type="html">     AMZNAuthorizationGrantTypeCode: An OAuth 2.0 authorization code grant. Login With Amazon SDK does not persist this grant and does not allow
+     access to use Login With Amazon-enabled APIs that require authorization.
+     </Abstract>
+            <Declaration>AMZNAuthorizationGrantTypeCode</Declaration>
+            <Availability type="html"></Availability>
+            <DeclaredIn>AMZNAuthorizeRequest.h</DeclaredIn>
+            
+            <NodeRef refid="13"/>
+        </Token>
+        
+        
+	</File>
+</Tokens>

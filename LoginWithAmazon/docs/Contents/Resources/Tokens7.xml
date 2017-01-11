@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/AMZNProfileScope.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/AMZNProfileScope</TokenIdentifier>
+			<Abstract type="html">This interface implements AMZNScope protocol and is used to define &apos;scopes&apos; owned by Login with Amazon.</Abstract>
+			<DeclaredIn>AMZNProfileScope.h</DeclaredIn>
+            <Availability type="html"></Availability>
+			
+			<NodeRef refid="7"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/AMZNProfileScope/profile</TokenIdentifier>
+			<Abstract type="html">This method returns an object of &apos;profile&apos; scope.</Abstract>
+			<DeclaredIn>AMZNProfileScope.h</DeclaredIn>
+			
+			<Declaration>+ (id&lt;AMZNScope&gt;)profile</Declaration>
+			
+			
+			<Anchor>//api/name/profile</Anchor>
+            <NodeRef refid="7"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/AMZNProfileScope/postalCode</TokenIdentifier>
+			<Abstract type="html">This method returns an object of &apos;postal_code&apos; scope.</Abstract>
+			<DeclaredIn>AMZNProfileScope.h</DeclaredIn>
+			
+			<Declaration>+ (id&lt;AMZNScope&gt;)postalCode</Declaration>
+			
+			
+			<Anchor>//api/name/postalCode</Anchor>
+            <NodeRef refid="7"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/AMZNProfileScope/userID</TokenIdentifier>
+			<Abstract type="html">This method returns an object of &apos;profile:user_id&apos; scope.</Abstract>
+			<DeclaredIn>AMZNProfileScope.h</DeclaredIn>
+			
+			<Declaration>+ (id&lt;AMZNScope&gt;)userID</Declaration>
+			
+			
+			<Anchor>//api/name/userID</Anchor>
+            <NodeRef refid="7"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

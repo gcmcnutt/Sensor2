@@ -28,6 +28,7 @@
 		D351F0AC1C01738800F6F91D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D351F0AB1C01738800F6F91D /* Assets.xcassets */; };
 		D351F0C21C0183D300F6F91D /* SensorDynamoImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D351F0C11C0183D300F6F91D /* SensorDynamoImpl.swift */; };
 		D3538F671C7A367D00D9C963 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D3538F641C76EEC900D9C963 /* GoogleService-Info.plist */; };
+		D36858781E23182F003E7CA7 /* CognitoCustomProviderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36858771E23182F003E7CA7 /* CognitoCustomProviderManager.swift */; };
 		D3E03A251D58487B00857076 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3E03A241D58487B00857076 /* SafariServices.framework */; };
 		D3E03A271D58488300857076 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3E03A261D58488300857076 /* CoreGraphics.framework */; };
 		D3E03A281D58489B00857076 /* LoginWithAmazon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D38056721C5DC4F800353CD7 /* LoginWithAmazon.framework */; };
@@ -127,6 +128,7 @@
 		D351F0AD1C01738800F6F91D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D351F0C11C0183D300F6F91D /* SensorDynamoImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensorDynamoImpl.swift; sourceTree = "<group>"; };
 		D3538F641C76EEC900D9C963 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D36858771E23182F003E7CA7 /* CognitoCustomProviderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CognitoCustomProviderManager.swift; sourceTree = "<group>"; };
 		D38056701C5DC3D900353CD7 /* LoginWithAmazon */ = {isa = PBXFileReference; lastKnownFileType = folder; path = LoginWithAmazon; sourceTree = "<group>"; };
 		D38056721C5DC4F800353CD7 /* LoginWithAmazon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LoginWithAmazon.framework; path = LoginWithAmazon/LoginWithAmazon.framework; sourceTree = "<group>"; };
 		D38E97891D597472005DF784 /* sensor2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = sensor2.entitlements; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 				D351F0751C01738800F6F91D /* Assets.xcassets */,
 				D351F0771C01738800F6F91D /* LaunchScreen.storyboard */,
 				D351F07A1C01738800F6F91D /* Info.plist */,
+				D36858771E23182F003E7CA7 /* CognitoCustomProviderManager.swift */,
 			);
 			path = sensor2;
 			sourceTree = "<group>";
@@ -572,6 +575,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3379F5E1C409FDF00430D2C /* AuthorizeUserDelegate.swift in Sources */,
+				D36858781E23182F003E7CA7 /* CognitoCustomProviderManager.swift in Sources */,
 				D351F0711C01738800F6F91D /* ViewController.swift in Sources */,
 				D3379F621C409FFB00430D2C /* AppGlobals.swift in Sources */,
 				D351F06F1C01738800F6F91D /* AppDelegate.swift in Sources */,

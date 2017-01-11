@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Constants/API.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/c/tdef/API</TokenIdentifier>
+			<Abstract type="html">  These constants identify which API succeeded or failed when calling AIAuthenticationDelegate. The value identifying
+  the API is passed in the APIResult and APIError objects.</Abstract>
+			<DeclaredIn>AIAuthenticationDelegate.h</DeclaredIn>
+            <Availability type="html"></Availability>
+			
+			<NodeRef refid="16"/>
+		</Token>
+		
+		
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/kAPIAuthorizeUser</TokenIdentifier>
+            <Abstract type="html">Refers to [AIMobileLib authorizeUserForScopes:delegate:]</Abstract>
+            <Declaration>kAPIAuthorizeUser</Declaration>
+            
+            <DeclaredIn>AIAuthenticationDelegate.h</DeclaredIn>
+            
+            <NodeRef refid="16"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/kAPIGetAccessToken</TokenIdentifier>
+            <Abstract type="html">Refers to [AIMobileLib getAccessTokenForScopes:withOverrideParams:delegate:]</Abstract>
+            <Declaration>kAPIGetAccessToken</Declaration>
+            
+            <DeclaredIn>AIAuthenticationDelegate.h</DeclaredIn>
+            
+            <NodeRef refid="16"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/kAPIClearAuthorizationState</TokenIdentifier>
+            <Abstract type="html">Refers to [AIMobileLib clearAuthorizationState:]</Abstract>
+            <Declaration>kAPIClearAuthorizationState</Declaration>
+            
+            <DeclaredIn>AIAuthenticationDelegate.h</DeclaredIn>
+            
+            <NodeRef refid="16"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/kAPIGetProfile</TokenIdentifier>
+            <Abstract type="html">Refers to [AIMobileLib getProfile:]</Abstract>
+            <Declaration>kAPIGetProfile</Declaration>
+            
+            <DeclaredIn>AIAuthenticationDelegate.h</DeclaredIn>
+            
+            <NodeRef refid="16"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/kAPIGetAuthorizationCode</TokenIdentifier>
+            <Abstract type="html">Refers to [AIMobileLib authorizeUserForScopes:delegate:options]</Abstract>
+            <Declaration>kAPIGetAuthorizationCode</Declaration>
+            
+            <DeclaredIn>AIAuthenticationDelegate.h</DeclaredIn>
+            
+            <NodeRef refid="16"/>
+        </Token>
+        
+        
+	</File>
+</Tokens>

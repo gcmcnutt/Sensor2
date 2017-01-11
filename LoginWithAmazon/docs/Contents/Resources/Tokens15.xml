@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Constants/AMZNRegion.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/c/tdef/AMZNRegion</TokenIdentifier>
+			<Abstract type="html">These constants will be used to identify what global end-points the SDK connects to. Set the region property to one of the following values</Abstract>
+			<DeclaredIn>AMZNAuthorizationManager.h</DeclaredIn>
+            <Availability type="html"></Availability>
+			
+			<NodeRef refid="15"/>
+		</Token>
+		
+		
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/AMZNRegionAuto</TokenIdentifier>
+            <Abstract type="html">Setting region property to this value causes the SDK to determine the best end-points to connect to. This will be the default value in case you don&apos;t set region property explicitly</Abstract>
+            <Declaration>AMZNRegionAuto</Declaration>
+            
+            <DeclaredIn>AMZNAuthorizationManager.h</DeclaredIn>
+            
+            <NodeRef refid="15"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/AMZNRegionNA</TokenIdentifier>
+            <Abstract type="html">Setting region property to this value causes the SDK to connect to end-points in North America.</Abstract>
+            <Declaration>AMZNRegionNA</Declaration>
+            
+            <DeclaredIn>AMZNAuthorizationManager.h</DeclaredIn>
+            
+            <NodeRef refid="15"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/AMZNRegionEU</TokenIdentifier>
+            <Abstract type="html">Setting region property to this value causes the SDK to connect to end-points in Europe.</Abstract>
+            <Declaration>AMZNRegionEU</Declaration>
+            
+            <DeclaredIn>AMZNAuthorizationManager.h</DeclaredIn>
+            
+            <NodeRef refid="15"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/AMZNRegionFE</TokenIdentifier>
+            <Abstract type="html">Setting region property to this value causes the SDK to connect to end-points in far East.</Abstract>
+            <Declaration>AMZNRegionFE</Declaration>
+            
+            <DeclaredIn>AMZNAuthorizationManager.h</DeclaredIn>
+            
+            <NodeRef refid="15"/>
+        </Token>
+        
+        
+	</File>
+</Tokens>
